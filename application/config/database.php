@@ -55,13 +55,13 @@ $db['default']['hostname'] = 'localhost';
 if(MODO_LOCAL){
 $db['default']['username'] = 'root';
 $db['default']['password'] = '';
-$db['default']['database'] = 'practica2';
+$db['default']['database'] = 'certificados';
 }
 else 
 {
-$db['default']['username'] = '2daw1415_manuel';
-$db['default']['password'] = 'iaiael|42';
-$db['default']['database'] ='2daw1415_manuel01';
+$db['default']['username'] = '2daw151ev_manugar';
+$db['default']['password'] = 'iaama_58';
+$db['default']['database'] ='2daw151ev_manugar01';
 }
 $db['default']['dbdriver'] = 'mysqli';
 $db['default']['dbprefix'] = '';
