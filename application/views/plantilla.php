@@ -3,6 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<link href="<?=base_url('assets/css/bootstrap.min.css')?>" rel="stylesheet">
+        <link href="<?=base_url('assets/css/mio.css')?>" rel="stylesheet">
 	<title>Certificado</title>
 </head>
 <body>
