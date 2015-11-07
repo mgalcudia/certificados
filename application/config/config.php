@@ -15,20 +15,19 @@
 |
 */
 
-/*
     Define('MODO_LOCAL', TRUE);
 if(MODO_LOCAL)
 {
-    $config['base_url']= 'http://localhost/pract2evaluacion/';
+    $config['base_url']= 'http://localhost/certificados/';
 
 }
 else{
 
-$config['base_url']= 'http://iessansebastian.com/alumnos/2daw1415/manuel';
+$config['base_url']= 'http://iessansebastian.com/alumnos/2daw151ev/manugar';
 }
   
- */
-$config['base_url']	= '';
+ 
+//$config['base_url']	= '';
 
 /*
 |--------------------------------------------------------------------------
@@ -83,7 +82,7 @@ $config['url_suffix'] = '';
 | than english.
 |
 */
-$config['language']	= 'english';
+$config['language']	= 'spanish';
 
 /*
 |--------------------------------------------------------------------------
@@ -238,7 +237,7 @@ $config['cache_path'] = '';
 | MUST set an encryption key.  See the user guide for info.
 |
 */
-$config['encryption_key'] = '';
+$config['encryption_key'] = 'PKHLGUKIYFUGUI0OIUYTD';
 
 /*
 |--------------------------------------------------------------------------

@@ -12,7 +12,7 @@
 	</header>
 	
 	<div class="col-sm-2 col-md-3">
-		<aside><?= $menu_izq?></aside>
+		<aside><?=$menu_izq?></aside>
 	</div>
 	
 	<div class="col-sm-9">
@@ -24,4 +24,7 @@
 	</div>
 </div>
 </body>
+    <script src="<?= base_url('/assets/js/jquery.min.js') ?>"></script>
+    <script src="<?= base_url('/assets/js/bootstrap.min.js') ?>"></script>
+    <script src="<?= base_url('/assets/js/script.js') ?>"></script>
 </html>
