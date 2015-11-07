@@ -11,11 +11,11 @@
 		<?= $encabezado?>
 	</header>
 	
-	<div class="col-sm-2 col-md-3">
+	<div class="col-sm-2 col-md-4">
 		<aside><?=$menu_izq?></aside>
 	</div>
 	
-	<div class="col-sm-9">
+	<div class="col-sm-9 col-md-8">
 		<?= $cuerpo?>
 	</div>
 	

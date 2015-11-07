@@ -20,7 +20,7 @@
 	            </ul>
 	            <ul class="nav navbar-nav">
 	                <div class="pull-right">
-	                    <form class="navbar-form" role="search" action="<?=base_url('index.php/principal/buscar_productos')?>" method="post">
+	                    <form class="navbar-form" role="search" action="<?=base_url('')?>" method="post">
 	                        <div class="input-group">
 	                            <input type="text" class="form-control" placeholder="Buscar..." name="busqueda">
 	                            <div class="input-group-btn" type="submit">
@@ -42,7 +42,7 @@
 	                        
 	                        <li><a href="<?=base_url('index.php/clientes/dar_de_baja')?>">Darse de baja</a></li>
 	                        
-	                        <li><a href="<?=base_url('index.php/clientes/listar_pedidos')?>">Ver pedidos</a></li>
+	                       
 	                        
 	                    
 	                    </ul>
