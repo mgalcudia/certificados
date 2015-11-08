@@ -16,28 +16,15 @@ class mi_controlador extends CI_Controller{
   function plantilla($cuerpo){       
   
          if(!$this->session->userdata('usuario')){
-              $encabezado= $this->load->view("cabecera",0 , TRUE);
-         }else{
+             $encabezado= $this->load->view("cabecera",0 ,TRUE);
+             $cuerpo= $this->load->view("login",0 ,TRUE);
+             $menu_izq =$this->load->view("menu_izq",0,TRUE);
+         }
+         else{
              
-             
-         } 
-         
-         if(!$this->session->userdata('usuario')){
-              $cuerpo= $this->load->view("login",0 , TRUE);
-         }else{
-             
-             
-         }  
-         if(!$this->session->userdata('usuario')){
-              $menu_izq =$this->load->view("menu_izq",0,TRUE);
-         }else{
-             
-             
-         }  
+         }
         
-         $pie= $this->load->view("pie", 0, TRUE);  
-        
-        
+         $pie= $this->load->view("pie",0,TRUE);  
         
         //Creo una plantilla con los apartados a mostrar
         $this->load->view('plantilla', array(

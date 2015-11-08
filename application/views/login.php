@@ -1,20 +1,31 @@
-<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-    <div class="container">
-      <form class="form-signin" class= "margin-sup">
-        <h2 class="form-signin-heading">Please sign in</h2>
-        <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
 
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-      </form>
+  <div class="col-md-6 col-md-offset-3">
+    <div class="panel member_signin">
+      <div class="panel-body">
+        <div class="fa_user">
+          <i class="fa fa-user"></i>
+        </div>
+        <p class="member">Member Login</p>
+        <form role="form" class="loginform">
+          <div class="form-group">
+            <label for="exampleInputEmail1" class="sr-only">Email address</label>
+            <div class="input-group">
+              <input type="email" class="form-control" id="exampleInputEmail1"
+                placeholder="Username">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1" class="sr-only">Password</label>
+            <div class="input-group">
+              <input type="password" class="form-control" id="exampleInputPassword1"
+                placeholder="Password">
+            </div>
+          </div>
+          <button type="button" class="btn btn-primary btn-md login">LOG IN</button>
+        </form>
+        <p class="forgotpass"><a href="#" class="small">Forgot Password?</a></p>
+      </div>
+    </div>
+  </div>
 
-    </div> <!-- /container -->
-
-    
-    
-    
-</div>
-   
   
