@@ -33,8 +33,8 @@
     
 </div>
 </body>
-    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script src="<?= base_url('/assets/jq/jquery-1.11.3.js') ?>"></script>
+    <script src="<?= base_url('/assets/jq/jquery-migrate-1.2.1.min.js') ?>"></script>
     <script src="<?= base_url('assets/js/bootstrap.min.js') ?>"></script>
     
 </html>

@@ -13,11 +13,13 @@ class mi_controlador extends CI_Controller{
      * Carga la plantilla html (encabezado, menu, cuerpo y pie).
      * @param unknown $cuerpo
      */
-  function plantilla($cuerpo){       
-  
+  function plantilla($cuerpo){ 
+      
+   //$cuerpo= $this->load->view("login",0 ,TRUE);
+      
          if(!$this->session->userdata('usuario')){
              $encabezado= $this->load->view("cabecera",0 ,TRUE);
-             $cuerpo= $this->load->view("login",0 ,TRUE);
+             //$cuerpo= $this->load->view("formulario_registro",0 ,TRUE);
              $menu_izq =$this->load->view("menu_izq",0,TRUE);
          }
          else{

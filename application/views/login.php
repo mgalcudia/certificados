@@ -5,7 +5,9 @@
         <div class="fa_user">
           <i class="fa fa-user"></i>
         </div>
-        <p class="member">Member Login</p>
+          
+        <p class="member">Entrar</p><p class="forgotpass">
+            <a href="<?=base_url("index.php/usuario/registro")?>" class="small">Registrarse</a></p>
         <form role="form" class="loginform">
           <div class="form-group">
             <label for="exampleInputEmail1" class="sr-only">Email address</label>
@@ -23,7 +25,7 @@
           </div>
           <button type="button" class="btn btn-primary btn-md login">LOG IN</button>
         </form>
-        <p class="forgotpass"><a href="#" class="small">Forgot Password?</a></p>
+        <p class="forgotpass"><a href="#" class="small">Recuperar contraseña</a> </p>
       </div>
     </div>
   </div>
