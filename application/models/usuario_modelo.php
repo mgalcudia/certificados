@@ -17,8 +17,8 @@ class usuario_modelo extends CI_Model {
      * @param type $data array de datos
      */
     function insertar_usuario ($data){
-        var_dump($data);
-       //$this->db->insert('usuario',$data);
+        //var_dump($data);
+       $this->db->insert('usuario',$data);
 
     }
     
@@ -33,10 +33,11 @@ class usuario_modelo extends CI_Model {
        $consulta= $this->db->get('usuario');
 
        if($consulta->result()){
-
+           var_dump('tiene');
            return true;
 
        }else{
+           var_dump(' NO tiene');
            return false;
        }
 
