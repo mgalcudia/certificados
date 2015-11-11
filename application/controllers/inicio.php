@@ -14,12 +14,8 @@ class inicio extends mi_controlador{
     }
     
        function index(){
-   
        
-        
-        $cuerpo = $this->load->view('login', 0, TRUE);    
-        
-        $this->plantilla($cuerpo);
+            redirect(base_url('index.php/usuario/login'));
         
     }
     

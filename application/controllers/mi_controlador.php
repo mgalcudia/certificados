@@ -23,7 +23,11 @@ class mi_controlador extends CI_Controller{
              $menu_izq =$this->load->view("menu_izq",0,TRUE);
          }
          else{
-             
+             $datos_cabecera['datos']= $this->load->view('cabecerastring',0,TRUE);
+             $datos_menuizq['datos_menu']= $this->load->view('menuizqstring',0,TRUE);
+             $encabezado= $this->load->view("cabecera", $datos_cabecera ,TRUE);
+             //$cuerpo= $this->load->view("formulario_registro",0 ,TRUE);
+             $menu_izq =$this->load->view("menu_izq",$datos_menuizq,TRUE);
          }
         
          $pie= $this->load->view("pie",0,TRUE);  
@@ -59,8 +63,7 @@ class mi_controlador extends CI_Controller{
          $this->pagination->initialize($config);
          
          
-         return $this->pagination->create_links(); 
-        
+         return $this->pagination->create_links();         
         
         
     }

@@ -66,7 +66,7 @@ class usuario extends mi_controlador {
                 $cuerpo = $this->load->view('formulario_registro', $mensaje, true);
                 $this->plantilla($cuerpo);
             } else {
-                var_dump($datos);
+               // var_dump($datos);
                 $this->usuario_modelo->insertar_usuario($datos);
                 redirect(site_url());
             }
@@ -84,8 +84,15 @@ class usuario extends mi_controlador {
         
         if($this->form_validation->run()== FALSE){           
             
-            $cuerpo= $this->load->view('login',0,TRUE);
-                $this->plantilla($cuerpo);                
+            if(!$this->session->userdata('usuario')){
+                $cuerpo= $this->load->view('login',0,TRUE);
+                $this->plantilla($cuerpo);
+                
+            }else{
+                
+                $cuerpo= $this->load->view('principal',0,TRUE);
+                $this->plantilla($cuerpo);
+            }
             
         }else{
             
@@ -94,21 +101,85 @@ class usuario extends mi_controlador {
        
             if($this->usuario_modelo->loginok($mail, $pasword)==TRUE){
     
+                $this->session->set_userdata('usuario',$mail);
                 //usuario correcto a ver donde lo mandamos
+                
+                $cuerpo= $this->load->view('principal',0,TRUE);
+                $this->plantilla($cuerpo);
                 
             }else{
                 
                 //usuario incorrecto
-                 $data['error'] = "<h1>Usuario incorrecto</h1>";
-
+                 $data['error'] = "<h1>Usuario incorrecto</h1>";                
                 $cuerpo = $this->load->view('login', $data, TRUE);
                 $this->plantilla($cuerpo);
                 
             }
         }
     }
+    
+    
+    
+        /**
+     * Cerrar sesión usuario
+     */
+    function salir() {
+
+        if ($this->session->userdata('usuario')) {            
+            $this->session->unset_userdata('usuario');
+            redirect(site_url());
+        } else {
+            $this->session->set_flashdata('informe', 'No había sesión iniciada');
+            redirect(site_url());
+        }
+    }
 
     
+    function recuperar_pass(){
+        
+                $this->form_validation->set_rules('mail', 'mail', 'trim|required|valid_email');
+                     
+
+        if ($this->form_validation->run() == FALSE) {
+
+            $cuerpo = $this->load->view('restaurar_pass', '', TRUE);
+            $this->plantilla($cuerpo);
+        } else {
+            $correo = $this->input->post('email');
+            $consulta = $this->clientes_modelo->existe_mail($correo);
+            if ($consulta) {
+
+                $usuario = $consulta['usuario'];
+                $mail['email'] = $consulta['email'];
+                $pass['password'] = md5('123456');
+                $id = $consulta['id'];
+
+                if ($this->clientes_modelo->editar_cliente($id, $pass)) {
+
+                    //mandamos el correo
+                    $this->password_mail($usuario, $mail);
+                    print_r($pass['password']);
+                    //Iniciamos la sesion del usuario y lo enviamos al panel de control
+                    if ($this->clientes_modelo->loginok($usuario, $pass['password']) == true) {
+                        $this->session->set_userdata('usuario', $usuario);
+                        redirect(site_url('usuario_controlador/panel_control'));
+                    }
+                } else {
+                    //se produce un error
+                    $this->session->set_flashdata('informe', 'Se ha producido un error al restaurar el password');
+                    redirect(site_url('usuario_controlador/restablece_pass'));
+                }
+            } else {
+                $this->session->set_flashdata('informe', 'El correo electronico no está registrado');
+                redirect(site_url('usuario_controlador/restablece_pass'));
+            }
+        }
+        
+        
+        
+        
+        
+    }
     
     
     
