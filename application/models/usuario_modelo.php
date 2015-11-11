@@ -44,6 +44,22 @@ class usuario_modelo extends CI_Model {
     }
     
     
+        function loginok($mail, $pasword){
+		$sql = "select * from usuario where mail = '".$mail."' AND pasword = '".$pasword."' AND activo = '1'";
+                print_r($sql);
+		$query = $this->db->query($sql);
+
+		if($query->num_rows() == 0)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+    
+    
     
     
     

@@ -78,9 +78,39 @@ class usuario extends mi_controlador {
      */
 
     function login() {
+        
+        $this->form_validation->set_rules('mail','mail','trim|required|valid_email');
+        $this->form_validation->set_rules('pasword','pasword','trim|required|md5');
+        
+        if($this->form_validation->run()== FALSE){           
+            
+            $cuerpo= $this->load->view('login',0,TRUE);
+                $this->plantilla($cuerpo);                
+            
+        }else{
+            
+            $mail= $this->input->post('mail');
+            $pasword=$this->input->post('pasword');
+       
+            if($this->usuario_modelo->loginok($mail, $pasword)==TRUE){
+    
+                //usuario correcto a ver donde lo mandamos
+                
+            }else{
+                
+                //usuario incorrecto
+                 $data['error'] = "<h1>Usuario incorrecto</h1>";
 
-        $this->form_validation->set_rules('mail', 'mail', 'trim|required|valid_email');
-        $this->form_validation->set_rules('password', 'password', 'trim|required|md5');
+                $cuerpo = $this->load->view('login', $data, TRUE);
+                $this->plantilla($cuerpo);
+                
+            }
+        }
     }
 
+    
+    
+    
+    
+    
 }

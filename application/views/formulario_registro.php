@@ -33,7 +33,7 @@
     
     <div class="form-group <?= (isset($clase_campo_form['mail'])) ? $clase_campo_form['mail'] : '' ?>">
         <label class="control-label" for="mail">Email</label>
-        <input type="text" class="form-control" name="mail" value="<?= set_value('email'); ?>" placeholder="Email"/>
+        <input type="text" class="form-control" name="mail" value="<?= set_value('mail'); ?>" placeholder="Email"/>
         <span class="help-block"><?= form_error('mail') ?></span>
         <span class="help-block"><?php if (isset($error)) echo $error; ?></span>
     </div>
