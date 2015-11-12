@@ -45,8 +45,9 @@ class usuario_modelo extends CI_Model {
     
     
         function loginok($mail, $pasword){
+            
 		$sql = "select * from usuario where mail = '".$mail."' AND pasword = '".$pasword."' AND activo = '1'";
-                print_r($sql);
+                
 		$query = $this->db->query($sql);
 
 		if($query->num_rows() == 0)
@@ -60,9 +61,43 @@ class usuario_modelo extends CI_Model {
 	}
     
     
+    /**
+     * Comprobar si el usuario existe por correo
+     */
+
+    function existe_mail($data){
+        //var_dump($data);
+       $this->db->where('mail',$data);
+       $consulta= $this->db->get('usuario');
+
+       if($consulta->result()){
+
+           return $consulta->row_array();
+
+       }else{
+           return false;
+       }
+
+    }
     
-    
-    
+         /**
+     * Edita los datos del usuario con id=$id
+     * actualizando sus datos con $datos
+     * @param type $id
+     * @param type $datos
+     */
+    function editar_cliente($id, $datos){
+        $this->db->where('cod', $id);
+        
+        if($this->db->update('usuario', $datos)){
+            return true;
+            
+        }  else {
+        
+            return false;
+        }
+    }
+
     
     
     

@@ -137,42 +137,46 @@ class usuario extends mi_controlador {
     
     function recuperar_pass(){
         
-                $this->form_validation->set_rules('mail', 'mail', 'trim|required|valid_email');
+        $this->form_validation->set_rules('mail', 'mail', 'trim|required|valid_email');
                      
 
         if ($this->form_validation->run() == FALSE) {
 
-            $cuerpo = $this->load->view('restaurar_pass', '', TRUE);
+            $cuerpo = $this->load->view('recuperar_pass', 0, TRUE);
             $this->plantilla($cuerpo);
         } else {
-            $correo = $this->input->post('email');
-            $consulta = $this->clientes_modelo->existe_mail($correo);
+            $correo = $this->input->post('mail');            
+            $consulta = $this->usuario_modelo->existe_mail($correo);
+            //var_dump($consulta);
             if ($consulta) {
 
-                $usuario = $consulta['usuario'];
-                $mail['email'] = $consulta['email'];
-                $pass['password'] = md5('123456');
-                $id = $consulta['id'];
-
-                if ($this->clientes_modelo->editar_cliente($id, $pass)) {
+                $usuario = $consulta['nombre'];
+                $mail['mail'] = $consulta['mail'];
+                $pass['pasword'] = md5('123456');
+                $id = $consulta['cod'];
+             
+                if ($this->usuario_modelo->editar_cliente($id, $pass)) {
 
                     //mandamos el correo
                     $this->password_mail($usuario, $mail);
-                    print_r($pass['password']);
+                   
+                    
                     //Iniciamos la sesion del usuario y lo enviamos al panel de control
-                    if ($this->clientes_modelo->loginok($usuario, $pass['password']) == true) {
-                        $this->session->set_userdata('usuario', $usuario);
-                        redirect(site_url('usuario_controlador/panel_control'));
+                    if ($this->usuario_modelo->loginok($mail['mail'], $pass['pasword']) == true) {
+                        $this->session->set_userdata('usuario', $mail['mail']);                       
+                        redirect(site_url(''));
                     }
                 } else {
-                    //se produce un error
-                    $this->session->set_flashdata('informe', 'Se ha producido un error al restaurar el password');
-                    redirect(site_url('usuario_controlador/restablece_pass'));
+                    echo 'se produce un error';
+                   // $this->session->set_flashdata('informe', 'Se ha producido un error al restaurar el password');
+                   // redirect(site_url('usuario/restablece_pass'));
                 }
             } else {
-                $this->session->set_flashdata('informe', 'El correo electronico no está registrado');
-                redirect(site_url('usuario_controlador/restablece_pass'));
+              echo "$this->session->set_flashdata('informe', 'El correo electronico no está registrado')";
+                //redirect(site_url('usuario_controlador/restablece_pass'));
+                
             }
+            
         }
         
         

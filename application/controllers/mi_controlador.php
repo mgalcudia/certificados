@@ -69,6 +69,33 @@ class mi_controlador extends CI_Controller{
     }
     
     
+        /**
+     * envia al usuario un correo informandole del la modificacion de su contraseña.
+     * @param type $usuario
+     * @param type $mail
+     * @return type
+     */
+    function password_mail($usuario, $mail) {
+
+        // Utilizando smtp
+        $config['protocol'] = 'smtp';
+        $config['smtp_host'] = 'mail.iessansebastian.com';
+        $config['smtp_user'] = 'aula4@iessansebastian.com';
+        $config['smtp_pass'] = 'daw2alumno';
+        $config['mailtype'] = 'html';
+
+ 
+        $this->email->initialize($config);
+
+        $this->email->from('aula4@iessansebastian.com', 'Tienda Virtual');
+        $this->email->to($mail['mail']);
+        $this->email->subject('Nuevo password');
+        $this->email->message("<html><body><h2>Modifique la contraseña a una de su gusto</h2><p>Usuario:<font color='red'>" . $usuario .
+                "</font></p><p>Nuevo password:<font color='red'> 123456</font></p></body></html>");
+        return $this->email->send();
+    }
+    
+    
     
     
     

@@ -26,7 +26,7 @@
 
                     <button type="submit" class="btn btn-primary btn-md login">Aceptar</button>
                 </form>
-                <p class="forgotpass"><a href="#" class="small">Recuperar contraseña</a> </p>
+                <p class="forgotpass"><a href="<?= base_url("index.php/usuario/recuperar_pass") ?>" class="small">Recuperar contraseña</a> </p>
             </div>
         </div>
     </div>
