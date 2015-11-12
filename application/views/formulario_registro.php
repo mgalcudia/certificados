@@ -35,7 +35,7 @@
         <label class="control-label" for="mail">Email</label>
         <input type="text" class="form-control" name="mail" value="<?= set_value('mail'); ?>" placeholder="Email"/>
         <span class="help-block"><?= form_error('mail') ?></span>
-        <span class="help-block"><?php if (isset($error)) echo $error; ?></span>
+        <span class="text-danger"><?php if (isset($error)) echo $error; ?></span>
     </div>
     
     <button type="submit" class="btn btn-primary btn-md login">Enviar</button>

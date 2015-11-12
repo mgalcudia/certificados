@@ -30,7 +30,7 @@
 	                </li>
 
 	                <li class="dropdown">
-	                    <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><strong><?=$this->session->userdata('usuario')?></strong><span class="caret"></span></a>
+	                    <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><strong><?=$this->session->userdata('nombre')?></strong><span class="caret"></span></a>
 	                    <ul class="dropdown-menu" role="menu">
 	                        <li class="dropdown-header">Panel Usuario</li>
 	                        <li><a href="<?=base_url('index.php/clientes/editar')?>">Editar información</a></li>

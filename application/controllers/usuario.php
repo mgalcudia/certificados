@@ -149,12 +149,12 @@ class usuario extends mi_controlador {
             $consulta = $this->usuario_modelo->existe_mail($correo);
             //var_dump($consulta);
             if ($consulta) {
-
+        
                 $usuario = $consulta['nombre'];
                 $mail['mail'] = $consulta['mail'];
                 $pass['pasword'] = md5('123456');
                 $id = $consulta['cod'];
-             
+                
                 if ($this->usuario_modelo->editar_cliente($id, $pass)) {
 
                     //mandamos el correo
@@ -163,17 +163,22 @@ class usuario extends mi_controlador {
                     
                     //Iniciamos la sesion del usuario y lo enviamos al panel de control
                     if ($this->usuario_modelo->loginok($mail['mail'], $pass['pasword']) == true) {
-                        $this->session->set_userdata('usuario', $mail['mail']);                       
+                        $this->session->set_userdata('usuario', $mail['mail']); 
+                      $this->session->set_userdata('nombre', $usuario);                    
                         redirect(site_url(''));
+                        
                     }
                 } else {
-                    echo 'se produce un error';
-                   // $this->session->set_flashdata('informe', 'Se ha producido un error al restaurar el password');
-                   // redirect(site_url('usuario/restablece_pass'));
+                    
+                $data['error'] = "<h1>Se ha producido un error al restaurar el password</h1>";                
+                $cuerpo = $this->load->view('recuperar_pass', $data, TRUE);
+                $this->plantilla($cuerpo);
                 }
             } else {
-              echo "$this->session->set_flashdata('informe', 'El correo electronico no está registrado')";
-                //redirect(site_url('usuario_controlador/restablece_pass'));
+            
+                $data['error'] = '<h3>El correo electronico no está registrado</h3>';                
+                $cuerpo = $this->load->view('recuperar_pass', $data, TRUE);
+                $this->plantilla($cuerpo);
                 
             }
             
