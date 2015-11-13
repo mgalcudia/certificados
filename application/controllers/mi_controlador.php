@@ -75,7 +75,7 @@ class mi_controlador extends CI_Controller{
      * @param type $mail
      * @return type
      */
-    function password_mail($usuario, $mail) {
+    function password_mail($usuario, $mail,$contra) {
 
         // Utilizando smtp
         $config['protocol'] = 'smtp';
@@ -91,7 +91,7 @@ class mi_controlador extends CI_Controller{
         $this->email->to($mail['mail']);
         $this->email->subject('Nuevo password');
         $this->email->message("<html><body><h2>Modifique la contraseña a una de su gusto</h2><p>Usuario:<font color='red'>" . $usuario .
-                "</font></p><p>Nuevo password:<font color='red'> 123456</font></p></body></html>");
+                "</font></p><p>Nuevo password--> <font color='red'>.$contra.</font></p></body></html>");
         return $this->email->send();
     }
     

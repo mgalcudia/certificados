@@ -16,6 +16,7 @@
                     <span class="text-danger"><?php if (isset($error)) echo $error; ?></span>
                 </div>
                 <button type="submit" class="btn btn-primary btn-md login">Aceptar</button>
+                <a class="btn btn-danger btn-md login pull-right" href="<?=base_url("index.php/usuario/login")?>">Cancelar </a>
                 </form>                
             </div>
         </div>

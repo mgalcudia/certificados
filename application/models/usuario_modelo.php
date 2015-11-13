@@ -98,6 +98,17 @@ class usuario_modelo extends CI_Model {
         }
     }
 
+        /**
+     * Busca clientes por diversos criterios
+     * recogidos en $datos
+     * @param type $datos
+     * @return type
+     */
+    function buscar_usuario($datos){
+        $this->db->where($datos);
+        $query = $this->db->get('usuario');
+        return $query->row_array();
+    }
     
     
     

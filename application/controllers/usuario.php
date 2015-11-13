@@ -100,8 +100,9 @@ class usuario extends mi_controlador {
             $pasword=$this->input->post('pasword');
        
             if($this->usuario_modelo->loginok($mail, $pasword)==TRUE){
-    
+                $consulta = $this->usuario_modelo->existe_mail($mail);
                 $this->session->set_userdata('usuario',$mail);
+                $this->session->set_userdata('nombre', $consulta['nombre']);
                 //usuario correcto a ver donde lo mandamos
                 
                 $cuerpo= $this->load->view('principal',0,TRUE);
@@ -135,6 +136,9 @@ class usuario extends mi_controlador {
     }
 
     
+    /*
+     * Restaura la contraseña del usuario recibiendo como dato el correo electronico
+     */
     function recuperar_pass(){
         
         $this->form_validation->set_rules('mail', 'mail', 'trim|required|valid_email');
@@ -147,18 +151,18 @@ class usuario extends mi_controlador {
         } else {
             $correo = $this->input->post('mail');            
             $consulta = $this->usuario_modelo->existe_mail($correo);
-            //var_dump($consulta);
+            
             if ($consulta) {
-        
+              $aleatorio=$this->getrandomcode();
                 $usuario = $consulta['nombre'];
                 $mail['mail'] = $consulta['mail'];
-                $pass['pasword'] = md5('123456');
+                $pass['pasword'] = md5($aleatorio);
                 $id = $consulta['cod'];
                 
                 if ($this->usuario_modelo->editar_cliente($id, $pass)) {
 
                     //mandamos el correo
-                    $this->password_mail($usuario, $mail);
+                    $this->password_mail($usuario, $mail,$aleatorio);
                    
                     
                     //Iniciamos la sesion del usuario y lo enviamos al panel de control
@@ -184,12 +188,83 @@ class usuario extends mi_controlador {
             
         }
         
-        
-        
-        
-        
     }
     
+    /*
+     * funcion que genera una clave aleatoria para la restauracion de contraseña
+     */
+    function getrandomcode(){
+    $an = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ-)(.:,;";
+    $su = strlen($an) - 1;
+    return substr($an, rand(0, $su), 1) .
+            substr($an, rand(0, $su), 1) .
+            substr($an, rand(0, $su), 1) .
+            substr($an, rand(0, $su), 1) .
+            substr($an, rand(0, $su), 1) .
+            substr($an, rand(0, $su), 1) .
+            substr($an, rand(0, $su), 1) .
+            substr($an, rand(0, $su), 1) .
+            substr($an, rand(0, $su), 1);
+}
+    
+
+    /*
+     * Edita usuario
+     */
+    function editarusuario(){
+        
+        
+        $this->form_validation->set_rules('nombre', 'nombre', 'trim|required');
+        $this->form_validation->set_rules('apellidos', 'apellidos', 'trim|required');
+        $this->form_validation->set_rules('dni', 'dni', 'trim|required|exact_length[9]|callback_validarDNI');
+        $this->form_validation->set_rules('direccion', 'direccion', 'trim|required');
+        $this->form_validation->set_rules('pasword', 'pasword', 'trim|required|md5');
+        $this->form_validation->set_rules('mail', 'mail', 'trim|required|valid_email');
+       
+        $datos['mail']=$this->session->userdata('usuario');
+        
+        
+               //da formato a los errores
+        
+        
+        $data['usuario']=$usuario;
+         $data['datos']=  $this->usuario_modelo-> buscar_usuario($datos);
+                 
+
+            if ($this->form_validation->run() == FALSE) {
+
+            $cuerpo = $this->load->view('formulario_modificar', $data, TRUE);
+            $this->plantilla($cuerpo);
+        }else{
+            
+            $id=$this->input->post('id');
+            $datos['nombre'] = $this->input->post('nombre');
+            $datos['apellidos'] = $this->input->post('apellidos');
+            $datos['dni'] = $this->input->post('dni');
+            $datos['direccion'] = $this->input->post('direccion');
+            $datos['codpostal'] = $this->input->post('codpostal');
+            $datos['provincia_id'] = $this->input->post('selprovincias');
+            $datos['usuario'] = $this->input->post('usuario');
+            $datos['email'] = $this->input->post('email');
+            $datos['password'] = $this->input->post('password');
+            
+            
+           
+            if($this->clientes_modelo->editar_cliente($id, $datos)){
+               redirect(site_url('usuario_controlador/panel_control')); 
+               
+            }else{
+                $this->session->set_flashdata('informe', 'Error al editar');
+                redirect(site_url('usuario_controlador/editar'));
+                
+            }
+           
+            
+        }
+    }
+       
+        
+        
     
     
     

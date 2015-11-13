@@ -6,11 +6,12 @@
                 <div class="fa_user">
                     <i class="fa fa-user"></i>
                 </div>          
-                <p class="member">Entrar</p><p class="forgotpass">
+                <h3> <p  class="text-primary text-center line-height">Entrar</p></h3>
+                <p class="forgotpass">
                     <a href="<?= base_url("index.php/usuario/registro") ?>" class="small">Registrarse</a></p>
                 <form role="form" class="loginform">
 
-                    <div class="form-group <?= (isset($clase_campo_form['mail'])) ? $clase_campo_form['mail'] : '' ?>">
+                    <div class="form-group">
                         <label class="control-label" for="mail">Email</label>
                         <input type="text" class="form-control" name="mail" value="<?= set_value('mail'); ?>" placeholder="Email"/>
                         <span class="help-block"><?= form_error('mail') ?></span>
@@ -18,7 +19,7 @@
                     </div>
 
 
-                    <div class="form-group <?= (isset($clase_campo_form['pasword'])) ? $clase_campo_form['pasword'] : '' ?>">
+                    <div class="form-group">
                         <label class="control-label" for="pasword">Password</label>
                         <input type="text" class="form-control" name="pasword" placeholder="Password"/>
                         <span class="text-danger"><?= form_error('pasword') ?></span>
