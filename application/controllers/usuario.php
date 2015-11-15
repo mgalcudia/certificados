@@ -127,10 +127,18 @@ class usuario extends mi_controlador {
     function salir() {
 
         if ($this->session->userdata('usuario')) {            
-            $this->session->unset_userdata('usuario');
-            redirect(site_url());
+           
+            
+                if ($this->input->post('si')){
+                    $this->session->unset_userdata('usuario');
+                    redirect(site_url());
+                }else{
+                    redirect(site_url());
+                    
+                }
+            
         } else {
-            $this->session->set_flashdata('informe', 'No había sesión iniciada');
+           
             redirect(site_url());
         }
     }
@@ -158,13 +166,12 @@ class usuario extends mi_controlador {
                 $mail['mail'] = $consulta['mail'];
                 $pass['pasword'] = md5($aleatorio);
                 $id = $consulta['cod'];
-                
-                if ($this->usuario_modelo->editar_cliente($id, $pass)) {
+                if ($this->usuario_modelo->editar_usuario($id, $pass)) {
 
                     //mandamos el correo
                     $this->password_mail($usuario, $mail,$aleatorio);
                    
-                    
+                    var_dump($pass);
                     //Iniciamos la sesion del usuario y lo enviamos al panel de control
                     if ($this->usuario_modelo->loginok($mail['mail'], $pass['pasword']) == true) {
                         $this->session->set_userdata('usuario', $mail['mail']); 
@@ -212,55 +219,45 @@ class usuario extends mi_controlador {
      * Edita usuario
      */
     function editarusuario(){
-        
-        
+         
         $this->form_validation->set_rules('nombre', 'nombre', 'trim|required');
         $this->form_validation->set_rules('apellidos', 'apellidos', 'trim|required');
         $this->form_validation->set_rules('dni', 'dni', 'trim|required|exact_length[9]|callback_validarDNI');
         $this->form_validation->set_rules('direccion', 'direccion', 'trim|required');
-        $this->form_validation->set_rules('pasword', 'pasword', 'trim|required|md5');
+        //$this->form_validation->set_rules('pasword', 'pasword', 'trim|required|md5');
         $this->form_validation->set_rules('mail', 'mail', 'trim|required|valid_email');
        
         $datos['mail']=$this->session->userdata('usuario');
-        
-        
-               //da formato a los errores
-        
-        
-        $data['usuario']=$usuario;
-         $data['datos']=  $this->usuario_modelo-> buscar_usuario($datos);
-                 
 
-            if ($this->form_validation->run() == FALSE) {
-
+         $data['datos']=  $this->usuario_modelo-> buscar_usuario($datos);   
+            if ($this->form_validation->run() == FALSE) {            
             $cuerpo = $this->load->view('formulario_modificar', $data, TRUE);
             $this->plantilla($cuerpo);
         }else{
-            
-            $id=$this->input->post('id');
+           
+ 
+            $id=$this->input->post('cod');
             $datos['nombre'] = $this->input->post('nombre');
             $datos['apellidos'] = $this->input->post('apellidos');
             $datos['dni'] = $this->input->post('dni');
-            $datos['direccion'] = $this->input->post('direccion');
-            $datos['codpostal'] = $this->input->post('codpostal');
-            $datos['provincia_id'] = $this->input->post('selprovincias');
-            $datos['usuario'] = $this->input->post('usuario');
-            $datos['email'] = $this->input->post('email');
-            $datos['password'] = $this->input->post('password');
-            
-            
+            $datos['direccion'] = $this->input->post('direccion');           
+            $datos['mail'] = $this->input->post('mail');
+            $datos['pasword'] = md5($this->input->post('pasword'));
            
-            if($this->clientes_modelo->editar_cliente($id, $datos)){
-               redirect(site_url('usuario_controlador/panel_control')); 
+            if($this->usuario_modelo->editar_usuario($id, $datos)){
+            redirect(site_url('usuario/editarusuario')); 
                
             }else{
-                $this->session->set_flashdata('informe', 'Error al editar');
-                redirect(site_url('usuario_controlador/editar'));
-                
+              
+                $data['error'] = '<h3>Error al modificar</h3>';                
+                $cuerpo = $this->load->view('formulario_modificar', $data, TRUE);
+                $this->plantilla($cuerpo);
+               
             }
            
             
         }
+        
     }
        
         

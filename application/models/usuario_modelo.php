@@ -80,23 +80,7 @@ class usuario_modelo extends CI_Model {
 
     }
     
-         /**
-     * Edita los datos del usuario con id=$id
-     * actualizando sus datos con $datos
-     * @param type $id
-     * @param type $datos
-     */
-    function editar_cliente($id, $datos){
-        $this->db->where('cod', $id);
-        
-        if($this->db->update('usuario', $datos)){
-            return true;
-            
-        }  else {
-        
-            return false;
-        }
-    }
+       
 
         /**
      * Busca clientes por diversos criterios
@@ -110,7 +94,24 @@ class usuario_modelo extends CI_Model {
         return $query->row_array();
     }
     
-    
+    /**
+     * Edita los datos del cliente con id=$id
+     * actualizando sus datos con $datos
+     * @param type $id
+     * @param type $datos
+     */
+    function editar_usuario($id, $datos){
+        
+        $this->db->where('cod', $id);
+        
+        if($this->db->update('usuario', $datos)){
+            return true;
+            var_dump("dentro");
+        }  else {
+        
+            return false;
+        }
+    }
     
 }
 
