@@ -20,6 +20,14 @@ class fichero extends mi_controlador {
             mkdir($carpeta,777); 
         }
         
+        $data['emisor'] = $this->emisor_certificado->listar_emisor();
+        $data['tipo']=$this->emisor_certificado->listar_tipo();
+        $data['titulacion']=  $this->titulacion->listar_titulacion();
+                        
+       
+        $cuerpo= $this->load->view('agregar',$data,TRUE);
+        $this->plantilla($cuerpo);
+       
        
     }
 }
