@@ -38,12 +38,12 @@
         <span class="help-block"><?= form_error('mail') ?></span>
         
     </div>
-  
+   <div class="row form-group">
     <button type="submit" class="btn btn-primary btn-md login">Enviar</button> 
      </form>
-    <button class="btn btn-success btn-md pull-left pull-right" onclick="quitarReadOnly('6')">Modificar</button>
-    <button class="btn btn-success btn-md pull-left pull-right" onclick=" quitarhidden('pass')">Mostrar contraseña</button>
+    <button class="btn btn-success btn-md " onclick="quitarReadOnly('6')">Modificar</button>
+    <button class="btn btn-success btn-md " onclick=" quitarhidden('pass')">Modificar contraseña</button>
    
-    <a class="btn btn-danger btn-md pull-right " href="<?=base_url("index.php/usuario/login")?>">Cancelar </a> 
-    
+    <a class="btn btn-danger btn-md" href="<?=base_url("index.php/usuario/login")?>">Cancelar </a> 
+    </div>
 

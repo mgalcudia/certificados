@@ -16,7 +16,4 @@ function quitarReadOnly(id)
 
     	$('#pass').attr("type", "text");
 
-
-
-
     }

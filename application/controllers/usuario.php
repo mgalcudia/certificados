@@ -87,6 +87,7 @@ class usuario extends mi_controlador {
             if(!$this->session->userdata('usuario')){
                 $cuerpo= $this->load->view('login',0,TRUE);
                 $this->plantilla($cuerpo);
+               
                 
             }else{
                 
@@ -131,9 +132,13 @@ class usuario extends mi_controlador {
             
                 if ($this->input->post('si')){
                     $this->session->unset_userdata('usuario');
+                    $this->session->unset_userdata('nombre');
+                    
+                    
                     redirect(site_url());
                 }else{
-                    redirect(site_url());
+                     $cuerpo = $this->load->view('salir', 0, TRUE);
+                $this->plantilla($cuerpo);
                     
                 }
             

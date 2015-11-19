@@ -35,4 +35,11 @@ class titulacion extends CI_Model {
     }
     
     
+    function insertar_titulo(){
+        
+        
+        
+        
+    }
+    
 }

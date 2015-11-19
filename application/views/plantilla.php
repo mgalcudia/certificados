@@ -3,8 +3,15 @@
 <head>
 
         <meta charset="utf-8">
-	<link href="<?=base_url('assets/css/bootstrap.min.css')?>" rel="stylesheet">
-        <link href="<?=base_url('assets/css/mio.css')?>" rel="stylesheet">
+    <link href="<?=base_url('assets/css/bootstrap.min.css')?>" rel="stylesheet">
+   <link href="<?=base_url('assets/css/mio.css')?>" rel="stylesheet">     
+    
+
+     <script type="text/javascript" src="<?=base_url('assets/jq/fijo/1.8.3/jquery.min.js')?> "></script>
+    <link href="<?=base_url('assets/css/fijo/bootstrap-multiselect.css')?>"
+        rel="stylesheet" type="text/css" />
+    
+<script src="<?=base_url('assets/jq/fijo/2.1.1/jquery.min.js')?> " type="text/javascript"></script>
 	<title>Certificado</title>
  
 </head>
@@ -33,10 +40,12 @@
     
 </div>
 </body>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js" type="text/javascript"></script>
-    <script src="<?= base_url('/assets/jq/jquery-1.11.3.js') ?>"></script>
-    <script src="<?= base_url('/assets/jq/jquery-migrate-1.2.1.min.js') ?>"></script>
-    <script src="<?= base_url('/assets/jq/personal.js') ?>"></script>
-    <script src="<?= base_url('assets/js/bootstrap.min.js') ?>"></script>
+
+<script src="<?=base_url('assets/js/fijo/bootstrap-multiselect.js')?>" type="text/javascript"></script>
+<script type="text/javascript" src="<?=base_url('assets/js/fijo/bootstrap.min.js')?>"></script>
+
+
+ <script src="<?= base_url('/assets/jq/personal.js') ?>"></script>
+   
     
 </html>
