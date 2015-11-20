@@ -22,7 +22,7 @@ class fichero_modelo extends CI_Model {
      * @param type $data array de datos
      */
     function insertar_certificado ($data){
-        var_dump($data);
+       
         if ($this->db->insert('certificado',$data)){
             
             return $this->db->insert_id();

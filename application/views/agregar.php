@@ -1,5 +1,5 @@
 <br/>
-<form role="form" action="<?= base_url('index.php/fichero/agregar_fichero') ?>" method="post">
+<form role="form" action="<?= base_url('index.php/fichero/agregar_fichero') ?>" enctype="multipart/form-data" method="post">
 
     <input type="hidden" id="cod" class="form-control" name="cod" value="<?= $cod; ?>"/>
 
@@ -68,6 +68,7 @@
 
         </div>        
     </div>
+    <span class="text-danger"><?php if (isset($error)) echo $error; ?></span>
     <br/>
     <div class="row form-group">
         <button type="submit" class="btn btn-primary btn-md login">Enviar</button>

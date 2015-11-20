@@ -37,7 +37,7 @@ class fichero extends mi_controlador {
         $data['emisor'] = $this->emisor_certificado->listar_emisor();
         $data['tipocertificado']=$this->emisor_certificado->listar_tipo();
         $data['titulacion']= $this->creaSelect();
-        
+        $data['error']= $this->session->flashdata('error');
         $cuerpo= $this->load->view('agregar',$data,TRUE);
         $this->plantilla($cuerpo);   
              
@@ -55,13 +55,13 @@ class fichero extends mi_controlador {
             $titulaciones['titulacion_cod'] = $this->input->post('titulacion');
             $datos['observaciones'] = $this->input->post('observaciones');            
             $datos['baremado'] = $this->input->post('baremado'); 
-            
+            $datos['ruta']=APPPATH . "../almacen/" . $datos['cod_usuario'];
             
           $cod_curso=  $this->fichero_modelo->insertar_certificado($datos);
-          print_r($cod_curso);
+         // 
            //sube el fichero
-          // $this->do_upload($datos['cod_usuario'], $cod_curso);
-            
+           $this->do_upload($datos['cod_usuario'], $cod_curso);
+            //print_r($cod_curso);
         }
         
     }
@@ -71,22 +71,28 @@ class fichero extends mi_controlador {
 
 
         $config['file_name'] = $cod_curso . '.pdf';
-        $config['upload_path'] = APPPATH . "../almacen/" . $cod_usuario . "/";
+        $config['upload_path'] =APPPATH . "../almacen/" . $cod_usuario . "/";
         $config['allowed_types'] = 'pdf';
         $config['remove_spaces'] = TRUE;
         $config['max_size'] = '2048';
 
-        //print_r($config);
+        //print_r( $config);
 
         $this->load->library('upload', $config);
-
-        if (!$this->upload->do_upload()) {
-            $error = array('error' => $this->upload->display_errors());
-            $this->load->view('upload_form', $error);
+       // print_r($this->upload->data());
+        if (!$this->upload->do_upload('fichero')) {
+            $this->session->set_flashdata('error', 'Error al Subir el fichero');
+           // $data['error'] = 'Error al Subir el fichero';
+           redirect('fichero/agregar_fichero');
+           // $cuerpo= $this->load->view('agregar',$data,TRUE);
+        //$this->plantilla($cuerpo);
         } else {
-            $data = array('upload_data' => $this->upload->data());
-            $this->load->view('upload_success', $data);
+            $data['error'] = 'Fichero subido';
+            print_r('entro');
+            // TODO: ENVIAR A LA VISTA DONDE SE VE EL CERTIFICADO SUBIDO
         }
+        
+        
     }
 
 }
