@@ -12,7 +12,7 @@ class usuario_modelo extends CI_Model {
         parent::__construct();        
     }
     
-       /**
+    /**
      *  Función para insertar usuarios
      * @param type $data array de datos
      */

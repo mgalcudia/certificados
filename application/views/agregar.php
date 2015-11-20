@@ -35,7 +35,7 @@
         </div>
         <div class=" col-xs-11 col-md-3">
             <label class="form-group">Tipo</label>
-            <p><?= form_dropdown('tipo', $tipo, set_value('tipo')); //TODO: modificar ES TIPO DE CERTIFICADO NO DE EMISOR ?></p>
+            <p><?=form_dropdown('tipo', $tipocertificado, set_value('tipo'));?></p>
             <span class="help-block"><?= form_error('tipo') ?></span>
         </div>
         <div class=" col-xs-11 col-md-4 dropdown ">

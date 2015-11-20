@@ -15,14 +15,7 @@ class fichero extends mi_controlador {
      * 
      */
     function agregar_fichero(){
-       /* 
-        $this->form_validation->set_rules('nombre', 'nombre', 'trim|required');
-        $this->form_validation->set_rules('apellidos', 'apellidos', 'trim|required');
-        $this->form_validation->set_rules('dni', 'dni', 'trim|required|exact_length[9]|callback_validarDNI');
-        $this->form_validation->set_rules('direccion', 'direccion', 'trim|required');
-        $this->form_validation->set_rules('pasword', 'pasword', 'trim|required|md5');
-        $this->form_validation->set_rules('mail', 'mail', 'trim|required|valid_email');
-        */
+
         $this->form_validation->set_rules('curso', 'curso', 'trim|required');
         $this->form_validation->set_rules('hora', 'hora', 'trim|is_natural');
         $this->form_validation->set_rules('corte', 'corte', 'trim|required|exact_length[4]|is_natural');
@@ -35,18 +28,19 @@ class fichero extends mi_controlador {
             
             $mail_usuario['mail']= $this->session->userdata('usuario');
         $datos=$this->usuario_modelo->buscar_usuario($mail_usuario);
+        //Si no existe la carpeta con el id del usuario se genera
         if (!file_exists(APPPATH . "../almacen/" .$datos['cod'])) {
             $carpeta=APPPATH . "../almacen/" .$datos['cod'];
             mkdir($carpeta,777); 
         }
         $data['cod']=$datos['cod'];
         $data['emisor'] = $this->emisor_certificado->listar_emisor();
-        $data['tipo']=$this->emisor_certificado->listar_tipo();
+        $data['tipocertificado']=$this->emisor_certificado->listar_tipo();
         $data['titulacion']= $this->creaSelect();
         
         $cuerpo= $this->load->view('agregar',$data,TRUE);
         $this->plantilla($cuerpo);   
-             print_r($this->input->post());
+             
             
         }else{
             
@@ -55,15 +49,18 @@ class fichero extends mi_controlador {
             $datos['horas'] = $this->input->post('hora');
             $datos['corte'] = $this->input->post('corte');
             $datos['fecha'] = $this->input->post('fecha');
-            $datos['fichero'] = $this->input->post('fichero');
+            //$datos['fichero'] = $this->input->post('fichero');
             $datos['cod_tipo_cer'] = $this->input->post('tipo');
             $datos['emisor_cod'] = $this->input->post('entidad');
-            $datos['titulacion_cod'] = $this->input->post('titulacion');
-            $datos['mail'] = $this->input->post('observaciones');            
+            $titulaciones['titulacion_cod'] = $this->input->post('titulacion');
+            $datos['observaciones'] = $this->input->post('observaciones');            
             $datos['baremado'] = $this->input->post('baremado'); 
             
-            redirect(site_url());
             
+          $cod_curso=  $this->fichero_modelo->insertar_certificado($datos);
+          print_r($cod_curso);
+           //sube el fichero
+          // $this->do_upload($datos['cod_usuario'], $cod_curso);
             
         }
         

@@ -35,7 +35,7 @@ class emisor_certificado extends CI_Model {
 
     function listar_tipo() {
 
-        $resultado = "select * from tipo_emisor";
+        $resultado = "select * from tipo_certificado";
         $resultado = $this->db->query($resultado);
 
         if ($resultado->num_rows() > 0) {
