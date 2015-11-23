@@ -58,15 +58,26 @@ class fichero extends mi_controlador {
             $datos['ruta']=APPPATH . "../almacen/" . $datos['cod_usuario'];
             
           $cod_curso=  $this->fichero_modelo->insertar_certificado($datos);
-         // 
+          
+          $this->titulacion->insertar_titulacion_a_titulo($cod_curso,$titulaciones);
+          $hitorico= array(
+              'corte' => $datos['corte'],
+              'certificado_cod'=>$cod_curso     
+          );
+          $this->fichero_modelo->insertar_historico($hitorico);
            //sube el fichero
            $this->do_upload($datos['cod_usuario'], $cod_curso);
-            //print_r($cod_curso);
+            
         }
         
     }
     
     
+    /**
+     * Funcion para subir certificados al servidor 
+     * @param type $cod_usuario
+     * @param type $cod_curso
+     */
       function do_upload($cod_usuario, $cod_curso) {
 
 
@@ -76,16 +87,15 @@ class fichero extends mi_controlador {
         $config['remove_spaces'] = TRUE;
         $config['max_size'] = '2048';
 
-        //print_r( $config);
+        
 
         $this->load->library('upload', $config);
        // print_r($this->upload->data());
         if (!$this->upload->do_upload('fichero')) {
             $this->session->set_flashdata('error', 'Error al Subir el fichero');
-           // $data['error'] = 'Error al Subir el fichero';
+           
            redirect('fichero/agregar_fichero');
-           // $cuerpo= $this->load->view('agregar',$data,TRUE);
-        //$this->plantilla($cuerpo);
+        
         } else {
             $data['error'] = 'Fichero subido';
             print_r('entro');

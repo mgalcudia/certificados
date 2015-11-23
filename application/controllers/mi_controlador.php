@@ -86,7 +86,7 @@ class mi_controlador extends CI_Controller {
 
         $this->email->initialize($config);
 
-        $this->email->from('aula4@iessansebastian.com', 'Tienda Virtual');
+        $this->email->from('aula4@iessansebastian.com', 'Certificados 1.0');
         $this->email->to($mail['mail']);
         $this->email->subject('Nuevo password');
         $this->email->message("<html><body><h2>Modifique la contraseña a una de su gusto</h2><p>Usuario:<font color='red'>" . $usuario .

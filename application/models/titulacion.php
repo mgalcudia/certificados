@@ -15,8 +15,7 @@ class titulacion extends CI_Model {
         parent::__construct();
         $this->load->database();
     }
-    
-    
+
     function listar_titulacion() {
 
         $resultado = "select * from titulacion";
@@ -33,13 +32,16 @@ class titulacion extends CI_Model {
             return $emisor;
         }
     }
-    
-    
-    function insertar_titulo(){
+
+    function insertar_titulacion_a_titulo($cod_curso, $titulaciones) {
+        $datos['certificado_cod'] = $cod_curso;
         
-        
-        
-        
+        foreach ($titulaciones['titulacion_cod'] as $clave) {
+            
+            $datos['titulacion_cod'] = $clave;
+            print_r($datos);
+            $this->db->insert('certificado_has_titulacion', $datos);
+        }
     }
-    
+
 }
