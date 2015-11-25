@@ -18,17 +18,17 @@ class mi_controlador extends CI_Controller {
      */
     function plantilla($cuerpo) {
 
-        //$cuerpo= $this->load->view("login",0 ,TRUE);
+        
 
         if (!$this->session->userdata('usuario')) {
             $encabezado = $this->load->view("cabecera", 0, TRUE);
-            //$cuerpo= $this->load->view("formulario_registro",0 ,TRUE);
+            
             $menu_izq = $this->load->view("menu_izq", 0, TRUE);
         } else {
             $datos_cabecera['datos'] = $this->load->view('cabecerastring', 0, TRUE);
             $datos_menuizq['datos_menu'] = $this->load->view('menuizqstring', 0, TRUE);
             $encabezado = $this->load->view("cabecera", $datos_cabecera, TRUE);
-            //$cuerpo= $this->load->view("formulario_registro",0 ,TRUE);
+            
             $menu_izq = $this->load->view("menu_izq", $datos_menuizq, TRUE);
         }
 
@@ -95,7 +95,9 @@ class mi_controlador extends CI_Controller {
     }
 
     function creaSelect($sel = '') {
-        $opciones = $this->titulacion->listar_titulacion();
+
+        
+        $opciones = $this->titulacion->listar_titulacion();        
         $html = "
     <script type='text/javascript'>
         $(function () {
@@ -107,11 +109,52 @@ class mi_controlador extends CI_Controller {
     </script>
    <select id='titulacion' multiple='multiple' name='titulacion[]'>";
         foreach ($opciones as $val => $texto) {
-            $selected = ($val == $sel) ? " selected " : "";
+
+            if (count($sel) > 1) {
+                foreach ($sel as $valor) {
+
+                    if ($valor == $val) {                        
+                        break;
+                    }
+                }
+                $selected = ($val ==$valor ) ? " selected " : "";
+            }else{
+                $selected = ($val ==$sel ) ? " selected " : "";
+            }
+
+            
             $html.="\n<option value=\"$val\" $selected>$texto</option>";
         }
         $html.="</select>";
         return $html;
     }
+
+    /*
+    function crearadiobutton($valordefecto){
+        
+        print_r($valordefecto);
+        $opciones= array('si','no');
+        $name= 'baremado';
+        foreach($opciones as $valor=>$clave){
+           
+            $html='<input type="radio" name="'.$name.'"value"'.$clave.'"';
+            
+            if($clave==$valordefecto){
+                
+              $html.='checked="checked"';              
+            }
+            $html.='>'.$clave.'<br/>';
+             print_r($html);
+            return $html;
+            
+        }
+           
+            
+    
+    }*/ 
+        
+        
+        
+        
 
 }

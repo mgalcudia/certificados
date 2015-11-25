@@ -27,24 +27,8 @@ class fichero_modelo extends CI_Model {
           
          } else {
                 return false;
-            }
-        
-            
-        /*
-        if ($this->db->insert('certificado', $data)) {
-
-            $cod = $this->db->insert_id();
-            $datos['ruta'] = $data['ruta'] . '/' . $cod . '.pdf';
-            if ($this->editar_certificado($cod, $datos)) {
-                
-                return $cod;
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
-        */
+            }      
+      
     }
 
     /**
@@ -77,4 +61,32 @@ class fichero_modelo extends CI_Model {
         
     }
 
+    /**
+     * Busca certificado por diversos criterios
+     * recogidos en $datos
+     * @param type $datos
+     * @return type
+     */
+    function buscar_certificado($datos){
+        $this->db->where($datos);
+        $query = $this->db->get('certificado');
+        return $query->row_array();
+    }
+
+    
+    
+    
+    
+        function modificar_certificado($cod,$data) {
+           
+            $this->db->where('cod',$cod);
+         if ($this->db->update('certificado', $data)) {
+
+             return true;
+          
+         } else {
+                return false;
+            }      
+      
+    }
 }
