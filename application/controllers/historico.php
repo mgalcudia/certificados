@@ -13,10 +13,12 @@ class historico extends mi_controlador {
     
     
     
-    function mostrar_historico(){
+    function mostrar_historico($year=""){
         
         
-
+      $year= $this->historico_modelo->year_corte();
+        
+      
         
         
         

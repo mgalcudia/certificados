@@ -18,14 +18,16 @@ class historico_modelo extends CI_Model {
 
     
     function year_corte(){
-        
-        $this->db->select('corte, certificado_cod');
-        $this->db->group_by('corte');
-        $this->db->order_by('corte', 'desc'); 
-      $consulta= $this->db->get('historico');
-      
-      print_r($consulta->result_array());
-       return $consulta; 
+        $cod_usuario=$this->session->userdata('cod_usuario');        
+        $this->db->select('h.corte');
+        $this->db->from('certificado c,historico h');
+        $this->db->where('c.cod_usuario',$cod_usuario); 
+        $this->db->where('c.cod = h.certificado_cod');              
+        $this->db->group_by('h.corte');
+        $this->db->order_by('h.corte', 'desc'); 
+        $consulta= $this->db->get();     
+      $consulta->result_array();
+      return($consulta->result_array()); 
        
        
        

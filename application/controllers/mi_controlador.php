@@ -27,7 +27,7 @@ class mi_controlador extends CI_Controller {
         } else {
             $datos_menuizq['historicos']=$this->historico_modelo->year_corte();
             $datos_cabecera['datos'] = $this->load->view('cabecerastring', 0, TRUE);
-            $datos_menuizq['datos_menu'] = $this->load->view('menuizqstring', 0, TRUE);
+            $datos_menuizq['datos_menu'] = $this->load->view('menuizqstring', $datos_menuizq, TRUE);
             $encabezado = $this->load->view("cabecera", $datos_cabecera, TRUE);
             
             $menu_izq = $this->load->view("menu_izq", $datos_menuizq, TRUE);

@@ -104,6 +104,7 @@ class usuario extends mi_controlador {
                 $consulta = $this->usuario_modelo->existe_mail($mail);
                 $this->session->set_userdata('usuario',$mail);
                 $this->session->set_userdata('nombre', $consulta['nombre']);
+                $this->session->set_userdata('cod_usuario',$consulta['cod']);
                 //usuario correcto a ver donde lo mandamos
                 
                 $cuerpo= $this->load->view('principal',0,TRUE);
