@@ -1,5 +1,5 @@
 <br/>
-<form role="form" action="<?= base_url('index.php/fichero/modificar_titulo') ?>" enctype="multipart/form-data" method="post">
+<form role="form" action="<?= base_url().'index.php/fichero/modificar_titulo/'.$cod?>" enctype="multipart/form-data" method="post">
 
     <input type="hidden" id="cod" class="form-control" name="cod" value="<?= $cod; ?>"/>
      <input type="hidden" id="cod" class="form-control" name="cod_user" value="<?= $cod_usuario;?>"/>
@@ -31,7 +31,7 @@
     <div class="row form-group">
         <div class="col-xs-11 col-md-5">
             <label class="control-label">Agrega el certificado</label>
-            <input  type="file" id="subir_fichero" name="fichero">
+            falta poner un boton para agregar el fichero
         </div>
         <div class=" col-xs-11 col-md-3">
             <label class="form-group">Tipo</label>

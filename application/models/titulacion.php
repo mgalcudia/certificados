@@ -58,9 +58,9 @@ class titulacion extends CI_Model {
         
     }
     /**
-     * Busca titulaciones asociadas a certificados
-     * recogidos en $datos
-     * @param type $datos
+     * Busca titulaciones en "certificado_has_titulacion" asociadas a certificados
+     * recogidos en $datos 
+     * @param type $datos codigo del certificado
      * @return type
      */
     function buscar_titulacion($datos){
@@ -77,5 +77,46 @@ class titulacion extends CI_Model {
         return $result;
 
     }
+
+
+    /**
+     * Busca titulaciones en "certificado_has_titulacion" asociadas a certificados
+     * recogidos en $datos 
+     * @param type $datos codigo del certificado
+     * @return type
+     */
+    function buscar_nombre_titulacion($datos){
+       
+       $nombre="";
+        $codigo['certificado_cod']=$datos['cod'];
+        $this->db->select('titulacion_cod');
+        $this->db->where($codigo);
+        $query = $this->db->get('certificado_has_titulacion');
+        $resultado= $query->result_array();
+    //   print_r($datos['cod']);
+        foreach ($resultado as $key => $value) {
+           //$result['cod']+=$value['titulacion_cod'];
+            $result['cod']=$value['titulacion_cod'];
+             
+           $nombre[]=$this->nombre_titulacion($result);
+
+        }
+       
+       return $nombre;
+    
+
+    }
+
+
+    function nombre_titulacion($datos){
+
+        $this->db->select('titulacion');
+        $this->db->where($datos);
+        $query = $this->db->get('titulacion');
+        $resultado= $query->row_array('titulacion');
+         return $resultado['titulacion'];
+
+    }
+
 
 }

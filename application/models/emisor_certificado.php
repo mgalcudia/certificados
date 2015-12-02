@@ -49,4 +49,20 @@ class emisor_certificado extends CI_Model {
         }
     }
 
+    function listar_tipo_emisor() {
+
+        $resultado = "select * from tipo_emisor";
+        $resultado = $this->db->query($resultado);
+
+        if ($resultado->num_rows() > 0) {
+            foreach ($resultado->result() as $fila) {
+
+                $emisor[$fila->cod] = $fila->tipo;
+                $resultado->free_result();
+            }
+           
+            return $emisor;
+        }
+    }
+
 }

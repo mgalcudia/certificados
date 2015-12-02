@@ -105,6 +105,8 @@ class usuario extends mi_controlador {
                 $this->session->set_userdata('usuario',$mail);
                 $this->session->set_userdata('nombre', $consulta['nombre']);
                 $this->session->set_userdata('cod_usuario',$consulta['cod']);
+
+                //print_r($this->session->userdata('cod_usuario'));
                 //usuario correcto a ver donde lo mandamos
                 
                 $cuerpo= $this->load->view('principal',0,TRUE);
@@ -113,7 +115,7 @@ class usuario extends mi_controlador {
             }else{
                 
                 //usuario incorrecto
-                 $data['error'] = "<h1>Usuario incorrecto</h1>";                
+                $data['error'] = "<h1>Usuario incorrecto</h1>";                
                 $cuerpo = $this->load->view('login', $data, TRUE);
                 $this->plantilla($cuerpo);
                 
@@ -177,7 +179,7 @@ class usuario extends mi_controlador {
                     //mandamos el correo
                     $this->password_mail($usuario, $mail,$aleatorio);
                    
-                    var_dump($pass);
+                    //var_dump($pass);
                     //Iniciamos la sesion del usuario y lo enviamos al panel de control
                     if ($this->usuario_modelo->loginok($mail['mail'], $pass['pasword']) == true) {
                         $this->session->set_userdata('usuario', $mail['mail']); 

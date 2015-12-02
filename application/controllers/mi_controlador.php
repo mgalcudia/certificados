@@ -18,14 +18,15 @@ class mi_controlador extends CI_Controller {
      */
     function plantilla($cuerpo) {
 
-            
+        
 
         if (!$this->session->userdata('usuario')) {
             $encabezado = $this->load->view("cabecera", 0, TRUE);
             
             $menu_izq = $this->load->view("menu_izq", 0, TRUE);
         } else {
-            $datos_menuizq['historicos']=$this->historico_modelo->year_corte();
+			$datos_menuizq['historicos']=$this->historico_modelo->year_corte();
+			
             $datos_cabecera['datos'] = $this->load->view('cabecerastring', 0, TRUE);
             $datos_menuizq['datos_menu'] = $this->load->view('menuizqstring', $datos_menuizq, TRUE);
             $encabezado = $this->load->view("cabecera", $datos_cabecera, TRUE);
@@ -109,9 +110,7 @@ class mi_controlador extends CI_Controller {
         });
     </script>
    <select id='titulacion' multiple='multiple' name='titulacion[]'>";
-        foreach ($opciones as $val => $texto) {
-
-            if (count($sel) > 1) {
+        foreach ($opciones as $val => $texto) {          
                 foreach ($sel as $valor) {
 
                     if ($valor == $val) {                        
@@ -119,9 +118,35 @@ class mi_controlador extends CI_Controller {
                     }
                 }
                 $selected = ($val ==$valor ) ? " selected " : "";
-            }else{
+            
+            $html.="\n<option value=\"$val\" $selected>$texto</option>";
+        }
+        $html.="</select>";
+
+        $html.= "<span class='help-block'><?= form_error('titulacion')?></span>";
+        return $html;
+    }
+
+
+function crea_no_selected($sel = '') {
+
+        
+        $opciones = $this->titulacion->listar_titulacion();        
+        $html = "
+    <script type='text/javascript'>
+        $(function () {
+            $('#titulacion').multiselect({
+                includeSelectAllOption: true
+            });
+           
+        });
+    </script>
+   <select id='titulacion' multiple='multiple' name='titulacion[]'>";
+        foreach ($opciones as $val => $texto) {
+
+           
                 $selected = ($val ==$sel ) ? " selected " : "";
-            }
+            
 
             
             $html.="\n<option value=\"$val\" $selected>$texto</option>";
@@ -129,33 +154,53 @@ class mi_controlador extends CI_Controller {
         $html.="</select>";
         return $html;
     }
+        
+   /**
+     * Funcion para mostrar titulos 
+     * Recibe por parametro el cod del curso 
+     * @param type $cod
+     */    
+    function mostrar_titulo($cod = ''){
+     
+       
+       $cuerpo="";
+        //print_r($cod);
 
-    /*
-    function crearadiobutton($valordefecto){
+        $datos['cod'] =$cod;
+        $data = $this->fichero_modelo->buscar_certificado($datos);
+        $data['titulacion'] = $this->titulacion->buscar_nombre_titulacion($datos);
+        //print_r($data);
+       
+        $fecha_obtencion =  new DateTime($data['fecha_registro']);
+        $data['fecha']=$fecha_obtencion->format("d-m-Y");
+                    
         
-        print_r($valordefecto);
-        $opciones= array('si','no');
-        $name= 'baremado';
-        foreach($opciones as $valor=>$clave){
-           
-            $html='<input type="radio" name="'.$name.'"value"'.$clave.'"';
-            
-            if($clave==$valordefecto){
+             if ($data['baremado']) {
+                $data['baremo'] = 'si';
                 
-              $html.='checked="checked"';              
+            } else {
+                $data['baremo'] = 'no';
             }
-            $html.='>'.$clave.'<br/>';
-             print_r($html);
-            return $html;
             
-        }
-           
+            //$data['cod'] = '67';// codigo puesto para testeo
+
+            $emisor = $this->emisor_certificado->listar_emisor();
+            $tipo = $this->emisor_certificado->listar_tipo();
+            $data['emisor']=$emisor[$data['emisor_cod']];
+            $data['tipo_certificado']= $tipo[$data['cod_tipo_cer']];
+          // print_r($data);
             
-    
-    }*/ 
+              
+         return $cuerpo= $this->load->view('mostrar_curso', $data, TRUE);
+        //$cuerpo= $this->load->view('mostrar_curso', $data, TRUE);      
+         // $this->plantilla($cuerpo);
+                    
+          
         
+    }     
         
-        
-        
+
+
+
 
 }

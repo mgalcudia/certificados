@@ -68,6 +68,7 @@ class fichero_modelo extends CI_Model {
      * @return type
      */
     function buscar_certificado($datos){
+      //  print_r($this->session->userdata('cod_usuario'));
         $this->db->where($datos);
         $query = $this->db->get('certificado');
         return $query->row_array();
@@ -89,4 +90,53 @@ class fichero_modelo extends CI_Model {
             }      
       
     }
+
+    /**
+     * Busca certificado por diversos criterios
+     * recogidos en $datos
+     * @param type $datos
+     * @return type
+     */
+    function buscar_varios_certificados($datos){
+       // print_r($datos);
+        $cod_usuario=$this->session->userdata('cod_usuario');
+        $this->db->select('cod');
+         $this->db->from('certificado');
+        $this->db->where($datos);
+        $this->db->where('cod_usuario',$cod_usuario);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+
+   function certificado_tiulacion($tipo="",$titulacion="",$baremado=""){
+        
+      //  print_r("titpo".$tipo."--titulacion".$titulacion."---baremado".$baremado);
+        $cod_usuario=$this->session->userdata('cod_usuario'); 
+
+        $this->db->select('c.cod,t.titulacion_cod');
+        $this->db->from('certificado c, certificado_has_titulacion t');
+        $this->db->where('c.cod = t.certificado_cod');
+        $this->db->where('c.cod_usuario',$cod_usuario); 
+        $this->db->where('c.cod_tipo_cer',$tipo);        
+        $this->db->where('c.baremado',$baremado); 
+        if ($titulacion!==""){
+        $this->db->where('t.titulacion_cod',$titulacion);             
+        }  
+        $this->db->group_by('c.cod');     
+        $this->db->order_by('c.cod', 'desc'); 
+
+        if($consulta= $this->db->get() ){
+
+             return($consulta->result_array()); 
+        }   else{
+
+            return false;
+        } 
+   
+          
+        
+    }
+
+
 }
