@@ -49,6 +49,13 @@ class historico_modelo extends CI_Model {
       return($consulta->result_array());      
         
     }
+
+    function borrar_historico($datos){
+
+      $this->db->delete('historico',$datos);
+
+
+    }
     
 }
 

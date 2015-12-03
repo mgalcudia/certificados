@@ -119,4 +119,14 @@ class titulacion extends CI_Model {
     }
 
 
+    function borrar_titulaciones_certificado($datos){
+
+      
+
+        $this->db->delete('certificado_has_titulacion',$datos);
+
+
+    }
+
+
 }

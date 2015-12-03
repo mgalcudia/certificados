@@ -17,3 +17,19 @@ function quitarReadOnly(id)
     	$('#pass').attr("type", "text");
 
     }
+
+
+
+    $("#autocompletar").on('keyup',function(){
+    var info = $(this).val();
+    $.ajax({
+        type: 'POST',
+        url: "<?php echo site_url('fichero/autocompletar'); ?>",
+        data: {info: info},
+        success: function (data) {
+            event.preventDefault();
+            $('#contenedor').html(data)
+                }
+
+    });
+});

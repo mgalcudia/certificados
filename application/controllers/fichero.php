@@ -121,6 +121,50 @@ if( is_array($titulacion) && count($titulacion)>0){
         }
     }
 
+
+    function eliminar_certificado($cod=""){
+
+        $datos['cod'] = $cod;
+       // $data = $this->fichero_modelo->buscar_certificado($datos);
+        $cod_usuario=$this->session->userdata('cod_usuario');
+
+           $dir=  APPPATH . "../almacen/" . $cod_usuario . "/".$cod.'.pdf';;
+                      //puedes usar dobles comillas si quieres 
+           
+            if(file_exists($dir)) 
+            { 
+            if(unlink($dir)){
+
+              $this->titulacion->borrar_titulaciones_certificado(array('certificado_cod' => $datos['cod']));   
+              $this->historico_modelo->borrar_historico(array('certificado_cod' => $datos['cod']));
+              $this->fichero_modelo->borrar_certificado(array('cod' => $datos['cod']));
+               // $this->fichero_modelo->borrar_certificado($cod);
+              
+              $this->session->set_flashdata('error', 'El certificado fue borrado');
+
+
+            }else{
+
+                $this->session->set_flashdata('error', 'El certificado no fue borrado');
+                 
+            } 
+              
+            }else {
+
+                $this->session->set_flashdata('error', 'El certificado no existe');
+                            
+            }
+               
+                $data['error'] = $this->session->flashdata('error');
+                 redirect(site_url('/fichero/mostrar_enlaces_editar'));
+    }
+
+
+
+
+
+
+
     /**
      * Funcion para modificar un titulo
      *
@@ -239,6 +283,11 @@ if( is_array($titulacion) && count($titulacion)>0){
               $cuerpo= $this->mostrar_tipo_titulacion();
                
                 break;
+                case "nombre":   
+
+             $this->view_autocompletar();
+               
+                break;
             default:
                 $cuerpo = $this->load->view('mostrar_enlaces_editar', 0, TRUE);
                 break;
@@ -295,16 +344,22 @@ if( is_array($titulacion) && count($titulacion)>0){
             }else{
                 $consulta[]= $this->fichero_modelo->certificado_tiulacion($cod_tipo_cer,$titulacion="",$baremado);
             }
-               /*
+
+               
                foreach ($consulta as $key => $value) {         
 
                                     if(count($value)>0){
 
-                                    
+
+                                 $this->recorre_array_consulta($consulta,"tipo");        
+
+                                  /*  
                                  foreach ($value as $clave => $valor) {
+
+
                                     $cuerpo.= $this->mostrar_titulo($valor['cod']);
                                 }                               
-
+                                */
 
                                  }else{
 
@@ -314,11 +369,16 @@ if( is_array($titulacion) && count($titulacion)>0){
 
                                  }                                  
                              }
-                             $this->plantilla($cuerpo);
-                             */
+                          //   $this->plantilla($cuerpo);
+                            
         } 
    }
 
+
+        /**
+        *   funcion que recibiendo un array con codigos de certificados los gestiona para mostrarlos evitando que se repitan
+        *
+        **/
 
             function recorre_array_consulta($consulta,$lugar){
 
@@ -360,6 +420,13 @@ if( is_array($titulacion) && count($titulacion)>0){
                              $this->plantilla($cuerpo);
             }
 
+
+        /**
+        *   Funcion para mostrar los certificados asignados por titulacion
+        *
+        **/    
+
+
         function mostrar_tipo_titulacion(){
 
            // $consulta=array();
@@ -375,12 +442,7 @@ if( is_array($titulacion) && count($titulacion)>0){
                      foreach ($titulacion_cod as $key => $titulacion) 
                      {             
                      
-
-
                      $consulta[]= $this->fichero_modelo->certificado_tiulacion($cod_tipo_cer="",$titulacion,$baremado);
-                    
-                     
-
                      }
 
                      $this->recorre_array_consulta($consulta,"titulacion");
@@ -399,6 +461,49 @@ if( is_array($titulacion) && count($titulacion)>0){
             }        
 
         }
+
+
+
+public function view_autocompletar(){
+
+$datos['title'] = 'Buscador';
+$datos['contenido'] = 'autocompletado';
+
+  // $this->load->view ('planilla', $datos,TRUE);
+
+   $this->plantilla($this->load->view ('planilla', $datos,TRUE));
+
+
+}
+
+
+
+public function autocompletar(){
+
+  
+
+    if($this->input->is_ajax_request() && $this->input->post('info')){
+      
+      var_dump($this->input->post('info'));
+
+    //  $abuscar = $this->security->xss_clean($this->input->post('info'));
+    //  $search = $this->fichero_modelo->search($abuscar);
+
+      
+     
+      if($search !== FALSE){
+        foreach($search as $fila){
+          print_r($fila);
+         // echo '<p><a href="'.$fila->email_usuario.'">'.$fila->nombre_usuario.'</a></p>';
+        }
+          
+      }else{
+        echo '<p>No hay resultados</p>';
+      }
+
+       
+    }
+}
 
 ////////////////////////////FIN//////////////////////////////
 }

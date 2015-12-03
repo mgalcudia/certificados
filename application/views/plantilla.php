@@ -12,6 +12,7 @@
         rel="stylesheet" type="text/css" />
     
 <script src="<?=base_url('assets/jq/fijo/2.1.1/jquery.min.js')?> " type="text/javascript"></script>
+
 	<title>Certificado</title>
  
 </head>
