@@ -72,6 +72,7 @@ class fichero_modelo extends CI_Model {
         $this->db->where($datos);
         $query = $this->db->get('certificado');
         return $query->row_array();
+
     }
 
     
@@ -109,24 +110,31 @@ class fichero_modelo extends CI_Model {
     }
 
 
-   function certificado_tiulacion($tipo="",$titulacion="",$baremado=""){
-        
-      //  print_r("titpo".$tipo."--titulacion".$titulacion."---baremado".$baremado);
-        $cod_usuario=$this->session->userdata('cod_usuario'); 
+   function certificado_tiulacion($tipo="",$titulacion="",$baremado=""){  
 
-        $this->db->select('c.cod,t.titulacion_cod');
+                                 
+                                
+                                
+                                
+
+        $cod_usuario=$this->session->userdata('cod_usuario');
+        $this->db->select('c.cod');
         $this->db->from('certificado c, certificado_has_titulacion t');
         $this->db->where('c.cod = t.certificado_cod');
         $this->db->where('c.cod_usuario',$cod_usuario); 
-        $this->db->where('c.cod_tipo_cer',$tipo);        
+
+        if($tipo!=""){
+       $this->db->where('c.cod_tipo_cer',$tipo); 
+        }
+        
         $this->db->where('c.baremado',$baremado); 
         if ($titulacion!==""){
         $this->db->where('t.titulacion_cod',$titulacion);             
         }  
         $this->db->group_by('c.cod');     
-        $this->db->order_by('c.cod', 'desc'); 
-
-        if($consulta= $this->db->get() ){
+       $this->db->order_by('c.cod', 'desc'); 
+        //$this->db->order_by($orde, 'desc'); 
+        if($consulta= $this->db->get()){
 
              return($consulta->result_array()); 
         }   else{

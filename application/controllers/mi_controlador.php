@@ -165,9 +165,12 @@ function crea_no_selected($sel = '') {
        
        $cuerpo="";
         //print_r($cod);
+        
 
         $datos['cod'] =$cod;
         $data = $this->fichero_modelo->buscar_certificado($datos);
+
+
         $data['titulacion'] = $this->titulacion->buscar_nombre_titulacion($datos);
         //print_r($data);
        
@@ -188,8 +191,8 @@ function crea_no_selected($sel = '') {
             $tipo = $this->emisor_certificado->listar_tipo();
             $data['emisor']=$emisor[$data['emisor_cod']];
             $data['tipo_certificado']= $tipo[$data['cod_tipo_cer']];
-          // print_r($data);
-            
+         
+
               
          return $cuerpo= $this->load->view('mostrar_curso', $data, TRUE);
         //$cuerpo= $this->load->view('mostrar_curso', $data, TRUE);      
