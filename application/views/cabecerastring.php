@@ -16,13 +16,13 @@
 	            </ul>
 	            <ul class="nav navbar-nav">
 	                <div class="pull-right">
-	                    <form class="navbar-form" role="search" action="">
+	                    <form class="navbar-form" role="search" action="<?=base_url('')?>" method="post">
 	                        <div class="input-group">
-	                            <input type="text" name="autocompletar" id="autocompletar" class="form-control" placeholder="Buscar titulo..." name="busqueda">
+	                            <input type="text" class="form-control" placeholder="Buscar..." name="busqueda">
 	                            <div class="input-group-btn" type="submit">
-	                                
+	                                <button class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
 	                            </div>
-	                            <div class="contenedor" id="contenedor">
+	                            <div id="busqueda">
 	                        </div>
 	                        
 	                    </form>

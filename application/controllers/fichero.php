@@ -433,17 +433,28 @@ class fichero extends mi_controlador {
     }
 
     public function autocompletar() {
+        
+        $cuerpo="";
         if ($this->input->is_ajax_request() && $this->input->post('info')) {
 
             $abuscar = $this->security->xss_clean($this->input->post('info'));
             $search = $this->fichero_modelo->search($abuscar);
 
             if ($search !== FALSE) {
+                echo"<br/>";
+                echo"<br/>";
+                echo"<ul>";
                 foreach ($search as $fila) {
-                    echo '<p><a href="' . site_url() . '/fichero/mostrar_un_curso/' . $fila['cod'] . '">' . $fila['nombre'] . '</a></p>';
+                 echo '<li><a href="' . site_url() . '/fichero/mostrar_un_curso/' . $fila['cod'] . '">' . $fila['nombre'] . '</a></li>';
+                
+                   // $cuerpo.=$this->mostrar_un_curso($fila['cod']);
+                    
+                    
                 }
+                echo "</ul>";
+                //$this->plantilla($cuerpo);
             } else {
-                echo '<p>No hay resultados</p>';
+                echo '<br/><p>No hay resultados</p>';
             }
         }
     }

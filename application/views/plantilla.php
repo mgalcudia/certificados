@@ -29,34 +29,18 @@
 	</div>
 	
 	<div class="col-sm-8 col-md-10 margin-sup">
-		<?= $cuerpo?>
+            <?php if (isset($cuerpo)) echo $cuerpo; ?>
+		
 	</div>
     
     
-	<div class="col-sm-12" style="background-color: red;">
-		<footer><?= $pie?></footer>
+	<div class="col-sm-12">
+		<footer><?php if (isset($pie)) echo $pie; ?></footer>
 	</div>
     
     </div>
     
 </div>
-
-<script type="text/javascript">
-
-    $("#autocompletar").on('keyup', function () {
-        var info = $(this).val();
-        $.ajax({
-            type: 'POST',
-            url: "<?= site_url('fichero/autocompletar'); ?>",
-            data: {info: info},
-            success: function (data) {
-                event.preventDefault();
-                $('#contenedor').html(data)
-            }
-
-        });
-    });
-</script>
 </body>
 
 <script src="<?=base_url('assets/js/fijo/bootstrap-multiselect.js')?>" type="text/javascript"></script>
