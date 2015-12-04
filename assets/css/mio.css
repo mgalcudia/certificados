@@ -1,7 +1,7 @@
 
 .margin-sup{
-	
-	margin-top: 55px;
+
+    margin-top: 55px;
 
 }
 
@@ -9,3 +9,28 @@
     float: none;
     margin: 0 auto;
 }
+
+
+body {
+    padding-bottom: 70px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    color: #333333;
+    background-color: #d6d1d1;
+
+}
+
+.logi{
+    background-color: #d6d1d1;
+    
+}
+.navbar-inner {
+    background-image: -moz-linear-gradient(top, #ffffff, #c6abab);
+    background-image: -ms-linear-gradient(top, #ffffff, #c6abab);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#c6abab));
+    background-image: -webkit-linear-gradient(top, #ffffff, #c6abab);
+    background-image: -o-linear-gradient(top, #ffffff, #c6abab);
+    background-image: linear-gradient(top, #ffffff, #c6abab);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#'ffffff, endColorstr='#'c6abab, GradientType=0);
+}
+

@@ -28,8 +28,8 @@
 		<aside><?=$menu_izq?></aside>
 	</div>
 	
-	<div class="col-sm-8 col-md-10 margin-sup">
-            <?php if (isset($cuerpo)) echo $cuerpo; ?>
+	<div class="col-sm-8 col-md-10 margin-sup barra">
+            <?=$cuerpo?>
 		
 	</div>
     

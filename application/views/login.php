@@ -2,7 +2,7 @@
 <form role="form" action="<?= base_url("index.php/usuario/login") ?>" method="post">
     <div class="col-md-6 col-md-offset-3">
         <div class="panel member_signin">
-            <div class="panel-body">
+            <div class="panel-body logi">
                 <div class="fa_user">
                     <i class="fa fa-user"></i>
                 </div>          

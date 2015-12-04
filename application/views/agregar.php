@@ -5,7 +5,7 @@
 
     <div class="form-group">
         <label class="form-group">Nombre</label>
-        <input type="text" id="curso" class="form-control" name="curso" value="<?= set_value('curso'); ?>" placeholder="Nombre titulacion" />
+        <input type="text" id="curso" class="form-control uneditable-input" name="curso" value="<?= set_value('curso'); ?>" placeholder="Nombre titulacion" />
         <span class="help-block"><?= form_error('curso') ?></span>        
     </div>
     <div class="row form-group">
