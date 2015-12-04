@@ -1,25 +1,26 @@
 <!-- ======================================== -->
 <!-- ======================================== -->
 <!-- ======================================== -->
+<br/>
+<br/>
 <div class="container">
 
-    <div class="buscador">
-        <aside>
-            <div class="noticias linea">
-                <h3>Buscador</h3>
-            </div>
-            <div class="formulario col-xs-9 col-md-9 ">
-                <input type="text" name="autocompletar" id="autocompletar" class="form-control" placeholder="Buscar...." />
-            </div>
+
+        
 
 
-            <div class="formulario">
-                <br/>
-                <div class="contenedor" id="contenedor"></div>
+        <div class="row-fluid">
+            <div class="col-xs-11 col-md-6" id="buscador">            
+           <h3> <p class="text-primary text-center line-height">Escriba el título del certificado</p></h3>  
+
+                <input type="search" name="autocompletar" id="autocompletar" class="form-control" placeholder="Buscar...." />
+               <div class=" contenedor" id="contenedor"> </div>                 
             </div>
+                          
+            
+
+        </div>
     </div>
-    <div class="espacio"></div>
-</div>
 <script type="text/javascript">
 
     $("#autocompletar").on('keyup', function () {
@@ -39,3 +40,4 @@
 <!-- ======================================== -->
 <!-- ======================================== -->
 <!-- ======================================== -->
+

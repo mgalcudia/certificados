@@ -441,18 +441,17 @@ class fichero extends mi_controlador {
             $search = $this->fichero_modelo->search($abuscar);
 
             if ($search !== FALSE) {
-                echo"<br/>";
-                echo"<br/>";
-                echo"<ul>";
+
+             echo '<div class="list-group">';   
                 foreach ($search as $fila) {
-                 echo '<li><a href="' . site_url() . '/fichero/mostrar_un_curso/' . $fila['cod'] . '">' . $fila['nombre'] . '</a></li>';
-                
-                   // $cuerpo.=$this->mostrar_un_curso($fila['cod']);
-                    
-                    
-                }
-                echo "</ul>";
-                //$this->plantilla($cuerpo);
+               echo '<a href="' . site_url() . '/fichero/mostrar_un_curso/' . $fila['cod'] . ' " class="list-group-item" >';
+
+                echo '<h4 class="list-group-item-heading">'.$fila['nombre'] . '</h4> </a>';
+
+               }
+
+                echo '</div>';
+
             } else {
                 echo '<br/><p>No hay resultados</p>';
             }
@@ -468,3 +467,4 @@ class fichero extends mi_controlador {
 
 ////////////////////////////FIN//////////////////////////////
 }
+

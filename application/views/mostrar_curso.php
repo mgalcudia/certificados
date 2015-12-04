@@ -73,7 +73,8 @@
     <br/>
     <div class="row form-group">
       <div class="col-xs-11 col-md-3">
-        <button type="submit" class="btn btn-primary btn-md login">Modificar datos</button>
+        
+        <a class="btn btn-primary btn-md login" href="<?= base_url("index.php/fichero/modificar_titulo/".$cod) ?>">Modificar datos</a>
       </div>
     <div class="col-xs-11 col-md-3">
         

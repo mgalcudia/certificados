@@ -33,14 +33,13 @@
 		
 	</div>
     
+
+ </div>   
+    <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+  <footer><?php if (isset($pie)) echo $pie; ?></footer>
+</nav>
     
-	<div class="col-sm-12">
-		<footer><?php if (isset($pie)) echo $pie; ?></footer>
-	</div>
-    
-    </div>
-    
-</div>
+
 </body>
 
 <script src="<?=base_url('assets/js/fijo/bootstrap-multiselect.js')?>" type="text/javascript"></script>

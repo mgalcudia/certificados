@@ -34,23 +34,25 @@ class mi_controlador extends CI_Controller {
             $menu_izq = $this->load->view("menu_izq", $datos_menuizq, TRUE);
         }
         
+        /*
         $this->load->view('plantilla', array(
             'encabezado' => $encabezado,
             'menu_izq' => $menu_izq,
             'cuerpo' => $cuerpo,
             
         ));
-      //  $pie = $this->load->view("pie", 0, TRUE);
+        */
+      $pie = $this->load->view("pie", 0, TRUE);
             
         //Creo una plantilla con los apartados a mostrar
-            /*
+            
         $this->load->view('plantilla', array(
             'encabezado' => $encabezado,
             'menu_izq' => $menu_izq,
             'cuerpo' => $cuerpo,
             'pie' => $pie
         ));
-        */
+        
     }
 
     /**

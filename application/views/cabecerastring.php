@@ -22,7 +22,7 @@
 	                            <div class="input-group-btn" type="submit">
 	                                <button class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
 	                            </div>
-	                            <div id="busqueda">
+	                            <div id="busqueda"></div>
 	                        </div>
 	                        
 	                    </form>
