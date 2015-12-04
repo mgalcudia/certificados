@@ -40,6 +40,23 @@
     </div>
     
 </div>
+
+<script type="text/javascript">
+
+    $("#autocompletar").on('keyup', function () {
+        var info = $(this).val();
+        $.ajax({
+            type: 'POST',
+            url: "<?= site_url('fichero/autocompletar'); ?>",
+            data: {info: info},
+            success: function (data) {
+                event.preventDefault();
+                $('#contenedor').html(data)
+            }
+
+        });
+    });
+</script>
 </body>
 
 <script src="<?=base_url('assets/js/fijo/bootstrap-multiselect.js')?>" type="text/javascript"></script>

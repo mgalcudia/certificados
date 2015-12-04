@@ -150,16 +150,16 @@ class fichero_modelo extends CI_Model {
 
 
     public function search($cadena){
-        print_r($cadena);
+        
         $this->db->like('nombre', $cadena, 'both');
         $this->db->or_like('nombre', $cadena, 'before');
-        $this->db->or_like('nombre', $cadena, 'after');
- 
- 
+        $this->db->or_like('nombre', $cadena, 'after'); 
         $consulta = $this->db->get('certificado');
- 
+         
         if($consulta->num_rows() > 0){
-            return $consulta->result();
+           // return $consulta->result();
+            
+            return $consulta->result_array();
         }else{      
             return FALSE;
         }
