@@ -1,11 +1,11 @@
-<br/>
+<div class="logi">
 <h1>
 <p  class="text-primary text-center line-height">Recuperar Contraseña</p>
 </h1>
 <form role="form" action="<?= base_url("index.php/usuario/recuperar_pass") ?>" method="post">
     <div class="col-md-6 col-md-offset-3">
         <div class="panel member_signin">
-            <div class="panel-body">
+            <div class="panel-body logi">
                 <div class="fa_user">
                     <i class="fa fa-user"></i>
                 </div>     
@@ -23,3 +23,4 @@
     </div>
 
 </form>
+</div>

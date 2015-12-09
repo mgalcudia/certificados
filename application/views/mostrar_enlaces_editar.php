@@ -1,5 +1,5 @@
-<br/>
-<div class='menu'>
+
+<div class='menu col-xs-11 col-xs-offset-2'>
 	<span class="text-danger"><?php if (isset($error)) echo $error; ?></span>
 	<h3>
 	    <ul>

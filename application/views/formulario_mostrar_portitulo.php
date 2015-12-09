@@ -1,11 +1,9 @@
-<br/>
-<br/>
-<br/>
+<div class= "container-fluid">
 <form role="form" action="<?= base_url("index.php/fichero/mostrar_tipo_certificado") ?>" method="post">
     <span class="text-danger"><?php if (isset($error)) echo $error; ?></span>
     <br/>
     <div class="row form-group">
-        <div class=" col-xs-11 col-md-3">
+        <div class=" col-xs-11 col-md-11">
             <label class="form-group">Tipo</label>
             <p><?=form_dropdown('tipo', $tipocertificado, set_value('tipo'));?></p>
             <span class="help-block"><?= form_error('tipo') ?></span>
@@ -35,3 +33,4 @@
     </div>
 
 </form>
+</div>

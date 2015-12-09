@@ -16,9 +16,9 @@
 	            </ul>
 	            <ul class="nav navbar-nav">
 	                <div class="pull-right">
-	                    <form class="navbar-form" role="search" action="<?=base_url('')?>" method="post">
+	                    <form class="navbar-form" role="search" action="<?=base_url('index.php/fichero/buscar_curso')?>" method="post">
 	                        <div class="input-group">
-	                            <input type="text" class="form-control" placeholder="Buscar..." name="busqueda">
+	                            <input type="text" class="form-control" placeholder="Buscar certificado..." name="busqueda">
 	                            <div class="input-group-btn" type="submit">
 	                                <button class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
 	                            </div>

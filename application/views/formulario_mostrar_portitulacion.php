@@ -1,14 +1,12 @@
-<br/>
-<br/>
-<br/>
+
 <form role="form" action="<?= base_url("index.php/fichero/mostrar_tipo_titulacion") ?>" method="post">
-    <span class="text-danger"><?php if (isset($error)) echo $error; ?></span>
+    
     <br/>
     <div class="row form-group">
         <div class="col-xs-11 col-md-8">
             <label class="form-group ">Titulación</label>
             <?= $titulacion ?>
-            <span class="help-block"><?= form_error('titulacion')?></span>
+            <span class="text-danger"><?php if (isset($error)) echo $error; ?></span>
 
             <p><label class="form-group ">Baremado</label></p>
             <div class="radio">

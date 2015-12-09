@@ -1,7 +1,7 @@
 
 .margin-sup{
 
-    margin-top: 55px;
+   margin-top: 5%; 
 
 }
 
@@ -12,6 +12,7 @@
 
 
 body {
+    padding-top: 70px;
     padding-bottom: 70px;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 13px;
@@ -20,8 +21,21 @@ body {
 
 }
 
+hr {
+  -moz-border-bottom-colors: none;
+  -moz-border-image: none;
+  -moz-border-left-colors: none;
+  -moz-border-right-colors: none;
+  -moz-border-top-colors: none;
+  border-color: #EEEEEE -moz-use-text-color #FFFFFF;
+  border-style: solid none;
+  border-width: 1px 0;
+  margin: 18px 0;
+}
+
 .logi{
     background-color: #d6d1d1;
+    
     
 }
 .navbar-inner {

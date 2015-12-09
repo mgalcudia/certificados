@@ -46,10 +46,13 @@ class usuario extends mi_controlador {
         $this->form_validation->set_rules('pasword', 'pasword', 'trim|required|md5');
         $this->form_validation->set_rules('mail', 'mail', 'trim|required|valid_email');
 
+       $mensaje['mensaje']="Registro de nuevo usuario";
+       $aviso= $this->load->view('mensaje',$mensaje,TRUE);
+
         if ($this->form_validation->run() == FALSE) {
 
             $cuerpo = $this->load->view('formulario_registro', 0, true);
-            $this->plantilla($cuerpo);
+            $this->plantilla($aviso.$cuerpo);
         } else {
 
             $datos['nombre'] = $this->input->post('nombre');
@@ -243,9 +246,13 @@ class usuario extends mi_controlador {
         $datos['mail']=$this->session->userdata('usuario');
 
          $data['datos']=  $this->usuario_modelo-> buscar_usuario($datos);   
-            if ($this->form_validation->run() == FALSE) {            
+
+            if ($this->form_validation->run() == FALSE) { 
+
+            $mensaje['mensaje']='Modificar datos de usuario';
+           $aviso= $this->load->view('mensaje',$mensaje,TRUE);           
             $cuerpo = $this->load->view('formulario_modificar', $data, TRUE);
-            $this->plantilla($cuerpo);
+            $this->plantilla($aviso.$cuerpo);
         }else{
            
  
@@ -272,10 +279,5 @@ class usuario extends mi_controlador {
         }
         
     }
-       
-        
-        
-    
-    
-    
+     
 }

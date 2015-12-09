@@ -1,12 +1,16 @@
+
 <br/>
+<div class= "container-fluid">
 <form role="form" action="<?= base_url('index.php/fichero/agregar_fichero') ?>" enctype="multipart/form-data" method="post">
 
     <input type="hidden" id="cod" class="form-control" name="cod" value="<?= $cod; ?>"/>
 
-    <div class="form-group">
+    <div class="row form-group">
+         <div class=" col-xs-11 ">
         <label class="form-group">Nombre</label>
-        <input type="text" id="curso" class="form-control uneditable-input" name="curso" value="<?= set_value('curso'); ?>" placeholder="Nombre titulacion" />
-        <span class="help-block"><?= form_error('curso') ?></span>        
+        <input type="text" id="curso" class="form-control" name="curso" value="<?= set_value('curso'); ?>" placeholder="Nombre titulacion" />
+        <span class="help-block"><?= form_error('curso') ?></span>     
+        </div>   
     </div>
     <div class="row form-group">
         <div class=" col-xs-11 col-md-4 ">
@@ -22,7 +26,7 @@
         </div>
         <div class=" col-xs-11 col-md-5">
             <label class="form-group">Fecha título</label>
-            <p> <input type="date" id="fecha" class="form-control" name="fecha" value="<?= set_value('fecha'); ?>" placeholder="fecha de obtencion"/></p>
+            <p> <input type="text" id="fecha" class="form-control" name="fecha" value="<?= set_value('fecha'); ?>" placeholder="fecha de obtencion dd-mm-yyyy"/></p>
             <span class="help-block"><?= form_error('fecha') ?></span>
         </div>
 
@@ -48,8 +52,8 @@
     <div class="row form-group">
         <div class="col-xs-11 col-md-8">
             <label class="form-group ">Titulación</label>
-            <?= $titulacion ?>
-            <span class="help-block"><?= form_error('titulacion[]')?></span>
+            <?= $titulacion?>
+            <span class="help-block"><?= form_error('titulacion')?></span>
 
             <p><label class="form-group ">Baremado</label></p>
             <div class="radio">
@@ -77,3 +81,4 @@
     </div>
 </form>
 
+</div>

@@ -1,6 +1,4 @@
-<br/>
-<br/> 
-<br/>
+
 <h3>
     <ul class="nav nav-sidebar">
 

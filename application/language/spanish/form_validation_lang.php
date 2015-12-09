@@ -25,7 +25,8 @@ $lang['greater_than']		= "El campo %s debe contener un número mayor que %s.";
 /* Added after 2.0.2 */
 $lang['is_unique'] 			= "El campo %s debe contener un valor único.";
 $lang['validarDNI']             ="El campo %s introducido no corresponde con los caracteres correctos";
-$lang['valida_titulacion']             ="El campo %s debe tener seleccionado almenos uno";
+$lang['valida_titulacion']             ="El campo %s debe tener seleccionado almenos una titulación";
+$lang['fecha']             ="El campo %s contener una fecha valida dd-mm-yyyy";
 
 /* End of file form_validation_lang.php */
 /* Location: ./system/language/spanish/form_validation_lang.php */

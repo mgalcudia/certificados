@@ -1,6 +1,6 @@
-<br/>
-<button class="btn btn-success btn-md " onclick="quitarReadOnly('6')">Modificar</button>
-<button class="btn btn-success btn-md " onclick=" quitarhidden('pass')">Modificar contraseña</button>
+
+<button class="btn btn-success btn-md " id="btnModificar" onclick="quitarReadOnly('6')">Modificar</button>
+<button class="btn btn-success btn-md " id="btnpass" onclick=" quitarhidden()">Modificar contraseña</button>
 <span class="text-danger"><?php if (isset($error)) echo $error; ?></span>
 <form role="form" action="<?= base_url("index.php/usuario/editarusuario") ?>" method="post">
     <input type="hidden" name="cod" value="<?= $datos['cod'] ?>">

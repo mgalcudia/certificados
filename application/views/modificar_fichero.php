@@ -1,4 +1,4 @@
-<br/>
+
 <form role="form" action="<?= base_url().'index.php/fichero/modificar_titulo/'.$cod?>" enctype="multipart/form-data" method="post">
 
     <input type="hidden" id="cod" class="form-control" name="cod" value="<?= $cod; ?>"/>
@@ -23,7 +23,7 @@
         </div>
         <div class=" col-xs-11 col-md-5">
             <label class="form-group">Fecha título</label>
-            <p> <input type="date" id="fecha" class="form-control" name="fecha" value="<?=(set_value('fecha'))?set_value('fecha'):$fecha;?>" placeholder="fecha de obtencion"/></p>
+            <p> <input type="text" id="fecha" class="form-control" name="fecha" value="<?=(set_value('fecha'))?set_value('fecha'):$fecha;?>" placeholder="fecha de obtencion"/></p>
             <span class="help-block"><?= form_error('fecha') ?></span>
         </div>
 

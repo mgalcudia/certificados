@@ -44,8 +44,10 @@ class historico_modelo extends CI_Model {
         $this->db->where('c.cod = h.certificado_cod');
 		  $this->db->where('h.corte',$year);
         $this->db->order_by('c.cod_tipo_cer', 'desc'); 
-        $consulta= $this->db->get();     
-     // $consulta->result_array();
+        $consulta= $this->db->get(); 
+
+
+     
       return($consulta->result_array());      
         
     }

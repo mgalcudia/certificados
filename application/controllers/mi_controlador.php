@@ -33,15 +33,6 @@ class mi_controlador extends CI_Controller {
             
             $menu_izq = $this->load->view("menu_izq", $datos_menuizq, TRUE);
         }
-        
-        /*
-        $this->load->view('plantilla', array(
-            'encabezado' => $encabezado,
-            'menu_izq' => $menu_izq,
-            'cuerpo' => $cuerpo,
-            
-        ));
-        */
       $pie = $this->load->view("pie", 0, TRUE);
             
         //Creo una plantilla con los apartados a mostrar
@@ -182,10 +173,11 @@ function crea_no_selected($sel = '') {
 
 
         $data['titulacion'] = $this->titulacion->buscar_nombre_titulacion($datos);
-        //print_r($data);
-       
-        $fecha_obtencion =  new DateTime($data['fecha_registro']);
-        $data['fecha']=$fecha_obtencion->format("d-m-Y");
+        
+         // convertirmos la fecha del servidor en una meda (d-m-y)
+        $data['fecha']= $this->formato_fecha_bajar($data['fecha']);
+
+     
                     
         
              if ($data['baremado']) {
@@ -202,15 +194,32 @@ function crea_no_selected($sel = '') {
             $data['emisor']=$emisor[$data['emisor_cod']];
             $data['tipo_certificado']= $tipo[$data['cod_tipo_cer']];
          
-
+         
               
-         return $cuerpo= $this->load->view('mostrar_curso', $data, TRUE);
-        //$cuerpo= $this->load->view('mostrar_curso', $data, TRUE);      
-         // $this->plantilla($cuerpo);
-                    
-          
+         return $cuerpo= $this->load->view('mostrar_curso', $data, TRUE);     
         
     }     
+
+
+
+    function formato_fecha_subir($fecha){
+
+
+            $fecha_nueva =  new DateTime($fecha);
+           $resultado=$fecha_nueva->format("Y-m-d");
+           return $resultado;
+
+    }
+
+    function formato_fecha_bajar($fecha){
+
+           $fecha_nueva =  new DateTime($fecha);
+           $resultado=$fecha_nueva->format("d-m-Y");
+           
+           return $resultado;
+
+
+    }
         
 
 
