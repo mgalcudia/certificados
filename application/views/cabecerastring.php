@@ -37,7 +37,7 @@
 	                        <li class="dropdown-header">Panel Usuario</li>
 	                        <li><a href="<?=base_url('index.php/usuario/editarusuario')?>">Editar información</a></li>
 	                        
-	                        <li><a href="<?=base_url('index.php/clientes/dar_de_baja')?>">Darse de baja</a></li>
+	                        <li><a href="<?=base_url('index.php/usuario/baja')?>">Darse de baja</a></li>
 	                        
 	                       
 	                        

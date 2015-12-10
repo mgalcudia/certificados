@@ -113,5 +113,18 @@ class usuario_modelo extends CI_Model {
         }
     }
     
+    /**
+     * Da de baja el cliente 
+     * pero no lo elimina
+     * 
+     */
+    function baja_usuario($cod){
+        $datos = array(
+            'activo' => 0
+        );
+        $this->db->where('cod', $cod);
+        $this->db->update('usuario', $datos);
+    }
+    
 }
 

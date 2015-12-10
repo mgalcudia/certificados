@@ -128,7 +128,7 @@ class usuario extends mi_controlador {
     
     
     
-        /**
+    /**
      * Cerrar sesión usuario
      */
     function salir() {
@@ -149,6 +149,38 @@ class usuario extends mi_controlador {
 
                 }else{
                      $cuerpo = $this->load->view('salir', 0, TRUE);
+                $this->plantilla($cuerpo);
+                    
+                }
+            
+        } else {
+           
+            redirect(site_url());
+        }
+    }
+
+    /**
+     * Da de baja a un usuario
+     */
+    function baja() {
+
+        if ($this->session->userdata('usuario')) {            
+           
+            $cod= $this->session->userdata('cod_usuario');
+            
+                if ($this->input->post('si')){
+                    $this->session->unset_userdata('usuario');
+                    $this->session->unset_userdata('nombre');
+                    $this->session->unset_userdata('cod_usuario');
+                  
+                    $this->usuario_modelo->baja_usuario($cod);
+                    redirect(site_url());
+                }else if($this->input->post('no')){
+
+                    redirect(site_url());
+
+                }else{
+                     $cuerpo = $this->load->view('dar_baja', 0, TRUE);
                 $this->plantilla($cuerpo);
                     
                 }
