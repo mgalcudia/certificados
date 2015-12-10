@@ -18,32 +18,31 @@ class mi_controlador extends CI_Controller {
      */
     function plantilla($cuerpo) {
 
-        
+
 
         if (!$this->session->userdata('usuario')) {
             $encabezado = $this->load->view("cabecera", 0, TRUE);
-            
+
             $menu_izq = $this->load->view("menu_izq", 0, TRUE);
         } else {
-			$datos_menuizq['historicos']=$this->historico_modelo->year_corte();
-			
+            $datos_menuizq['historicos'] = $this->historico_modelo->year_corte();
+
             $datos_cabecera['datos'] = $this->load->view('cabecerastring', 0, TRUE);
             $datos_menuizq['datos_menu'] = $this->load->view('menuizqstring', $datos_menuizq, TRUE);
             $encabezado = $this->load->view("cabecera", $datos_cabecera, TRUE);
-            
+
             $menu_izq = $this->load->view("menu_izq", $datos_menuizq, TRUE);
         }
-      $pie = $this->load->view("pie", 0, TRUE);
-            
+        $pie = $this->load->view("pie", 0, TRUE);
+
         //Creo una plantilla con los apartados a mostrar
-            
+
         $this->load->view('plantilla', array(
             'encabezado' => $encabezado,
             'menu_izq' => $menu_izq,
             'cuerpo' => $cuerpo,
             'pie' => $pie
         ));
-        
     }
 
     /**
@@ -99,8 +98,8 @@ class mi_controlador extends CI_Controller {
 
     function creaSelect($sel = '') {
 
-        
-        $opciones = $this->titulacion->listar_titulacion();        
+
+        $opciones = $this->titulacion->listar_titulacion();
         $html = "
     <script type='text/javascript'>
         $(function () {
@@ -111,15 +110,15 @@ class mi_controlador extends CI_Controller {
         });
     </script>
    <select id='titulacion' multiple='multiple' name='titulacion[]'>";
-        foreach ($opciones as $val => $texto) {          
-                foreach ($sel as $valor) {
+        foreach ($opciones as $val => $texto) {
+            foreach ($sel as $valor) {
 
-                    if ($valor == $val) {                        
-                        break;
-                    }
+                if ($valor == $val) {
+                    break;
                 }
-                $selected = ($val ==$valor ) ? " selected " : "";
-            
+            }
+            $selected = ($val == $valor ) ? " selected " : "";
+
             $html.="\n<option value=\"$val\" $selected>$texto</option>";
         }
         $html.="</select>";
@@ -128,11 +127,10 @@ class mi_controlador extends CI_Controller {
         return $html;
     }
 
+    function crea_no_selected($sel = '') {
 
-function crea_no_selected($sel = '') {
 
-        
-        $opciones = $this->titulacion->listar_titulacion();        
+        $opciones = $this->titulacion->listar_titulacion();
         $html = "
     <script type='text/javascript'>
         $(function () {
@@ -145,84 +143,73 @@ function crea_no_selected($sel = '') {
    <select id='titulacion' multiple='multiple' name='titulacion[]'>";
         foreach ($opciones as $val => $texto) {
 
-           
-                $selected = ($val ==$sel ) ? " selected " : "";
-            
 
-            
+            $selected = ($val == $sel ) ? " selected " : "";
+
+
+
             $html.="\n<option value=\"$val\" $selected>$texto</option>";
         }
         $html.="</select>";
         return $html;
     }
-        
-   /**
+
+    /**
      * Funcion para mostrar titulos 
      * Recibe por parametro el cod del curso 
      * @param type $cod
-     */    
-    function mostrar_titulo($cod = ''){
-     
-       
-       $cuerpo="";
-        //print_r($cod);
-        
+     */
+    function mostrar_titulo($cod = '') {
 
-        $datos['cod'] =$cod;
+
+        $cuerpo = "";
+        //print_r($cod);
+
+
+        $datos['cod'] = $cod;
         $data = $this->fichero_modelo->buscar_certificado($datos);
 
 
         $data['titulacion'] = $this->titulacion->buscar_nombre_titulacion($datos);
-        
-         // convertirmos la fecha del servidor en una meda (d-m-y)
-        $data['fecha']= $this->formato_fecha_bajar($data['fecha']);
 
-     
-                    
-        
-             if ($data['baremado']) {
-                $data['baremo'] = 'si';
-                
-            } else {
-                $data['baremo'] = 'no';
-            }
-            
-            //$data['cod'] = '67';// codigo puesto para testeo
-
-            $emisor = $this->emisor_certificado->listar_emisor();
-            $tipo = $this->emisor_certificado->listar_tipo();
-            $data['emisor']=$emisor[$data['emisor_cod']];
-            $data['tipo_certificado']= $tipo[$data['cod_tipo_cer']];
-         
-         
-              
-         return $cuerpo= $this->load->view('mostrar_curso', $data, TRUE);     
-        
-    }     
+        // convertirmos la fecha del servidor en una meda (d-m-y)
+        $data['fecha'] = $this->formato_fecha_bajar($data['fecha']);
 
 
 
-    function formato_fecha_subir($fecha){
+
+        if ($data['baremado']) {
+            $data['baremo'] = 'si';
+        } else {
+            $data['baremo'] = 'no';
+        }
+
+        //$data['cod'] = '67';// codigo puesto para testeo
+
+        $emisor = $this->emisor_certificado->listar_emisor();
+        $tipo = $this->emisor_certificado->listar_tipo();
+        $data['emisor'] = $emisor[$data['emisor_cod']];
+        $data['tipo_certificado'] = $tipo[$data['cod_tipo_cer']];
 
 
-            $fecha_nueva =  new DateTime($fecha);
-           $resultado=$fecha_nueva->format("Y-m-d");
-           return $resultado;
 
+        return $cuerpo = $this->load->view('mostrar_curso', $data, TRUE);
     }
 
-    function formato_fecha_bajar($fecha){
-
-           $fecha_nueva =  new DateTime($fecha);
-           $resultado=$fecha_nueva->format("d-m-Y");
-           
-           return $resultado;
+    function formato_fecha_subir($fecha) {
 
 
+        $fecha_nueva = new DateTime($fecha);
+        $resultado = $fecha_nueva->format("Y-m-d");
+        return $resultado;
     }
-        
 
+    function formato_fecha_bajar($fecha) {
 
+        $fecha_nueva = new DateTime($fecha);
+        $resultado = $fecha_nueva->format("d-m-Y");
 
+        return $resultado;
+    }
 
 }

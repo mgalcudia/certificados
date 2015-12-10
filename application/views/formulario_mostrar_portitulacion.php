@@ -1,6 +1,6 @@
 
 <form role="form" action="<?= base_url("index.php/fichero/mostrar_tipo_titulacion") ?>" method="post">
-    
+
     <br/>
     <div class="row form-group">
         <div class="col-xs-11 col-md-8">
@@ -14,8 +14,8 @@
                 <p>  <input type="radio" name="baremado" id="opciones_1" value="1">Si</p>
             </div>
         </div>    
-    <br/>
-</div>
+        <br/>
+    </div>
     <div class="row form-group">
         <button type="submit" class="btn btn-primary btn-md login">Enviar</button>
         <a class="btn btn-danger btn-md login pull-right" href="<?= base_url("index.php/fichero/mostrar_tipo_certificado") ?>">Cancelar </a>

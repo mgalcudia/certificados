@@ -12,7 +12,7 @@ class fichero extends mi_controlador {
 
     function valida_titulacion($titulacion) {
 
-        
+
         if (is_array($titulacion) && count($titulacion) > 0) {
 
             foreach ($titulacion as $key => $value) {
@@ -31,31 +31,27 @@ class fichero extends mi_controlador {
         }
     }
 
-    function fecha($input){
+    function fecha($input) {
 
 
 
-        $input_array=explode("-", $input);
+        $input_array = explode("-", $input);
 
-        if(count($input_array)==3){
+        if (count($input_array) == 3) {
 
-        if( checkdate((int)$input_array[1], $input_array[0],$input_array[2])){
-
-            
-           
-            return true;
+            if (checkdate((int) $input_array[1], $input_array[0], $input_array[2])) {
 
 
-        }else{
 
-            return false;
-            
-        }
+                return true;
+            } else {
 
-        }else{
-
-            return false;
+                return false;
             }
+        } else {
+
+            return false;
+        }
     }
 
     /**
@@ -89,9 +85,9 @@ class fichero extends mi_controlador {
             $data['error'] = $this->session->flashdata('error');
             $cuerpo = $this->load->view('agregar', $data, TRUE);
 
-           $mensaje['mensaje']="Agregar certificado";
-           $aviso= $this->load->view('mensaje',$mensaje,TRUE);
-            $this->plantilla($aviso.$cuerpo);
+            $mensaje['mensaje'] = "Agregar certificado";
+            $aviso = $this->load->view('mensaje', $mensaje, TRUE);
+            $this->plantilla($aviso . $cuerpo);
         } else {
 
             $datos['cod_usuario'] = $this->input->post('cod');
@@ -107,8 +103,8 @@ class fichero extends mi_controlador {
             $datos['ruta'] = APPPATH . "../almacen/" . $datos['cod_usuario'];
 
             //conversion de fecha para subir al servidor
-             $datos['fecha']= $this->formato_fecha_subir($datos['fecha']);
-    
+            $datos['fecha'] = $this->formato_fecha_subir($datos['fecha']);
+
             $cod_curso = $this->fichero_modelo->insertar_certificado($datos);
 
             $this->titulacion->insertar_titulacion_a_titulo($cod_curso, $titulaciones);
@@ -119,8 +115,6 @@ class fichero extends mi_controlador {
             $this->fichero_modelo->insertar_historico($hitorico);
 
             $this->do_upload($datos['cod_usuario'], $cod_curso);
-
-
         }
     }
 
@@ -148,7 +142,7 @@ class fichero extends mi_controlador {
             redirect('fichero/agregar_fichero');
         } else {
             $data['error'] = 'Fichero subido';
-          
+
             // TODO: ENVIAR A LA VISTA DONDE SE VE EL CERTIFICADO SUBIDO
             $cuerpo = $this->mostrar_titulo($cod_curso);
             $this->plantilla($cuerpo);
@@ -209,7 +203,7 @@ class fichero extends mi_controlador {
         $val = $this->titulacion->buscar_titulacion($datos);
         $data['titulacion'] = $this->creaSelect($val);
 
-         $data['fecha']= $this->formato_fecha_bajar($data['fecha']);
+        $data['fecha'] = $this->formato_fecha_bajar($data['fecha']);
 
 
         if ($this->form_validation->run() == FALSE) {
@@ -247,8 +241,8 @@ class fichero extends mi_controlador {
             $datos['ruta'] = APPPATH . "../almacen/" . $datos['cod_usuario'];
             //  print_r($datos['ruta']);
             //si se modifica el certificado
-                        //conversion de fecha para subir al servidor
-             $datos['fecha']= $this->formato_fecha_subir($datos['fecha']);
+            //conversion de fecha para subir al servidor
+            $datos['fecha'] = $this->formato_fecha_subir($datos['fecha']);
 
             if ($this->fichero_modelo->modificar_certificado($cod, $datos)) {
 
@@ -282,7 +276,7 @@ class fichero extends mi_controlador {
 
 
         $codusuario = $this->session->userdata('cod_usuario');
-        $aviso="";
+        $aviso = "";
         switch ($value) {
 
             case "nobaremado":
@@ -291,8 +285,8 @@ class fichero extends mi_controlador {
                     'cod_usuario' => $codusuario,
                     'baremado' => 0
                 );
-                $mensaje['mensaje']="Cursos no baremados";
-                $aviso= $this->load->view('mensaje',$mensaje,TRUE);
+                $mensaje['mensaje'] = "Cursos no baremados";
+                $aviso = $this->load->view('mensaje', $mensaje, TRUE);
                 $cuerpo = $this->mostrar_estado_baremado($consulta);
 
                 break;
@@ -301,36 +295,36 @@ class fichero extends mi_controlador {
                     'cod_usuario' => $codusuario,
                     'baremado' => 1
                 );
-                 $mensaje['mensaje']="Cursos baremados";
-                $aviso= $this->load->view('mensaje',$mensaje,TRUE);
+                $mensaje['mensaje'] = "Cursos baremados";
+                $aviso = $this->load->view('mensaje', $mensaje, TRUE);
                 $cuerpo = $this->mostrar_estado_baremado($consulta);
                 break;
             case "tipo":
-                $mensaje['mensaje']="Cursos por tipo de certificado";
-                $aviso= $this->load->view('mensaje',$mensaje,TRUE);
+                $mensaje['mensaje'] = "Cursos por tipo de certificado";
+                $aviso = $this->load->view('mensaje', $mensaje, TRUE);
                 $cuerpo = $this->mostrar_tipo_certificado();
 
                 break;
             case "titulacion":
-                $mensaje['mensaje']="Cursos por tipo de titulación";
-                $aviso= $this->load->view('mensaje',$mensaje,TRUE);
+                $mensaje['mensaje'] = "Cursos por tipo de titulación";
+                $aviso = $this->load->view('mensaje', $mensaje, TRUE);
                 $cuerpo = $this->mostrar_tipo_titulacion();
 
                 break;
             case "nombre":
-                $mensaje['mensaje']="Cursos por nombre del certificado";
-                $aviso= $this->load->view('mensaje',$mensaje,TRUE);
-             $cuerpo=   $this->view_autocompletar();
+                $mensaje['mensaje'] = "Cursos por nombre del certificado";
+                $aviso = $this->load->view('mensaje', $mensaje, TRUE);
+                $cuerpo = $this->view_autocompletar();
 
                 break;
             default:
-                $mensaje['mensaje']="Seleccione la opcion para buscar los certificados";
-                $aviso= $this->load->view('mensaje',$mensaje,TRUE);
+                $mensaje['mensaje'] = "Seleccione la opcion para buscar los certificados";
+                $aviso = $this->load->view('mensaje', $mensaje, TRUE);
                 $cuerpo = $this->load->view('mostrar_enlaces_editar', 0, TRUE);
                 break;
         }
 
-        $this->plantilla($aviso.$cuerpo);
+        $this->plantilla($aviso . $cuerpo);
     }
 
     function mostrar_estado_baremado($consulta) {
@@ -384,7 +378,6 @@ class fichero extends mi_controlador {
 
 
                     $this->recorre_array_consulta($consulta, "tipo");
-
                 } else {
 
 
@@ -392,7 +385,6 @@ class fichero extends mi_controlador {
                     redirect(site_url() . '/fichero/mostrar_enlaces_editar/tipo');
                 }
             }
-
         }
     }
 
@@ -474,12 +466,11 @@ class fichero extends mi_controlador {
         $datos['title'] = 'Buscador';
         $datos['contenido'] = 'autocompletado';
         return $this->load->view('planilla', $datos, TRUE);
-        
     }
 
     public function autocompletar() {
-        
-        $cuerpo="";
+
+        $cuerpo = "";
         if ($this->input->is_ajax_request() && $this->input->post('info')) {
 
             $abuscar = $this->security->xss_clean($this->input->post('info'));
@@ -487,16 +478,14 @@ class fichero extends mi_controlador {
 
             if ($search !== FALSE) {
 
-             echo '<div class="list-group">';   
+                echo '<div class="list-group">';
                 foreach ($search as $fila) {
-               echo '<a href="' . site_url() . '/fichero/mostrar_un_curso/' . $fila['cod'] . ' " class="list-group-item" >';
+                    echo '<a href="' . site_url() . '/fichero/mostrar_un_curso/' . $fila['cod'] . ' " class="list-group-item" >';
 
-                echo '<h4 class="list-group-item-heading">'.$fila['nombre'] . '</h4> </a>';
-
-               }
+                    echo '<h4 class="list-group-item-heading">' . $fila['nombre'] . '</h4> </a>';
+                }
 
                 echo '</div>';
-
             } else {
                 echo '<br/><p>No hay resultados</p>';
             }
@@ -510,38 +499,32 @@ class fichero extends mi_controlador {
         $this->plantilla($cuerpo);
     }
 
+    function buscar_curso() {
+
+        $cuerpo = "";
 
 
-    function buscar_curso(){
+        $nombre = $this->input->post('busqueda');
+        $cod_curso = $this->fichero_modelo->search($nombre);
 
-        $cuerpo="";
-
-            
-         $nombre = $this->input->post('busqueda');
-         $cod_curso= $this->fichero_modelo->search($nombre);
-         
-         $mensaje['mensaje']='Certificados que contiene "'.$nombre.'"';
-         $aviso= $this->load->view('mensaje',$mensaje,TRUE);
+        $mensaje['mensaje'] = 'Certificados que contiene "' . $nombre . '"';
+        $aviso = $this->load->view('mensaje', $mensaje, TRUE);
         if ($cod_curso !== FALSE) {
 
-         foreach ($cod_curso as $key => $value) {
+            foreach ($cod_curso as $key => $value) {
 
-            $cuerpo .= $this->mostrar_titulo($value['cod']);           
-         }
-
-            } else {
-                
-
-           $mensaje['mensaje']='<br/><span class="text-danger">No hay resultados que contengan: "'.$nombre.'"</span>';
-           $aviso= $this->load->view('mensaje',$mensaje,TRUE);
-
+                $cuerpo .= $this->mostrar_titulo($value['cod']);
             }
+        } else {
 
 
-         $this->plantilla($aviso.$cuerpo);
+            $mensaje['mensaje'] = '<br/><span class="text-danger">No hay resultados que contengan: "' . $nombre . '"</span>';
+            $aviso = $this->load->view('mensaje', $mensaje, TRUE);
+        }
 
+
+        $this->plantilla($aviso . $cuerpo);
     }
 
 ////////////////////////////FIN//////////////////////////////
 }
-

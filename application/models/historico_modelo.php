@@ -17,47 +17,42 @@ class historico_modelo extends CI_Model {
     }
 
     /**
-	 * Funcion para obtener los años de corte de casa usuario
+     * Funcion para obtener los años de corte de casa usuario
      * @brief 
      * @return  año de cada corte de los curso
      */
-    function year_corte(){
-        $cod_usuario=$this->session->userdata('cod_usuario');        
+    function year_corte() {
+        $cod_usuario = $this->session->userdata('cod_usuario');
         $this->db->select('h.corte');
         $this->db->from('certificado c,historico h');
-        $this->db->where('c.cod_usuario',$cod_usuario); 
-        $this->db->where('c.cod = h.certificado_cod');              
+        $this->db->where('c.cod_usuario', $cod_usuario);
+        $this->db->where('c.cod = h.certificado_cod');
         $this->db->group_by('h.corte');
-        $this->db->order_by('h.corte', 'desc'); 
-        $consulta= $this->db->get();     
-     // $consulta->result_array();
-      return($consulta->result_array());      
-        
+        $this->db->order_by('h.corte', 'desc');
+        $consulta = $this->db->get();
+        // $consulta->result_array();
+        return($consulta->result_array());
     }
-    
-    function cursos_corte($year){
-		
-        $cod_usuario=$this->session->userdata('cod_usuario');        
+
+    function cursos_corte($year) {
+
+        $cod_usuario = $this->session->userdata('cod_usuario');
         $this->db->select('h.certificado_cod');
         $this->db->from('certificado c,historico h');
-        $this->db->where('c.cod_usuario',$cod_usuario); 
+        $this->db->where('c.cod_usuario', $cod_usuario);
         $this->db->where('c.cod = h.certificado_cod');
-		  $this->db->where('h.corte',$year);
-        $this->db->order_by('c.cod_tipo_cer', 'desc'); 
-        $consulta= $this->db->get(); 
+        $this->db->where('h.corte', $year);
+        $this->db->order_by('c.cod_tipo_cer', 'desc');
+        $consulta = $this->db->get();
 
 
-     
-      return($consulta->result_array());      
-        
+
+        return($consulta->result_array());
     }
 
-    function borrar_historico($datos){
+    function borrar_historico($datos) {
 
-      $this->db->delete('historico',$datos);
-
-
+        $this->db->delete('historico', $datos);
     }
-    
+
 }
-

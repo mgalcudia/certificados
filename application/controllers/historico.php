@@ -10,32 +10,25 @@ class historico extends mi_controlador {
         parent::__construct();
     }
 
-    
-    
-    
-    function mostrar_historico($year=""){
-        $cuerpo="";
-      //$year= $this->historico_modelo->year_corte();
-      $mensaje['mensaje']="Certificados presentados corte ".$year;
-     $aviso= $this->load->view('mensaje',$mensaje,TRUE);
-      $cod_curso= $this->historico_modelo->cursos_corte($year);
-        
-       // print_r($cod_curso);
+    function mostrar_historico($year = "") {
+        $cuerpo = "";
+        //$year= $this->historico_modelo->year_corte();
+        $mensaje['mensaje'] = "Certificados presentados corte " . $year;
+        $aviso = $this->load->view('mensaje', $mensaje, TRUE);
+        $cod_curso = $this->historico_modelo->cursos_corte($year);
 
-       foreach ($cod_curso as $key => $value) {
-         
-         foreach ($value as $valor) {
+        // print_r($cod_curso);
 
-     //  print_r($valor."<br/>");
-         $cuerpo.=  $this->mostrar_titulo($valor);
+        foreach ($cod_curso as $key => $value) {
+
+            foreach ($value as $valor) {
+
+                //  print_r($valor."<br/>");
+                $cuerpo.= $this->mostrar_titulo($valor);
             }
         }
-		
-        $this->plantilla($aviso.$cuerpo);
+
+        $this->plantilla($aviso . $cuerpo);
     }
-	
-	 
-	
-	
-	
+
 }

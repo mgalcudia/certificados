@@ -44,7 +44,7 @@ class emisor_certificado extends CI_Model {
                 $emisor[$fila->cod] = $fila->tipo;
                 $resultado->free_result();
             }
-           
+
             return $emisor;
         }
     }
@@ -60,7 +60,7 @@ class emisor_certificado extends CI_Model {
                 $emisor[$fila->cod] = $fila->tipo;
                 $resultado->free_result();
             }
-           
+
             return $emisor;
         }
     }
