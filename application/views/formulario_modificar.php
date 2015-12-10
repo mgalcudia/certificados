@@ -41,7 +41,7 @@
 
     </div>
     <div class="row form-group">
-        <button type="submit" class="btn btn-primary btn-md login pull-left">Enviar</button> 
+        <button type="submit" disabled="disabled" id="btnenviar" class="btn btn-primary btn-md login pull-left">Enviar</button> 
         <a class="btn btn-danger btn-md pull-right" href="<?= base_url("index.php/usuario/login") ?>">Cancelar </a>
     </div>
 </form>

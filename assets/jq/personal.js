@@ -6,15 +6,16 @@ function quitarReadOnly(id)
                          {
                             if($("#id"+i).attr("readonly")){
 
-                               //  $("#btnModificar").prop("value","Cancelar modificar");
                                $("#btnModificar").html('Cancelar modificar');
                                 $("#id"+i).removeAttr("readonly");
-
-                            }else{
-
+                                $("#btnenviar").removeAttr('disabled');
+                            }else{                                
                                 $("#btnModificar").html('Modificar');
                                 $("#id"+i).attr("readonly","readonly");
-
+                                
+                                if($('#pass').attr("type")=="hidden"){
+                                    $("#btnenviar").attr('disabled','disabled');
+                                }
                             }                          
 
                           }
@@ -24,53 +25,23 @@ function quitarReadOnly(id)
 
     function quitarhidden(){
 
-
-     
-
         if($('#pass').attr("type")=="hidden"){
 
-            console.log('hidden');
             $('#pass').attr("type", "text");
             $("#btnpass").html('Ocultar contraseña');
+             $("#btnenviar").removeAttr('disabled');
+                $("#btnenviar").removeAttr('disabled'); 
+             
 
         }else{
-
-            console.log('text');
+            
+           
              $('#pass').attr("type", "hidden");
              $("#btnpass").html('Modificar contraseña');
+             if($("#id"+1).attr("readonly")=="readonly"){               
+             $("#btnenviar").attr('disabled','disabled');
+                         }
         }
-
-   // $('#pass').attr("type", "text");
-/*
-    if($('#pass').attr("type[]")){
-
-        $('#pass').attr("type", "text");
-        console.log("texto");
-    }else{
-
-        $('#pass').attr("type", "hidden");
-        console.log("no texto");
-
-
-
-    }
-
-*/
-  
-           //$("#formulariomayores").css("display", "none");
-    
-/*
-
-        if($('#pass').attr("text")){
-            console.log("entro");
-            $('#pass').attr("type", "hidden");
-
-        }else{
-            console.log("else");
-            
-
-        }
-*/
     }
 
 
