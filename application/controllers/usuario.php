@@ -193,8 +193,11 @@ class usuario extends mi_controlador {
             $this->plantilla($cuerpo);
         } else {
             $correo = $this->input->post('mail');
-            $consulta = $this->usuario_modelo->existe_mail($correo);
+            
+            $activo= $this->usuario_modelo->usuario_activo($correo);
 
+            if($activo){
+               $consulta = $this->usuario_modelo->existe_mail($correo); 
             if ($consulta) {
                 $aleatorio = $this->getrandomcode();
                 $usuario = $consulta['nombre'];
@@ -206,11 +209,13 @@ class usuario extends mi_controlador {
                     //mandamos el correo
                     $this->password_mail($usuario, $mail, $aleatorio);
 
+                   
                     //var_dump($pass);
                     //Iniciamos la sesion del usuario y lo enviamos al panel de control
                     if ($this->usuario_modelo->loginok($mail['mail'], $pass['pasword']) == true) {
-                        $this->session->set_userdata('usuario', $mail['mail']);
-                        $this->session->set_userdata('nombre', $usuario);
+                $this->session->set_userdata('usuario', $mail['mail']);
+                $this->session->set_userdata('nombre', $consulta['nombre']);
+                $this->session->set_userdata('cod_usuario', $consulta['cod']);
                         redirect(site_url(''));
                     }
                 } else {
@@ -225,6 +230,16 @@ class usuario extends mi_controlador {
                 $cuerpo = $this->load->view('recuperar_pass', $data, TRUE);
                 $this->plantilla($cuerpo);
             }
+
+            }else{
+
+                $data['error'] = '<h3>El usuario no está activo por favor contacte con el administrador</h3>';
+                $cuerpo = $this->load->view('recuperar_pass', $data, TRUE);
+                $this->plantilla($cuerpo);
+
+            }
+
+
         }
     }
 
@@ -260,6 +275,8 @@ class usuario extends mi_controlador {
         $this->form_validation->set_rules('mail', 'mail', 'trim|required|valid_email');
 
         $datos['mail'] = $this->session->userdata('usuario');
+
+          //  print_r($this->session->userdata('usuario'));
 
         $data['datos'] = $this->usuario_modelo->buscar_usuario($datos);
 

@@ -80,13 +80,14 @@
 
             <a class="btn btn-danger btn-md pull-left" href="<?= base_url("index.php/fichero/eliminar_certificado/" . $cod) ?>">Eliminar</a>
         </div>
-        <div class="col-xs-11 col-md-3">         
+        <div class="col-xs-11 col-md-3">
+            <iframe src="<?= base_url() . $ruta . '/' . $cod . '.pdf' ?>" id="<?= $cod ?>" style='display:none'> </iframe>         
             <input type="button" class="btn btn-danger btn-md" value="Imprimir" onclick="document.getElementById('<?= $cod ?>').focus();
          document.getElementById('<?= $cod ?>').contentWindow.print();">
-            <iframe src="<?= base_url() . $ruta . '/' . $cod . '.pdf' ?>" id="<?= $cod ?>" style='display:none'> </iframe>
+            
         </div>
         <div class="col-xs-11 col-md-3">
-            <a class="btn btn-danger btn-md" href="<?= base_url() . $ruta . $cod . '.pdf' ?>"
+            <a class="btn btn-danger btn-md" href="<?= base_url() . $ruta.'/' . $cod . '.pdf' ?>"
                download="<?= $cod . '.pdf' ?>">Descargar</a>
         </div>
     </div>

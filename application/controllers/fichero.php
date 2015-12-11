@@ -76,7 +76,7 @@ class fichero extends mi_controlador {
             //Si no existe la carpeta con el id del usuario se genera
             if (!file_exists(APPPATH . "../almacen/" . $datos['cod'])) {
                 $carpeta = APPPATH . "../almacen/" . $datos['cod'];
-                mkdir($carpeta, 777);
+                mkdir($carpeta, 0777);
             }
             $data['cod'] = $datos['cod'];
             $data['emisor'] = $this->emisor_certificado->listar_emisor();
@@ -102,6 +102,7 @@ class fichero extends mi_controlador {
             $datos['baremado'] = $this->input->post('baremado');
             $datos['ruta'] = APPPATH . "../almacen/" . $datos['cod_usuario'];
 
+            
             //conversion de fecha para subir al servidor
             $datos['fecha'] = $this->formato_fecha_subir($datos['fecha']);
 
@@ -152,7 +153,7 @@ class fichero extends mi_controlador {
     function eliminar_certificado($cod = "") {
 
         $datos['cod'] = $cod;
-        // $data = $this->fichero_modelo->buscar_certificado($datos);
+        
         $cod_usuario = $this->session->userdata('cod_usuario');
 
         $dir = APPPATH . "../almacen/" . $cod_usuario . "/" . $cod . '.pdf';
@@ -181,6 +182,7 @@ class fichero extends mi_controlador {
         redirect(site_url('/fichero/mostrar_enlaces_editar'));
     }
 
+
     /**
      * Funcion para modificar un titulo
      *
@@ -198,13 +200,15 @@ class fichero extends mi_controlador {
         $this->form_validation->set_rules('titulacion', 'titulacion', 'required |callback_valida_titulacion');
 
         $mail_usuario['mail'] = $this->session->userdata('usuario');
+       
         $cod_usuario = $this->usuario_modelo->buscar_usuario($mail_usuario);
+        //$cod_usuario= $this->session->userdata('cod_usuario');
         $data = $this->fichero_modelo->buscar_certificado($datos);
+
         $val = $this->titulacion->buscar_titulacion($datos);
         $data['titulacion'] = $this->creaSelect($val);
 
         $data['fecha'] = $this->formato_fecha_bajar($data['fecha']);
-
 
         if ($this->form_validation->run() == FALSE) {
 
@@ -222,7 +226,9 @@ class fichero extends mi_controlador {
             $data['error'] = $this->session->flashdata('error');
             //  print_r($data);
             $cuerpo = $this->load->view('modificar_fichero', $data, TRUE);
-            $this->plantilla($cuerpo);
+            $mensaje['mensaje'] = "Modificar certificado";
+            $aviso = $this->load->view('mensaje', $mensaje, TRUE);
+            $this->plantilla($aviso . $cuerpo);
         } else {
 
             $cod = $this->input->post('cod');
@@ -244,6 +250,7 @@ class fichero extends mi_controlador {
             //conversion de fecha para subir al servidor
             $datos['fecha'] = $this->formato_fecha_subir($datos['fecha']);
 
+
             if ($this->fichero_modelo->modificar_certificado($cod, $datos)) {
 
 
@@ -257,12 +264,31 @@ class fichero extends mi_controlador {
                     $this->fichero_modelo->insertar_historico($hitorico);
                 }
 
+             if($_FILES['fichero']['size']>0){             
+
+                      $dir= $datos['ruta']."/".$cod.'.pdf';
+                    //  print_r($dir);
+
+                    if(file_exists($dir)){
+                           //chmod($dir,0777);
+                        if(unlink($dir)){
+                      //    print_r($_FILES['fichero']['size']);
+                        $this->do_upload($cod_usuario, $cod);
+                        }
+                    }
+
+            }else{
 
                 $cuerpo = $this->mostrar_titulo($cod);
-                $this->plantilla($cuerpo);
+                $this->plantilla($cuerpo); 
+               
+                
+            }
+
+
             } else {
                 $this->session->set_flashdata('error', 'Error al modificar el fichero');
-                redirect(site_url('index.php/fichero/modificar_titulo'));
+                redirect(site_url('index.php/fichero/modificar_titulo'.$cod));
             }
         }
     }
@@ -274,7 +300,7 @@ class fichero extends mi_controlador {
      */
     function mostrar_enlaces_editar($value = '') {
 
-
+        $data['error'] = $this->session->flashdata('error');
         $codusuario = $this->session->userdata('cod_usuario');
         $aviso = "";
         switch ($value) {
@@ -320,7 +346,7 @@ class fichero extends mi_controlador {
             default:
                 $mensaje['mensaje'] = "Seleccione la opcion para buscar los certificados";
                 $aviso = $this->load->view('mensaje', $mensaje, TRUE);
-                $cuerpo = $this->load->view('mostrar_enlaces_editar', 0, TRUE);
+                $cuerpo = $this->load->view('mostrar_enlaces_editar', $data, TRUE);
                 break;
         }
 

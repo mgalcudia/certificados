@@ -33,14 +33,17 @@ class usuario_modelo extends CI_Model {
         $consulta = $this->db->get('usuario');
 
         if ($consulta->result()) {
-            var_dump('tiene');
+            
             return true;
         } else {
-            var_dump(' NO tiene');
+         
             return false;
         }
     }
 
+    /**
+    * Comprueba que el pass y el usuario es correcto para loguearse
+    */
     function loginok($mail, $pasword) {
 
         $sql = "select * from usuario where mail = '" . $mail . "' AND pasword = '" . $pasword . "' AND activo = '1'";
@@ -68,6 +71,27 @@ class usuario_modelo extends CI_Model {
         } else {
             return false;
         }
+    }
+
+    /**
+    *
+    */
+    function usuario_activo($data){
+
+        $this->db->where('mail', $data);
+        $this->db->where('activo', '1');
+        $consulta=$this->db->get('usuario');
+        
+        if($consulta->result()){
+            return true;
+
+        }else{
+            return false;
+
+        }
+
+
+
     }
 
     /**

@@ -4,11 +4,13 @@
     <input type="hidden" id="cod" class="form-control" name="cod" value="<?= $cod; ?>"/>
     <input type="hidden" id="cod" class="form-control" name="cod_user" value="<?= $cod_usuario; ?>"/>
 
-    <div class="form-group">
-        <label class="form-group">Nombre</label>
-        <input type="text" id="curso" class="form-control" name="curso" value="<?= (set_value('curso')) ? set_value('curso') : $nombre; ?>" placeholder="Nombre titulacion" />
-        <span class="help-block"><?= form_error('curso') ?></span>        
-    </div>
+        <div class="row form-group">
+            <div class=" col-xs-12 ">
+                <label class="form-group">Nombre</label>
+                <input type="text" id="curso" class="form-control" name="curso" value="<?= (set_value('curso')) ? set_value('curso') : $nombre;?>" placeholder="Nombre titulacion" />
+                <span class="help-block"><?= form_error('curso') ?></span>     
+            </div>   
+        </div>
     <div class="row form-group">
         <div class=" col-xs-11 col-md-4 ">
             <label class="form-group">Horas</label>
@@ -31,7 +33,7 @@
     <div class="row form-group">
         <div class="col-xs-11 col-md-5">
             <label class="control-label">Agrega el certificado</label>
-            falta poner un boton para agregar el fichero
+           <input  type="file" id="subir_fichero" name="fichero" class="file">
         </div>
         <div class=" col-xs-11 col-md-3">
             <label class="form-group">Tipo</label>

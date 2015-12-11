@@ -6,7 +6,7 @@
         <input type="hidden" id="cod" class="form-control" name="cod" value="<?= $cod; ?>"/>
 
         <div class="row form-group">
-            <div class=" col-xs-11 ">
+            <div class=" col-xs-12">
                 <label class="form-group">Nombre</label>
                 <input type="text" id="curso" class="form-control" name="curso" value="<?= set_value('curso'); ?>" placeholder="Nombre titulacion" />
                 <span class="help-block"><?= form_error('curso') ?></span>     
@@ -35,7 +35,7 @@
         <div class="row form-group">
             <div class="col-xs-11 col-md-5">
                 <label class="control-label">Agrega el certificado</label>
-                <input  type="file" id="subir_fichero" name="fichero">
+                <input  type="file" id="subir_fichero" name="fichero" class="file">
             </div>
             <div class=" col-xs-11 col-md-3">
                 <label class="form-group">Tipo</label>
@@ -82,3 +82,5 @@
     </form>
 
 </div>
+
+
