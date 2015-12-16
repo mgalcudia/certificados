@@ -29,12 +29,16 @@ class fichero_modelo extends CI_Model {
         }
     }
 
-    /**
-     * 
-     * Funcion para editar en certificados
-     */
+/**
+ * Edita los certificado de cada usuario
+ * @param  string $cod   codigo de certificado
+ * @param  array $datos  array de datos
+ * @return bool          
+ */
     function editar_certificado($cod, $datos) {
 
+        $cod_usuario = $this->session->userdata('cod_usuario');
+        $this->db->where('cod_usuario', $cod_usuario);
         $this->db->where('cod', $cod);
         if ($this->db->update('certificado', $datos)) {
             return true;
@@ -43,9 +47,11 @@ class fichero_modelo extends CI_Model {
         }
     }
 
-    /**
-     * funcion para crear el corte
-     */
+/**
+ * Inserta los codigo de los certificado
+ * @param  [type] $hitorico [description]
+ * @return [type]           [description]
+ */
     function insertar_historico($hitorico) {
 
         if ($this->db->insert('historico', $hitorico)) {
@@ -59,18 +65,28 @@ class fichero_modelo extends CI_Model {
     /**
      * Busca certificado por diversos criterios
      * recogidos en $datos
-     * @param type $datos
-     * @return type
+     * @param array $datos
+     * @return array de los datos de un certificado
      */
     function buscar_certificado($datos) {
-        //  print_r($this->session->userdata('cod_usuario'));
+
+        $cod_usuario = $this->session->userdata('cod_usuario');
+        $this->db->where('cod_usuario', $cod_usuario);
         $this->db->where($datos);
         $query = $this->db->get('certificado');
         return $query->row_array();
     }
 
+/**
+ * Modifica los datos de un certificado
+ * @param  string $cod  codigo de certificado
+ * @param  array  $data  datos a modificados del certificado
+ * @return bool      
+ */
     function modificar_certificado($cod, $data) {
 
+        $cod_usuario = $this->session->userdata('cod_usuario');
+        $this->db->where('cod_usuario', $cod_usuario);
         $this->db->where('cod', $cod);
         if ($this->db->update('certificado', $data)) {
 
@@ -87,7 +103,7 @@ class fichero_modelo extends CI_Model {
      * @return type
      */
     function buscar_varios_certificados($datos) {
-        // print_r($datos);
+        
         $cod_usuario = $this->session->userdata('cod_usuario');
         $this->db->select('cod');
         $this->db->from('certificado');
@@ -97,6 +113,14 @@ class fichero_modelo extends CI_Model {
         return $query->result_array();
     }
 
+/**
+ * Obtiene cursos filtrados por titulacion
+ * 
+ * @param  string $tipo       tipo de certificado
+ * @param  string $titulacion [description]
+ * @param  string $baremado   [description]
+ * @return [type]             [description]
+ */
     function certificado_tiulacion($tipo = "", $titulacion = "", $baremado = "") {
 
         $cod_usuario = $this->session->userdata('cod_usuario');
@@ -125,16 +149,32 @@ class fichero_modelo extends CI_Model {
         }
     }
 
+/**
+ *  Borrar certificado
+ * @param  array  $datos datos del certificado a eliminar
+ */
     function borrar_certificado($datos) {
-
+        $cod_usuario = $this->session->userdata('cod_usuario');
+        $this->db->where('cod_usuario', $cod_usuario);
         $this->db->delete('certificado', $datos);
     }
 
+/**
+ * funcion para buscar certificad filtrado por el nombre
+ * @param  string $cadena parte del nombre del certificado
+ * @return array         certificado que corresponden a esa parte del nombreS
+ */
     public function search($cadena) {
-
+        $cod_usuario = $this->session->userdata('cod_usuario');
+       
+        $this->db->where('cod_usuario', $cod_usuario);
         $this->db->like('nombre', $cadena, 'both');
+        /*
         $this->db->or_like('nombre', $cadena, 'before');
+                $this->db->where('cod_usuario', $cod_usuario);
         $this->db->or_like('nombre', $cadena, 'after');
+                $this->db->where('cod_usuario', $cod_usuario);
+                */
         $consulta = $this->db->get('certificado');
 
         if ($consulta->num_rows() > 0) {

@@ -128,19 +128,20 @@ class fichero extends mi_controlador {
 
 
         $config['file_name'] = $cod_curso . '.pdf';
-        $config['upload_path'] = APPPATH . "../almacen/" . $cod_usuario . "/";
+        $config['upload_path'] = APPPATH . "../almacen/".$cod_usuario."/";
         $config['allowed_types'] = 'pdf';
         $config['remove_spaces'] = TRUE;
         $config['max_size'] = '2048';
 
-
+        // print_r($cod_usuario);
+        // print_r($config['upload_path']);
 
         $this->load->library('upload', $config);
-        // print_r($this->upload->data());
+
         if (!$this->upload->do_upload('fichero')) {
             $this->session->set_flashdata('error', 'Error al Subir el fichero');
 
-            redirect('fichero/agregar_fichero');
+          //  redirect('fichero/agregar_fichero');
         } else {
             $data['error'] = 'Fichero subido';
 
@@ -267,14 +268,17 @@ class fichero extends mi_controlador {
              if($_FILES['fichero']['size']>0){             
 
                       $dir= $datos['ruta']."/".$cod.'.pdf';
-                    //  print_r($dir);
+                      
 
                     if(file_exists($dir)){
-                           //chmod($dir,0777);
+                        chmod($dir,0777);
                         if(unlink($dir)){
-                      //    print_r($_FILES['fichero']['size']);
-                        $this->do_upload($cod_usuario, $cod);
+                         
+                        $this->do_upload($datos['cod_usuario'], $cod);
                         }
+                    }else{
+                        //print_r($_FILES['fichero']['size']);
+                        $this->do_upload($datos['cod_usuario'], $cod);                        
                     }
 
             }else{
