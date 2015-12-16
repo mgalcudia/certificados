@@ -44,5 +44,32 @@ function quitarhidden() {
     }
 }
 
+function buscador(){
+    
+    if (navigator.userAgent.toLowerCase().indexOf('chrome') >-1)
+  {
+
+    if(navigator.appName.toLowerCase().indexOf('netscape') >-1){
+
+    }else{
+
+      $('#insertame-texto').html(        
+       '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Atencion!</strong>\n\
+         La aplicacion ha sido desarrollada para su uso con chrome.');
+
+    }
+     //document.bgColor = '#ff0000'; //Aqua
+
+  }
+ else{
+
+     $('#insertame-texto').html(        
+       '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Atencion!</strong>\n\
+         La aplicacion ha sido desarrollada para su uso con chrome\n\
+        algunas funcionalidades no funcionarán correctamente.</div>');
+  }
+    
+}
+
 
 

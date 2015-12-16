@@ -1,4 +1,5 @@
-<div class="logi">
+
+<div class="logi row">
     <form  class="logi" role="form" action="<?= base_url("index.php/usuario/login") ?>" method="post">
         <div class="col-md-6 col-md-offset-2">
             <h3> <p class="text-primary text-center line-height">CERTIFICADOS 1.0</p></h3>
@@ -34,4 +35,6 @@
         </div>
 
     </form>
+
 </div>
+<div id="insertame-texto"></div>

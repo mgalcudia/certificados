@@ -16,7 +16,8 @@
         <title>Certificado</title>
 
     </head>
-    <body>
+    
+    <body <?php if (isset($buscador)) echo $buscador; ?>>
         <div class="container">
 
             <header>

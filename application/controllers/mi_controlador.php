@@ -16,26 +16,22 @@ class mi_controlador extends CI_Controller {
      * Carga la plantilla html (encabezado, menu, cuerpo y pie).
      * @param unknown $cuerpo
      */
+    
     function plantilla($cuerpo) {
-
-
 
         if (!$this->session->userdata('usuario')) {
             $encabezado = $this->load->view("cabecera", 0, TRUE);
-
             $menu_izq = $this->load->view("menu_izq", 0, TRUE);
         } else {
             $datos_menuizq['historicos'] = $this->historico_modelo->year_corte();
-
             $datos_cabecera['datos'] = $this->load->view('cabecerastring', 0, TRUE);
             $datos_menuizq['datos_menu'] = $this->load->view('menuizqstring', $datos_menuizq, TRUE);
             $encabezado = $this->load->view("cabecera", $datos_cabecera, TRUE);
 
             $menu_izq = $this->load->view("menu_izq", $datos_menuizq, TRUE);
         }
-        $pie = $this->load->view("pie", 0, TRUE);
 
-        //Creo una plantilla con los apartados a mostrar
+        $pie = $this->load->view("pie", 0, TRUE);
 
         $this->load->view('plantilla', array(
             'encabezado' => $encabezado,
@@ -44,6 +40,8 @@ class mi_controlador extends CI_Controller {
             'pie' => $pie
         ));
     }
+
+
 
     /**
      * Funcion para paginar los productos
@@ -91,7 +89,7 @@ class mi_controlador extends CI_Controller {
         $this->email->from('aula4@iessansebastian.com', 'Certificados 1.0');
         $this->email->to($mail['mail']);
         $this->email->subject('Nuevo password');
-        $this->email->message("<html><body><h2>Modifique la contraseña a una de su gusto</h2><p>Usuario:<font color='red'>" . $mail .
+        $this->email->message("<html><body><h1>Hola ".$usuario."<h1/><br/><h2>Modifique la contraseña a una de su gusto</h2><p>Usuario:<font color='red'>" . $mail .
                 "</font></p><p>Nuevo password--> <font color='red'>$contra</font></p></body></html>");
         return $this->email->send();
     }
@@ -100,7 +98,7 @@ class mi_controlador extends CI_Controller {
 
 
         $opciones = $this->titulacion->listar_titulacion();
-        $html = "
+       $html = "
     <script type='text/javascript'>
         $(function () {
             $('#titulacion').multiselect({
@@ -197,8 +195,6 @@ class mi_controlador extends CI_Controller {
     }
 
     function formato_fecha_subir($fecha) {
-
-
         $fecha_nueva = new DateTime($fecha);
         $resultado = $fecha_nueva->format("Y-m-d");
         return $resultado;
@@ -208,7 +204,6 @@ class mi_controlador extends CI_Controller {
 
         $fecha_nueva = new DateTime($fecha);
         $resultado = $fecha_nueva->format("d-m-Y");
-
         return $resultado;
     }
 

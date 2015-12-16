@@ -84,11 +84,11 @@ class usuario extends mi_controlador {
 
         $this->form_validation->set_rules('mail', 'mail', 'trim|required|valid_email');
         $this->form_validation->set_rules('pasword', 'pasword', 'trim|required|md5');
-
+        $buscador['buscador']= 'onload="buscador()"';
         if ($this->form_validation->run() == FALSE) {
 
             if (!$this->session->userdata('usuario')) {
-                $cuerpo = $this->load->view('login', 0, TRUE);
+                $cuerpo = $this->load->view('login', $buscador, TRUE);
                 $this->plantilla($cuerpo);
             } else {
 
