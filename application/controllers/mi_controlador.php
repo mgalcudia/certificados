@@ -41,38 +41,11 @@ class mi_controlador extends CI_Controller {
         ));
     }
 
-
-
-    /**
-     * Funcion para paginar los productos
-     * @param type $url localizador del controlador donde nos encontramos 
-     * @param type $total_pagina
-     * @param type $total_filas
-     * @return type devuelve el paginador
-     */
-    function paginador($url, $total_pagina, $total_filas, $segm = 4) {
-
-        $config['uri_segment'] = $segm;
-        $config['base_url'] = $url;
-        $config['total_rows'] = $total_filas;
-        $config['per_page'] = $total_pagina;
-        $config['num_links'] = 2;
-        $config['first_link'] = 'Primero';
-        $config['last_link'] = 'Último';
-        $config['full_tag_open'] = '<div id="paginacion">'; //el div que debemos maquetar
-        $config['full_tag_close'] = '</div>'; //el cierre del div de la paginación
-
-        $this->pagination->initialize($config);
-
-
-        return $this->pagination->create_links();
-    }
-
     /**
      * envia al usuario un correo informandole del la modificacion de su contraseña.
      * @param type $usuario
      * @param type $mail
-     * @return type
+     * @return envia el correo
      */
     function password_mail($usuario, $mail, $contra) {
 
@@ -94,6 +67,11 @@ class mi_controlador extends CI_Controller {
         return $this->email->send();
     }
 
+/**
+ * funcion para crear el selec con datos de las titulaciones
+ * @param  array $sel las posiciones de las titulaciones en su tabla
+ * @return string        envia el selec para pintarlo en el html
+ */
     function creaSelect($sel = '') {
 
 
@@ -125,6 +103,11 @@ class mi_controlador extends CI_Controller {
         return $html;
     }
 
+/**
+ * funcion para crear el selec vacio de las titulaciones
+ * @param array   $sel    las posiciones de las titulaciones en su tabla
+ * @return string envia el selec para pintarlo en el html
+ */
     function crea_no_selected($sel = '') {
 
 
@@ -155,7 +138,7 @@ class mi_controlador extends CI_Controller {
     /**
      * Funcion para mostrar titulos 
      * Recibe por parametro el cod del curso 
-     * @param type $cod
+     * @param string    $cod    codigo del curso en su tabla
      */
     function mostrar_titulo($cod = '') {
 
@@ -170,19 +153,14 @@ class mi_controlador extends CI_Controller {
 
         $data['titulacion'] = $this->titulacion->buscar_nombre_titulacion($datos);
 
-        // convertirmos la fecha del servidor en una meda (d-m-y)
+
         $data['fecha'] = $this->formato_fecha_bajar($data['fecha']);
-
-
-
 
         if ($data['baremado']) {
             $data['baremo'] = 'si';
         } else {
             $data['baremo'] = 'no';
         }
-
-        //$data['cod'] = '67';// codigo puesto para testeo
 
         $emisor = $this->emisor_certificado->listar_emisor();
         $tipo = $this->emisor_certificado->listar_tipo();
@@ -194,12 +172,22 @@ class mi_controlador extends CI_Controller {
         return $cuerpo = $this->load->view('mostrar_curso', $data, TRUE);
     }
 
+/**
+ * convierte el formato para insertar la fecha en la base de datos
+ * @param  date $fecha  fecha en formato "d-m-Y"
+ * @return date fecha en formato "Y-m-d"
+ */
     function formato_fecha_subir($fecha) {
         $fecha_nueva = new DateTime($fecha);
         $resultado = $fecha_nueva->format("Y-m-d");
         return $resultado;
     }
 
+/**
+ * convierte el formato de la fecha descargada de la base de datos
+ * @param  date $fecha  fecha en formato "Y-m-d"
+ * @return date fecha en formato "d-m-Y"
+ */
     function formato_fecha_bajar($fecha) {
 
         $fecha_nueva = new DateTime($fecha);

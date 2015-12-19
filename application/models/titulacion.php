@@ -16,6 +16,10 @@ class titulacion extends CI_Model {
         $this->load->database();
     }
 
+/**
+ * Listar titulaciones
+ * @return array titulaciones
+ */
     function listar_titulacion() {
 
         $resultado = "select * from titulacion";
@@ -32,20 +36,29 @@ class titulacion extends CI_Model {
         }
     }
 
-    /**
-     *   Inserta en la tabla certificado_has_titulacion el curso relacionado con sus titulaciones    
-     */
+
+/**
+ * Inserta en la tabla certificado_has_titulacion el curso relacionado con sus titulaciones
+ * @param  string    $cod_curso  codigo de certificado
+ * @param  array    $titulaciones   codigo de titulaciones 
+ * @return [type]               [description]
+ */
     function insertar_titulacion_a_titulo($cod_curso, $titulaciones) {
         $datos['certificado_cod'] = $cod_curso;
 
         foreach ($titulaciones['titulacion_cod'] as $clave) {
 
             $datos['titulacion_cod'] = $clave;
-            //print_r($datos);
             $this->db->insert('certificado_has_titulacion', $datos);
         }
     }
 
+/**
+ * modifica la titulacion relacionado con el certificado
+ * @param  [type] $cod_curso    [description]
+ * @param  [type] $titulaciones [description]
+ * @return [type]               [description]
+ */
     function modificar_titulacion_a_titulo($cod_curso, $titulaciones) {
 
         $datos['certificado_cod'] = $cod_curso;
@@ -99,6 +112,11 @@ class titulacion extends CI_Model {
         return $nombre;
     }
 
+/**
+ * obtiene el nombre de la titulacion
+ * @param  array    $datos  codigo de las titulaciones
+ * @return nombre nobre de la titulacion
+ */
     function nombre_titulacion($datos) {
 
         $this->db->select('titulacion');
@@ -108,9 +126,12 @@ class titulacion extends CI_Model {
         return $resultado['titulacion'];
     }
 
+/**
+ * borra los datos de las titulaciones en la tabla que relaciona las titulaciones a los certificados
+ * @param  array    $datos  [description]
+ * @return [type]        [description]
+ */
     function borrar_titulaciones_certificado($datos) {
-
-
 
         $this->db->delete('certificado_has_titulacion', $datos);
     }

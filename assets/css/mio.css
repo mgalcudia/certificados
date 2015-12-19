@@ -1,16 +1,16 @@
-
+/**
+ * Proporciona un margen superior
+ */
 .margin-sup{
 
     margin-top: 5%; 
 
 }
 
-.col-centered{
-    float: none;
-    margin: 0 auto;
-}
 
-
+/**
+ * estilos del body
+ */
 body {
     padding-top: 70px;
     padding-bottom: 70px;
@@ -21,6 +21,9 @@ body {
 
 }
 
+/**
+ * estilos de la barra que separa las titulaciones mostradas
+ */
 hr {
     -moz-border-bottom-colors: none;
     -moz-border-image: none;
@@ -33,11 +36,17 @@ hr {
     margin: 18px 0;
 }
 
+/**
+ * Estilos del login
+ */
 .logi{
     background-color: #d6d1d1;
 
 
 }
+/**
+ * Estilos del navbar
+ */
 .navbar-inner {
     background-image: -moz-linear-gradient(top, #ffffff, #c6abab);
     background-image: -ms-linear-gradient(top, #ffffff, #c6abab);

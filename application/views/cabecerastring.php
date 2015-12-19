@@ -9,10 +9,10 @@
 </div>
 <div id="navbar" class="navbar-collapse collapse">
     <ul class="nav navbar-nav">
-        <li><a href="<?= base_url() ?>">Inicio</a></li>
+        
         <li><a href="<?= base_url('index.php/fichero/agregar_fichero') ?>">Añadir</a></li>
         <li><a href="<?= base_url('index.php/fichero/mostrar_enlaces_editar') ?>">Mostrar</a></li>
-        <li><a href="<?= base_url() ?>">Filtrar</a></li>
+        <li><a href="#">Convertir</a></li>
     </ul>
     <ul class="nav navbar-nav">
         <div class="pull-right">

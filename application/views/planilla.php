@@ -7,8 +7,8 @@
         <div class=" contenedor" id="contenedor"> </div>                 
     </div>
 </div>
-<script type="text/javascript">
 
+<script type="text/javascript">
     $("#autocompletar").on('keyup', function () {
         var info = $(this).val();
         $.ajax({

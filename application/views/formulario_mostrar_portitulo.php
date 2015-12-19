@@ -30,7 +30,7 @@
         </div>
         <div class="row form-group">
             <button type="submit" class="btn btn-primary btn-md login">Enviar</button>
-            <a class="btn btn-danger btn-md login pull-right" href="<?= base_url("index.php/fichero/mostrar_tipo_certificado") ?>">Cancelar </a>
+            <a class="btn btn-danger btn-md login pull-right" href="<?= base_url("index.php/fichero/mostrar_enlaces_editar") ?>">Cancelar </a>
         </div>
 
     </form>

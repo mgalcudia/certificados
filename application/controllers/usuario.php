@@ -33,10 +33,10 @@ class usuario extends mi_controlador {
         return TRUE;
     }
 
-    /**
-     * Funcion que registra los usuarios en la base de datos
-     * 
-     */
+/**
+ * Registro de usuario
+ * @return string redirige a site url
+ */
     function registro() {
 
         $this->form_validation->set_rules('nombre', 'nombre', 'trim|required');
@@ -76,10 +76,10 @@ class usuario extends mi_controlador {
         }
     }
 
-    /*
-     * funcion utizada en el login
+    /**
+     * Login del usuario
+     * @return [type] [description]
      */
-
     function login() {
 
         $this->form_validation->set_rules('mail', 'mail', 'trim|required|valid_email');
@@ -121,9 +121,11 @@ class usuario extends mi_controlador {
         }
     }
 
-    /**
-     * Cerrar sesión usuario
-     */
+
+/**
+ * Cerrar sesion usuario
+ * @return [type] [description]
+ */
     function salir() {
 
         if ($this->session->userdata('usuario')) {
@@ -149,9 +151,10 @@ class usuario extends mi_controlador {
         }
     }
 
-    /**
-     * Da de baja a un usuario
-     */
+/**
+ * Da de baja a un usuario
+ * @return [type] [description]
+ */
     function baja() {
 
         if ($this->session->userdata('usuario')) {
@@ -178,10 +181,10 @@ class usuario extends mi_controlador {
         }
     }
 
-    /*
-     * Restaura la contraseña del usuario recibiendo como dato el correo electronico
+    /**
+     * Restaura la contraseña del usuario
+     * @return [type] [description]
      */
-
     function recuperar_pass() {
 
         $this->form_validation->set_rules('mail', 'mail', 'trim|required|valid_email');
@@ -243,10 +246,10 @@ class usuario extends mi_controlador {
         }
     }
 
-    /*
-     * funcion que genera una clave aleatoria para la restauracion de contraseña
-     */
-
+/**
+ * Genera clave aleatoria para la restauracion del pass
+ * @return [type] [description]
+ */
     function getrandomcode() {
         $an = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ-)(.:,;";
         $su = strlen($an) - 1;
@@ -261,10 +264,10 @@ class usuario extends mi_controlador {
                 substr($an, rand(0, $su), 1);
     }
 
-    /*
-     * Edita usuario
-     */
-
+/**
+ * Edita los datos del usuario
+ * @return [type] [description]
+ */
     function editarusuario() {
 
         $this->form_validation->set_rules('nombre', 'nombre', 'trim|required');

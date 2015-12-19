@@ -24,9 +24,11 @@ class usuario_modelo extends CI_Model {
         $this->db->insert('usuario', $data);
     }
 
-    /**
-     * Comprobar si el usuario existe
-     */
+/**
+ * Comprobar si el usuario existe por correo
+ * @param  string   $data   correo electronico
+ * @return array si es ok devuelve un array de dato
+ */
     function existe_usuario($data) {
         var_dump($data);
         $this->db->where('mail', $data);
@@ -41,9 +43,13 @@ class usuario_modelo extends CI_Model {
         }
     }
 
-    /**
-    * Comprueba que el pass y el usuario es correcto para loguearse
-    */
+
+/**
+ * Comprueba que el pass y el usuario es correcto para loguearse
+ * @param  string   $mail   correo electronico
+ * @param  string   $pasword    contraseña
+ * @return bool true si es ok
+ */
     function loginok($mail, $pasword) {
 
         $sql = "select * from usuario where mail = '" . $mail . "' AND pasword = '" . $pasword . "' AND activo = '1'";
@@ -57,9 +63,13 @@ class usuario_modelo extends CI_Model {
         }
     }
 
-    /**
-     * Comprobar si el usuario existe por correo
-     */
+
+
+/**
+ * Comprobar si el usuario existe por correo
+ * @param  string   $data   correo electronico
+ * @return array si es ok devuelve un array de dato
+ */
     function existe_mail($data) {
         //var_dump($data);
         $this->db->where('mail', $data);
@@ -73,9 +83,12 @@ class usuario_modelo extends CI_Model {
         }
     }
 
-    /**
-    *
-    */
+
+/**
+ * Comprueba si el usuario esta activo
+ * @param  string   $data   correo electronico
+ * @return bool true si es ok
+ */
     function usuario_activo($data){
 
         $this->db->where('mail', $data);

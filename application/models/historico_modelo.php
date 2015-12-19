@@ -34,6 +34,11 @@ class historico_modelo extends CI_Model {
         return($consulta->result_array());
     }
 
+/**
+ * certificado relacionado con los años de corte
+ * @param  string   $year   año del corte
+ * @return array array de datos de los certificados
+ */
     function cursos_corte($year) {
 
         $cod_usuario = $this->session->userdata('cod_usuario');
@@ -45,11 +50,13 @@ class historico_modelo extends CI_Model {
         $this->db->order_by('c.cod_tipo_cer', 'desc');
         $consulta = $this->db->get();
 
-
-
         return($consulta->result_array());
     }
 
+/**
+ * borrar los datos de los certificado en el historico
+ * @param  array    $datos  para borrar en el historico
+ */
     function borrar_historico($datos) {
 
         $this->db->delete('historico', $datos);

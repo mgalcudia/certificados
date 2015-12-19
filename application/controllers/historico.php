@@ -10,6 +10,11 @@ class historico extends mi_controlador {
         parent::__construct();
     }
 
+/**
+ * Muestra los cursos asignados a cada año de corte
+ * @param  string   $year   año del corte
+ * @return string los cursos pasados por parametos a la plantilla
+ */
     function mostrar_historico($year = "") {
         $cuerpo = "";
         //$year= $this->historico_modelo->year_corte();

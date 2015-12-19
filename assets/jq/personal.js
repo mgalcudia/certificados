@@ -1,6 +1,10 @@
 console.log("lo lee");
-function quitarReadOnly(id)
-{
+/**
+ * fucion  para poder editar los input type
+ * @param  int id     el numero de campos recogido en su id
+ * @return {[type]}    [description]
+ */
+function quitarReadOnly(id) {
 
     for (var i = 1; i <= id; i++)
     {
@@ -22,7 +26,10 @@ function quitarReadOnly(id)
 
 }
 
-
+/**
+ * Quita el hidden del boton de enviar
+ * @return {[type]} [description]
+ */
 function quitarhidden() {
 
     if ($('#pass').attr("type") == "hidden") {
@@ -44,6 +51,10 @@ function quitarhidden() {
     }
 }
 
+/**
+ * identifica si el buscador que utiliza el usuario es google chrome
+ * @return {[type]} [description]
+ */
 function buscador(){
     
     if (navigator.userAgent.toLowerCase().indexOf('chrome') >-1)
@@ -57,8 +68,7 @@ function buscador(){
        '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Atencion!</strong>\n\
          La aplicacion ha sido desarrollada para su uso con chrome.');
 
-    }
-     //document.bgColor = '#ff0000'; //Aqua
+    }    
 
   }
  else{

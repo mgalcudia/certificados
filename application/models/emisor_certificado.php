@@ -16,6 +16,10 @@ class emisor_certificado extends CI_Model {
         $this->load->database();
     }
 
+/**
+ * lista los emisores de certificados
+ * @return array emisores
+ */
     function listar_emisor() {
 
         $resultado = "select * from emisor";
@@ -33,6 +37,10 @@ class emisor_certificado extends CI_Model {
         }
     }
 
+/**
+ * Lista los tipos de certificados
+ * @return array tipos de certificados
+ */
     function listar_tipo() {
 
         $resultado = "select * from tipo_certificado";
@@ -49,6 +57,10 @@ class emisor_certificado extends CI_Model {
         }
     }
 
+/**
+ * Listar tipos de emisores
+ * @return array tipos de emisores
+ */
     function listar_tipo_emisor() {
 
         $resultado = "select * from tipo_emisor";

@@ -16,6 +16,10 @@ class inicio extends mi_controlador {
         parent::__construct();
     }
 
+/**
+ * index de la aplicacion manda a la vista de login
+ * @return url redirecciona al login
+ */
     function index() {
 
         redirect(base_url('index.php/usuario/login'));

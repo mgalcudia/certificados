@@ -10,6 +10,11 @@ class fichero extends mi_controlador {
         parent::__construct();
     }
 
+/**
+ * Comprueba para el form_validation que se ha seleccionado al menos una titulacion
+ * @param  array $titulacion array de titulaciones
+ * @return bool             true si selecciona alguna false si no seleccionado
+ */
     function valida_titulacion($titulacion) {
 
 
@@ -31,6 +36,11 @@ class fichero extends mi_controlador {
         }
     }
 
+/**
+ * Comprueba la fecha pra el form_validation
+ * @param  date $input   dd-mm-yyyy
+ * @return bool          true si es ok y false si no
+ */
     function fecha($input) {
 
 
@@ -54,10 +64,10 @@ class fichero extends mi_controlador {
         }
     }
 
-    /**
-     * Agrega los datos del certificado a subir y sube el fichero al servidor
-     * 
-     */
+/**
+ * Agrega los datos del certificado a subir y sube el fichero al servidor
+ * @return [type] [description]
+ */
     function agregar_fichero() {
 
         $this->form_validation->set_rules('curso', 'curso', 'trim|required');
@@ -121,8 +131,8 @@ class fichero extends mi_controlador {
 
     /**
      * Funcion para subir certificados al servidor 
-     * @param type $cod_usuario
-     * @param type $cod_curso
+     * @param string $cod_usuario
+     * @param string $cod_curso
      */
     function do_upload($cod_usuario, $cod_curso) {
 
@@ -133,24 +143,26 @@ class fichero extends mi_controlador {
         $config['remove_spaces'] = TRUE;
         $config['max_size'] = '2048';
 
-        // print_r($cod_usuario);
-        // print_r($config['upload_path']);
-
         $this->load->library('upload', $config);
 
         if (!$this->upload->do_upload('fichero')) {
             $this->session->set_flashdata('error', 'Error al Subir el fichero');
 
-          //  redirect('fichero/agregar_fichero');
+
         } else {
             $data['error'] = 'Fichero subido';
 
-            // TODO: ENVIAR A LA VISTA DONDE SE VE EL CERTIFICADO SUBIDO
+
             $cuerpo = $this->mostrar_titulo($cod_curso);
             $this->plantilla($cuerpo);
         }
     }
 
+/**
+ * Elimina un certificado
+ * @param  string $cod codigo del certificado
+ * @return manda a la vista donde selecciona el filtro para ver los certificados
+ */
     function eliminar_certificado($cod = "") {
 
         $datos['cod'] = $cod;
@@ -203,7 +215,6 @@ class fichero extends mi_controlador {
         $mail_usuario['mail'] = $this->session->userdata('usuario');
        
         $cod_usuario = $this->usuario_modelo->buscar_usuario($mail_usuario);
-        //$cod_usuario= $this->session->userdata('cod_usuario');
         $data = $this->fichero_modelo->buscar_certificado($datos);
 
         $val = $this->titulacion->buscar_titulacion($datos);
@@ -221,11 +232,11 @@ class fichero extends mi_controlador {
                 $data['no'] = 'checked';
             }
 
-            //  $data['cod'] = '67';
+
             $data['emisor'] = $this->emisor_certificado->listar_emisor();
             $data['tipocertificado'] = $this->emisor_certificado->listar_tipo();
             $data['error'] = $this->session->flashdata('error');
-            //  print_r($data);
+
             $cuerpo = $this->load->view('modificar_fichero', $data, TRUE);
             $mensaje['mensaje'] = "Modificar certificado";
             $aviso = $this->load->view('mensaje', $mensaje, TRUE);
@@ -233,7 +244,7 @@ class fichero extends mi_controlador {
         } else {
 
             $cod = $this->input->post('cod');
-            // print_r($cod);
+
             $datos['cod_usuario'] = $this->input->post('cod_user');
             $datos['nombre'] = $this->input->post('curso');
             $datos['horas'] = $this->input->post('hora');
@@ -244,9 +255,9 @@ class fichero extends mi_controlador {
             $titulaciones['titulacion_cod'] = $this->input->post('titulacion');
             $datos['observaciones'] = $this->input->post('observaciones');
             $datos['baremado'] = $this->input->post('baremado');
-            // print_r($datos['cod_usuario']);
+
             $datos['ruta'] = APPPATH . "../almacen/" . $datos['cod_usuario'];
-            //  print_r($datos['ruta']);
+
             //si se modifica el certificado
             //conversion de fecha para subir al servidor
             $datos['fecha'] = $this->formato_fecha_subir($datos['fecha']);
@@ -277,7 +288,7 @@ class fichero extends mi_controlador {
                         $this->do_upload($datos['cod_usuario'], $cod);
                         }
                     }else{
-                        //print_r($_FILES['fichero']['size']);
+
                         $this->do_upload($datos['cod_usuario'], $cod);                        
                     }
 
@@ -299,8 +310,8 @@ class fichero extends mi_controlador {
 
     /**
      * Funcion para mostrar los enlaces de las opciones para buscar los certificados y editarlos
-     * @param type $cod_usuario
-     * @param type $cod_curso
+     * @param string $value parametro para filtrar la opcion seleccionada por el usuario
+     * @return plantilla para mostrar cursos o pantalla de seleccion de filtro
      */
     function mostrar_enlaces_editar($value = '') {
 
@@ -357,6 +368,11 @@ class fichero extends mi_controlador {
         $this->plantilla($aviso . $cuerpo);
     }
 
+/**
+ * Muestra los certificados baremados o no baremados
+ * @param  string $consulta recibe "baremado =>1" o "nobaremado=>0"
+ * @return string            cuerpo para mostrar
+ */
     function mostrar_estado_baremado($consulta) {
         $cuerpo = "";
         $datos = $this->fichero_modelo->buscar_varios_certificados($consulta);
@@ -371,6 +387,10 @@ class fichero extends mi_controlador {
         return $cuerpo;
     }
 
+/**
+ * Muestra los certificados depentiendo del tipo que sean , el tipo titulacion es un parametro opcional
+ * @return certificados a mostrar o redirige si la consulta no tiene resultados
+ */
     function mostrar_tipo_certificado() {
 
         $this->form_validation->set_rules('tipo', 'tipo', 'trim|required');
@@ -418,10 +438,12 @@ class fichero extends mi_controlador {
         }
     }
 
-    /**
-     *   funcion que recibiendo un array con codigos de certificados los gestiona para mostrarlos evitando que se repitan
-     *
-     * */
+/**
+ * funcion que recibiendo un array con codigos de certificados los gestiona para mostrarlos evitando que se repitan
+ * @param  array $consulta  array de certificados
+ * @param  string $lugar    parametro que indica el filtro de donde se solicitaba la acción
+ * @return string           cuerpo de certificados a mostrar
+ */
     function recorre_array_consulta($consulta, $lugar) {
 
         $cuerpo = "";
@@ -457,13 +479,14 @@ class fichero extends mi_controlador {
         $this->plantilla($cuerpo);
     }
 
-    /**
-     *   Funcion para mostrar los certificados asignados por titulacion
-     *
-     * */
+
+/**
+ * Funcion para mostrar los certificados asignados por titulacion
+ * @return array codigos de cursos
+ */
     function mostrar_tipo_titulacion() {
 
-        // $consulta=array();
+
 
         if ($this->input->post()) {
 
@@ -491,6 +514,10 @@ class fichero extends mi_controlador {
         }
     }
 
+/**
+ * vista autocompletar usando ajax
+ * @return string vista de la funcion pedida
+ */
     public function view_autocompletar() {
 
         $datos['title'] = 'Buscador';
@@ -498,6 +525,10 @@ class fichero extends mi_controlador {
         return $this->load->view('planilla', $datos, TRUE);
     }
 
+/**
+ * Recibe la peticion ajax y le devuelve el resultado
+ * @return string enlace a mostrar el curso
+ */
     public function autocompletar() {
 
         $cuerpo = "";
@@ -522,6 +553,11 @@ class fichero extends mi_controlador {
         }
     }
 
+/**
+ * muestra un curso
+ * @param  string $cod codigo del cursos
+ * @return string muestra el curso en el cuerpo
+ */
     function mostrar_un_curso($cod = "") {
 
         $cuerpo = $this->mostrar_titulo($cod);
@@ -529,6 +565,10 @@ class fichero extends mi_controlador {
         $this->plantilla($cuerpo);
     }
 
+/**
+ * busca los curso coincidentes con lo escrito en el campo del navbar
+ * @return string muestra los cursos coindicentes enviados a la plantilla
+ */
     function buscar_curso() {
 
         $cuerpo = "";
@@ -536,23 +576,16 @@ class fichero extends mi_controlador {
 
         $nombre = $this->input->post('busqueda');
         $cod_curso = $this->fichero_modelo->search($nombre);
-
         $mensaje['mensaje'] = 'Certificados que contiene "' . $nombre . '"';
         $aviso = $this->load->view('mensaje', $mensaje, TRUE);
         if ($cod_curso !== FALSE) {
-
             foreach ($cod_curso as $key => $value) {
-
                 $cuerpo .= $this->mostrar_titulo($value['cod']);
             }
         } else {
-
-
             $mensaje['mensaje'] = '<br/><span class="text-danger">No hay resultados que contengan: "' . $nombre . '"</span>';
             $aviso = $this->load->view('mensaje', $mensaje, TRUE);
         }
-
-
         $this->plantilla($aviso . $cuerpo);
     }
 
