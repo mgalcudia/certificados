@@ -33,10 +33,10 @@ class usuario extends mi_controlador {
         return TRUE;
     }
 
-/**
- * Registro de usuario
- * @return string redirige a site url
- */
+    /**
+     * Registro de usuario
+     * @return string redirige a site url
+     */
     function registro() {
 
         $this->form_validation->set_rules('nombre', 'nombre', 'trim|required');
@@ -84,7 +84,7 @@ class usuario extends mi_controlador {
 
         $this->form_validation->set_rules('mail', 'mail', 'trim|required|valid_email');
         $this->form_validation->set_rules('pasword', 'pasword', 'trim|required|md5');
-        $buscador['buscador']= 'onload="buscador()"';
+        $buscador['buscador'] = 'onload="buscador()"';
         if ($this->form_validation->run() == FALSE) {
 
             if (!$this->session->userdata('usuario')) {
@@ -121,11 +121,10 @@ class usuario extends mi_controlador {
         }
     }
 
-
-/**
- * Cerrar sesion usuario
- * @return [type] [description]
- */
+    /**
+     * Cerrar sesion usuario
+     * @return [type] [description]
+     */
     function salir() {
 
         if ($this->session->userdata('usuario')) {
@@ -151,10 +150,10 @@ class usuario extends mi_controlador {
         }
     }
 
-/**
- * Da de baja a un usuario
- * @return [type] [description]
- */
+    /**
+     * Da de baja a un usuario
+     * @return [type] [description]
+     */
     function baja() {
 
         if ($this->session->userdata('usuario')) {
@@ -196,60 +195,57 @@ class usuario extends mi_controlador {
             $this->plantilla($cuerpo);
         } else {
             $correo = $this->input->post('mail');
-            
-            $activo= $this->usuario_modelo->usuario_activo($correo);
 
-            if($activo){
-               $consulta = $this->usuario_modelo->existe_mail($correo); 
-            if ($consulta) {
-                $aleatorio = $this->getrandomcode();
-                $usuario = $consulta['nombre'];
-                $mail['mail'] = $consulta['mail'];
-                $pass['pasword'] = md5($aleatorio);
-                $id = $consulta['cod'];
-                if ($this->usuario_modelo->editar_usuario($id, $pass)) {
+            $activo = $this->usuario_modelo->usuario_activo($correo);
 
-                    //mandamos el correo
-                    $this->password_mail($usuario, $mail, $aleatorio);
+            if ($activo) {
+                $consulta = $this->usuario_modelo->existe_mail($correo);
+                if ($consulta) {
+                    $aleatorio = $this->getrandomcode();
+                    $usuario = $consulta['nombre'];
+                    $mail['mail'] = $consulta['mail'];
+                    $pass['pasword'] = md5($aleatorio);
+                    $id = $consulta['cod'];
 
-                   
-                    //var_dump($pass);
-                    //Iniciamos la sesion del usuario y lo enviamos al panel de control
-                    if ($this->usuario_modelo->loginok($mail['mail'], $pass['pasword']) == true) {
-                $this->session->set_userdata('usuario', $mail['mail']);
-                $this->session->set_userdata('nombre', $consulta['nombre']);
-                $this->session->set_userdata('cod_usuario', $consulta['cod']);
-                        redirect(site_url(''));
+                    if ($this->usuario_modelo->editar_usuario($id, $pass)) {
+
+                        //mandamos el correo
+                        $this->password_mail($usuario, $mail, $aleatorio);
+
+
+                        //var_dump($pass);
+                        //Iniciamos la sesion del usuario y lo enviamos al panel de control
+                        if ($this->usuario_modelo->loginok($mail['mail'], $pass['pasword']) == true) {
+                            $this->session->set_userdata('usuario', $mail['mail']);
+                            $this->session->set_userdata('nombre', $consulta['nombre']);
+                            $this->session->set_userdata('cod_usuario', $consulta['cod']);
+                            redirect(site_url(''));
+                        }
+                    } else {
+
+                        $data['error'] = "<h1>Se ha producido un error al restaurar el password</h1>";
+                        $cuerpo = $this->load->view('recuperar_pass', $data, TRUE);
+                        $this->plantilla($cuerpo);
                     }
                 } else {
 
-                    $data['error'] = "<h1>Se ha producido un error al restaurar el password</h1>";
+                    $data['error'] = '<h3>El correo electronico no está registrado</h3>';
                     $cuerpo = $this->load->view('recuperar_pass', $data, TRUE);
                     $this->plantilla($cuerpo);
                 }
             } else {
 
-                $data['error'] = '<h3>El correo electronico no está registrado</h3>';
-                $cuerpo = $this->load->view('recuperar_pass', $data, TRUE);
-                $this->plantilla($cuerpo);
-            }
-
-            }else{
-
                 $data['error'] = '<h3>El usuario no está activo por favor contacte con el administrador</h3>';
                 $cuerpo = $this->load->view('recuperar_pass', $data, TRUE);
                 $this->plantilla($cuerpo);
-
             }
-
-
         }
     }
 
-/**
- * Genera clave aleatoria para la restauracion del pass
- * @return [type] [description]
- */
+    /**
+     * Genera clave aleatoria para la restauracion del pass
+     * @return [type] [description]
+     */
     function getrandomcode() {
         $an = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ-)(.:,;";
         $su = strlen($an) - 1;
@@ -264,12 +260,15 @@ class usuario extends mi_controlador {
                 substr($an, rand(0, $su), 1);
     }
 
-/**
- * Edita los datos del usuario
- * @return [type] [description]
- */
+    /**
+     * Edita los datos del usuario
+     * @return [type] [description]
+     */
     function editarusuario() {
-
+        $cod_usuario = $this->session->userdata('cod_usuario');
+        if (!$cod_usuario) {
+            redirect(site_url());
+        }
         $this->form_validation->set_rules('nombre', 'nombre', 'trim|required');
         $this->form_validation->set_rules('apellidos', 'apellidos', 'trim|required');
         $this->form_validation->set_rules('dni', 'dni', 'trim|required|exact_length[9]|callback_validarDNI');
@@ -279,7 +278,7 @@ class usuario extends mi_controlador {
 
         $datos['mail'] = $this->session->userdata('usuario');
 
-          //  print_r($this->session->userdata('usuario'));
+        //  print_r($this->session->userdata('usuario'));
 
         $data['datos'] = $this->usuario_modelo->buscar_usuario($datos);
 

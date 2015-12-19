@@ -23,7 +23,7 @@
 
                         <div class="form-group">
                             <label class="control-label" for="pasword">Password</label>
-                            <input type="text" class="form-control" name="pasword" placeholder="Password"/>
+                            <input type="password" class="form-control" name="pasword" placeholder="Password"/>
                             <span class="text-danger"><?= form_error('pasword') ?></span>
                         </div>
 

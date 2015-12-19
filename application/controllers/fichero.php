@@ -10,11 +10,11 @@ class fichero extends mi_controlador {
         parent::__construct();
     }
 
-/**
- * Comprueba para el form_validation que se ha seleccionado al menos una titulacion
- * @param  array $titulacion array de titulaciones
- * @return bool             true si selecciona alguna false si no seleccionado
- */
+    /**
+     * Comprueba para el form_validation que se ha seleccionado al menos una titulacion
+     * @param  array $titulacion array de titulaciones
+     * @return bool             true si selecciona alguna false si no seleccionado
+     */
     function valida_titulacion($titulacion) {
 
 
@@ -36,11 +36,11 @@ class fichero extends mi_controlador {
         }
     }
 
-/**
- * Comprueba la fecha pra el form_validation
- * @param  date $input   dd-mm-yyyy
- * @return bool          true si es ok y false si no
- */
+    /**
+     * Comprueba la fecha pra el form_validation
+     * @param  date $input   dd-mm-yyyy
+     * @return bool          true si es ok y false si no
+     */
     function fecha($input) {
 
 
@@ -64,12 +64,15 @@ class fichero extends mi_controlador {
         }
     }
 
-/**
- * Agrega los datos del certificado a subir y sube el fichero al servidor
- * @return [type] [description]
- */
+    /**
+     * Agrega los datos del certificado a subir y sube el fichero al servidor
+     * @return [type] [description]
+     */
     function agregar_fichero() {
-
+        $cod_usuario = $this->session->userdata('cod_usuario');
+        if (!$cod_usuario) {
+            redirect(site_url());
+        }
         $this->form_validation->set_rules('curso', 'curso', 'trim|required');
         $this->form_validation->set_rules('hora', 'hora', 'trim|is_natural');
         $this->form_validation->set_rules('corte', 'corte', 'trim|required|exact_length[4]|is_natural');
@@ -112,7 +115,7 @@ class fichero extends mi_controlador {
             $datos['baremado'] = $this->input->post('baremado');
             $datos['ruta'] = APPPATH . "../almacen/" . $datos['cod_usuario'];
 
-            
+
             //conversion de fecha para subir al servidor
             $datos['fecha'] = $this->formato_fecha_subir($datos['fecha']);
 
@@ -138,7 +141,7 @@ class fichero extends mi_controlador {
 
 
         $config['file_name'] = $cod_curso . '.pdf';
-        $config['upload_path'] = APPPATH . "../almacen/".$cod_usuario."/";
+        $config['upload_path'] = APPPATH . "../almacen/" . $cod_usuario . "/";
         $config['allowed_types'] = 'pdf';
         $config['remove_spaces'] = TRUE;
         $config['max_size'] = '2048';
@@ -147,8 +150,6 @@ class fichero extends mi_controlador {
 
         if (!$this->upload->do_upload('fichero')) {
             $this->session->set_flashdata('error', 'Error al Subir el fichero');
-
-
         } else {
             $data['error'] = 'Fichero subido';
 
@@ -158,16 +159,19 @@ class fichero extends mi_controlador {
         }
     }
 
-/**
- * Elimina un certificado
- * @param  string $cod codigo del certificado
- * @return manda a la vista donde selecciona el filtro para ver los certificados
- */
+    /**
+     * Elimina un certificado
+     * @param  string $cod codigo del certificado
+     * @return manda a la vista donde selecciona el filtro para ver los certificados
+     */
     function eliminar_certificado($cod = "") {
 
         $datos['cod'] = $cod;
-        
+
         $cod_usuario = $this->session->userdata('cod_usuario');
+        if (!$cod_usuario) {
+            redirect(site_url());
+        }
 
         $dir = APPPATH . "../almacen/" . $cod_usuario . "/" . $cod . '.pdf';
         ;
@@ -195,14 +199,16 @@ class fichero extends mi_controlador {
         redirect(site_url('/fichero/mostrar_enlaces_editar'));
     }
 
-
     /**
      * Funcion para modificar un titulo
      *
      * @param type $cod codigo del curso
      */
     function modificar_titulo($cod = '') {
-
+        $cod_usuario = $this->session->userdata('cod_usuario');
+        if (!$cod_usuario) {
+            redirect(site_url());
+        }
         $datos['cod'] = $cod;
         $this->form_validation->set_rules('curso', 'curso', 'trim|required');
         $this->form_validation->set_rules('hora', 'hora', 'trim|is_natural');
@@ -213,7 +219,7 @@ class fichero extends mi_controlador {
         $this->form_validation->set_rules('titulacion', 'titulacion', 'required |callback_valida_titulacion');
 
         $mail_usuario['mail'] = $this->session->userdata('usuario');
-       
+
         $cod_usuario = $this->usuario_modelo->buscar_usuario($mail_usuario);
         $data = $this->fichero_modelo->buscar_certificado($datos);
 
@@ -276,34 +282,29 @@ class fichero extends mi_controlador {
                     $this->fichero_modelo->insertar_historico($hitorico);
                 }
 
-             if($_FILES['fichero']['size']>0){             
+                if ($_FILES['fichero']['size'] > 0) {
 
-                      $dir= $datos['ruta']."/".$cod.'.pdf';
-                      
+                    $dir = $datos['ruta'] . "/" . $cod . '.pdf';
 
-                    if(file_exists($dir)){
-                        chmod($dir,0777);
-                        if(unlink($dir)){
-                         
-                        $this->do_upload($datos['cod_usuario'], $cod);
+
+                    if (file_exists($dir)) {
+                        chmod($dir, 0777);
+                        if (unlink($dir)) {
+
+                            $this->do_upload($datos['cod_usuario'], $cod);
                         }
-                    }else{
+                    } else {
 
-                        $this->do_upload($datos['cod_usuario'], $cod);                        
+                        $this->do_upload($datos['cod_usuario'], $cod);
                     }
+                } else {
 
-            }else{
-
-                $cuerpo = $this->mostrar_titulo($cod);
-                $this->plantilla($cuerpo); 
-               
-                
-            }
-
-
+                    $cuerpo = $this->mostrar_titulo($cod);
+                    $this->plantilla($cuerpo);
+                }
             } else {
                 $this->session->set_flashdata('error', 'Error al modificar el fichero');
-                redirect(site_url('index.php/fichero/modificar_titulo'.$cod));
+                redirect(site_url('index.php/fichero/modificar_titulo' . $cod));
             }
         }
     }
@@ -317,6 +318,9 @@ class fichero extends mi_controlador {
 
         $data['error'] = $this->session->flashdata('error');
         $codusuario = $this->session->userdata('cod_usuario');
+        if (!$cod_usuario) {
+            redirect(site_url());
+        }
         $aviso = "";
         switch ($value) {
 
@@ -368,12 +372,16 @@ class fichero extends mi_controlador {
         $this->plantilla($aviso . $cuerpo);
     }
 
-/**
- * Muestra los certificados baremados o no baremados
- * @param  string $consulta recibe "baremado =>1" o "nobaremado=>0"
- * @return string            cuerpo para mostrar
- */
+    /**
+     * Muestra los certificados baremados o no baremados
+     * @param  string $consulta recibe "baremado =>1" o "nobaremado=>0"
+     * @return string            cuerpo para mostrar
+     */
     function mostrar_estado_baremado($consulta) {
+        $cod_usuario = $this->session->userdata('cod_usuario');
+        if (!$cod_usuario) {
+            redirect(site_url());
+        }
         $cuerpo = "";
         $datos = $this->fichero_modelo->buscar_varios_certificados($consulta);
         foreach ($datos as $key => $value) {
@@ -387,12 +395,16 @@ class fichero extends mi_controlador {
         return $cuerpo;
     }
 
-/**
- * Muestra los certificados depentiendo del tipo que sean , el tipo titulacion es un parametro opcional
- * @return certificados a mostrar o redirige si la consulta no tiene resultados
- */
+    /**
+     * Muestra los certificados depentiendo del tipo que sean , el tipo titulacion es un parametro opcional
+     * @return certificados a mostrar o redirige si la consulta no tiene resultados
+     */
     function mostrar_tipo_certificado() {
 
+        $cod_usuario = $this->session->userdata('cod_usuario');
+        if (!$cod_usuario) {
+            redirect(site_url());
+        }
         $this->form_validation->set_rules('tipo', 'tipo', 'trim|required');
         // $this->form_validation->set_rules('titulacion', 'titulacion', 'required |callback_valida_titulacion');
 
@@ -438,12 +450,12 @@ class fichero extends mi_controlador {
         }
     }
 
-/**
- * funcion que recibiendo un array con codigos de certificados los gestiona para mostrarlos evitando que se repitan
- * @param  array $consulta  array de certificados
- * @param  string $lugar    parametro que indica el filtro de donde se solicitaba la acción
- * @return string           cuerpo de certificados a mostrar
- */
+    /**
+     * funcion que recibiendo un array con codigos de certificados los gestiona para mostrarlos evitando que se repitan
+     * @param  array $consulta  array de certificados
+     * @param  string $lugar    parametro que indica el filtro de donde se solicitaba la acción
+     * @return string           cuerpo de certificados a mostrar
+     */
     function recorre_array_consulta($consulta, $lugar) {
 
         $cuerpo = "";
@@ -479,13 +491,15 @@ class fichero extends mi_controlador {
         $this->plantilla($cuerpo);
     }
 
-
-/**
- * Funcion para mostrar los certificados asignados por titulacion
- * @return array codigos de cursos
- */
+    /**
+     * Funcion para mostrar los certificados asignados por titulacion
+     * @return array codigos de cursos
+     */
     function mostrar_tipo_titulacion() {
-
+        $cod_usuario = $this->session->userdata('cod_usuario');
+        if (!$cod_usuario) {
+            redirect(site_url());
+        }
 
 
         if ($this->input->post()) {
@@ -514,10 +528,10 @@ class fichero extends mi_controlador {
         }
     }
 
-/**
- * vista autocompletar usando ajax
- * @return string vista de la funcion pedida
- */
+    /**
+     * vista autocompletar usando ajax
+     * @return string vista de la funcion pedida
+     */
     public function view_autocompletar() {
 
         $datos['title'] = 'Buscador';
@@ -525,10 +539,10 @@ class fichero extends mi_controlador {
         return $this->load->view('planilla', $datos, TRUE);
     }
 
-/**
- * Recibe la peticion ajax y le devuelve el resultado
- * @return string enlace a mostrar el curso
- */
+    /**
+     * Recibe la peticion ajax y le devuelve el resultado
+     * @return string enlace a mostrar el curso
+     */
     public function autocompletar() {
 
         $cuerpo = "";
@@ -553,11 +567,11 @@ class fichero extends mi_controlador {
         }
     }
 
-/**
- * muestra un curso
- * @param  string $cod codigo del cursos
- * @return string muestra el curso en el cuerpo
- */
+    /**
+     * muestra un curso
+     * @param  string $cod codigo del cursos
+     * @return string muestra el curso en el cuerpo
+     */
     function mostrar_un_curso($cod = "") {
 
         $cuerpo = $this->mostrar_titulo($cod);
@@ -565,10 +579,10 @@ class fichero extends mi_controlador {
         $this->plantilla($cuerpo);
     }
 
-/**
- * busca los curso coincidentes con lo escrito en el campo del navbar
- * @return string muestra los cursos coindicentes enviados a la plantilla
- */
+    /**
+     * busca los curso coincidentes con lo escrito en el campo del navbar
+     * @return string muestra los cursos coindicentes enviados a la plantilla
+     */
     function buscar_curso() {
 
         $cuerpo = "";

@@ -34,7 +34,7 @@ function quitarhidden() {
 
     if ($('#pass').attr("type") == "hidden") {
 
-        $('#pass').attr("type", "text");
+        $('#pass').attr("type", "password");
         $("#btnpass").html('Ocultar contraseña');
         $("#btnenviar").removeAttr('disabled');
         $("#btnenviar").removeAttr('disabled');

@@ -16,7 +16,6 @@ class mi_controlador extends CI_Controller {
      * Carga la plantilla html (encabezado, menu, cuerpo y pie).
      * @param unknown $cuerpo
      */
-    
     function plantilla($cuerpo) {
 
         if (!$this->session->userdata('usuario')) {
@@ -49,6 +48,7 @@ class mi_controlador extends CI_Controller {
      */
     function password_mail($usuario, $mail, $contra) {
 
+
         // Utilizando smtp
         $config['protocol'] = 'smtp';
         $config['smtp_host'] = 'mail.iessansebastian.com';
@@ -62,21 +62,20 @@ class mi_controlador extends CI_Controller {
         $this->email->from('aula4@iessansebastian.com', 'Certificados 1.0');
         $this->email->to($mail['mail']);
         $this->email->subject('Nuevo password');
-        $this->email->message("<html><body><h1>Hola ".$usuario."<h1/><br/><h2>Modifique la contraseña a una de su gusto</h2><p>Usuario:<font color='red'>" . $mail .
-                "</font></p><p>Nuevo password--> <font color='red'>$contra</font></p></body></html>");
+        $this->email->message("<html><body><h1>Hola  " . $usuario . "<h1/><br/><h2>Modifique la contraseña a una de su gusto</h2><p>Usuario:<font color='red'>" . $mail['mail'] . "</font></p><p>Nuevo password--> <font color='red'>" . $contra . "</font></p></body></html>");
         return $this->email->send();
     }
 
-/**
- * funcion para crear el selec con datos de las titulaciones
- * @param  array $sel las posiciones de las titulaciones en su tabla
- * @return string        envia el selec para pintarlo en el html
- */
+    /**
+     * funcion para crear el selec con datos de las titulaciones
+     * @param  array $sel las posiciones de las titulaciones en su tabla
+     * @return string        envia el selec para pintarlo en el html
+     */
     function creaSelect($sel = '') {
 
 
         $opciones = $this->titulacion->listar_titulacion();
-       $html = "
+        $html = "
     <script type='text/javascript'>
         $(function () {
             $('#titulacion').multiselect({
@@ -103,11 +102,11 @@ class mi_controlador extends CI_Controller {
         return $html;
     }
 
-/**
- * funcion para crear el selec vacio de las titulaciones
- * @param array   $sel    las posiciones de las titulaciones en su tabla
- * @return string envia el selec para pintarlo en el html
- */
+    /**
+     * funcion para crear el selec vacio de las titulaciones
+     * @param array   $sel    las posiciones de las titulaciones en su tabla
+     * @return string envia el selec para pintarlo en el html
+     */
     function crea_no_selected($sel = '') {
 
 
@@ -172,22 +171,22 @@ class mi_controlador extends CI_Controller {
         return $cuerpo = $this->load->view('mostrar_curso', $data, TRUE);
     }
 
-/**
- * convierte el formato para insertar la fecha en la base de datos
- * @param  date $fecha  fecha en formato "d-m-Y"
- * @return date fecha en formato "Y-m-d"
- */
+    /**
+     * convierte el formato para insertar la fecha en la base de datos
+     * @param  date $fecha  fecha en formato "d-m-Y"
+     * @return date fecha en formato "Y-m-d"
+     */
     function formato_fecha_subir($fecha) {
         $fecha_nueva = new DateTime($fecha);
         $resultado = $fecha_nueva->format("Y-m-d");
         return $resultado;
     }
 
-/**
- * convierte el formato de la fecha descargada de la base de datos
- * @param  date $fecha  fecha en formato "Y-m-d"
- * @return date fecha en formato "d-m-Y"
- */
+    /**
+     * convierte el formato de la fecha descargada de la base de datos
+     * @param  date $fecha  fecha en formato "Y-m-d"
+     * @return date fecha en formato "d-m-Y"
+     */
     function formato_fecha_bajar($fecha) {
 
         $fecha_nueva = new DateTime($fecha);
