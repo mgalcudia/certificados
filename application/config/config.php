@@ -17,7 +17,7 @@
 |
 */
 
-    Define('MODO_LOCAL', TRUE);
+    Define('MODO_LOCAL', FALSE);
 if(MODO_LOCAL)
 {
     $config['base_url']= 'http://localhost/certificados/';
@@ -25,7 +25,7 @@ if(MODO_LOCAL)
 }
 else{
 
-$config['base_url']= 'http://iessansebastian.com/alumnos/2daw151ev/manugar';
+$config['base_url']= 'http://certificados.ddns.net/';
 }
   
  

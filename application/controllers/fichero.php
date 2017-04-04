@@ -81,7 +81,9 @@ class fichero extends mi_controlador {
         $this->form_validation->set_rules('entidad', 'entidad', 'trim|required');
         $this->form_validation->set_rules('titulacion', 'titulacion', 'required |callback_valida_titulacion');
 
-
+        if (empty($_FILES['fichero']['name'])) {
+            $this->form_validation->set_rules('fichero', 'fichero', 'required');
+        }
         if ($this->form_validation->run() == FALSE) {
 
             $mail_usuario['mail'] = $this->session->userdata('usuario');
@@ -205,7 +207,9 @@ class fichero extends mi_controlador {
      * @param type $cod codigo del curso
      */
     function modificar_titulo($cod = '') {
+
         $cod_usuario = $this->session->userdata('cod_usuario');
+
         if (!$cod_usuario) {
             redirect(site_url());
         }
@@ -317,8 +321,8 @@ class fichero extends mi_controlador {
     function mostrar_enlaces_editar($value = '') {
 
         $data['error'] = $this->session->flashdata('error');
-        $codusuario = $this->session->userdata('cod_usuario');
-        if (!$cod_usuario) {
+
+        if (!$this->session->userdata('cod_usuario')) {
             redirect(site_url());
         }
         $aviso = "";
@@ -327,7 +331,7 @@ class fichero extends mi_controlador {
             case "nobaremado":
 
                 $consulta = array(
-                    'cod_usuario' => $codusuario,
+                    'cod_usuario' => $this->session->userdata('cod_usuario'),
                     'baremado' => 0
                 );
                 $mensaje['mensaje'] = "Cursos no baremados";
@@ -337,7 +341,7 @@ class fichero extends mi_controlador {
                 break;
             case "baremado":
                 $consulta = array(
-                    'cod_usuario' => $codusuario,
+                    'cod_usuario' => $this->session->userdata('cod_usuario'),
                     'baremado' => 1
                 );
                 $mensaje['mensaje'] = "Cursos baremados";
@@ -589,8 +593,15 @@ class fichero extends mi_controlador {
 
 
         $nombre = $this->input->post('busqueda');
+        if($nombre ==""){
+            $mensaje['mensaje'] = 'Todos los certificados'; 
+
+        }else{
+            $mensaje['mensaje'] = 'Certificados que contiene "' . $nombre . '"';
+
+        }
         $cod_curso = $this->fichero_modelo->search($nombre);
-        $mensaje['mensaje'] = 'Certificados que contiene "' . $nombre . '"';
+        
         $aviso = $this->load->view('mensaje', $mensaje, TRUE);
         if ($cod_curso !== FALSE) {
             foreach ($cod_curso as $key => $value) {

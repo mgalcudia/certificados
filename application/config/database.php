@@ -59,7 +59,7 @@ $db['default']['database'] = 'certificados';
 }
 else 
 {
-$db['default']['username'] = '2daw151ev_manugar';
+$db['default']['username'] = '2daw151ev_manu';
 $db['default']['password'] = 'iaama_58';
 $db['default']['database'] ='2daw151ev_manugar01';
 }

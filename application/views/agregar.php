@@ -36,6 +36,7 @@
             <div class="col-xs-11 col-md-5">
                 <label class="control-label">Agrega el certificado</label>
                 <input  type="file" id="subir_fichero" name="fichero" class="file">
+                 <span class="help-block"><?= form_error('fichero') ?></span>
             </div>
             <div class=" col-xs-11 col-md-3">
                 <label class="form-group">Tipo</label>
